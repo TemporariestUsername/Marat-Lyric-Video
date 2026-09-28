@@ -84,7 +84,8 @@ for e in manifest["images"]:
     k = e["id"]
     if want and k not in want:
         continue
-    src = os.path.join(RAW, e.get("raw", k) + ".png")
+    # generated plates live in assets/images/generated (tracked), period prints in raw/
+    src = os.path.join(ROOT, "assets", "images", e["src"] + ".png") if e.get("src") else os.path.join(RAW, e.get("raw", k) + ".png")
     if not os.path.exists(src):
         print("missing", k)
         continue

@@ -4,6 +4,7 @@ import { MaratVideo } from "./Video";
 import { DURATION, FPS, sectionLines } from "./timing";
 import { SCENES } from "./scenes";
 import { SyncCheck } from "./SyncCheck";
+import { StyleFrame } from "./StyleFrames";
 
 const f = (s: number) => Math.round(s * FPS);
 
@@ -43,6 +44,8 @@ export const RemotionRoot: React.FC = () => (
       height={1080}
       defaultProps={{ startSec: previewStart }}
     />
+    {/* style frames: finished stills of hero moments, for approval */}
+    <Composition id="StyleFrame" component={StyleFrame} durationInFrames={1} fps={FPS} width={1920} height={1080} defaultProps={{ which: "sewer" as "sewer" | "press" }} />
     {/* one composition per scene, for section-by-section review renders */}
     {SCENES.map((s) => (
       <Composition

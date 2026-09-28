@@ -23,3 +23,10 @@ All images are period prints or paintings in the public domain / with no known r
 - **L'Intérieur du comité révolutionnaire. Scène derniere**, [ca. 1794]. No known restrictions on publication. Source: https://www.loc.gov/pictures/item/90712046/
 - **Musee Carnavalet, Marat, (Joseph Boze)**, [between 1900 and 1940]. No known restrictions on publication. Source: https://www.loc.gov/pictures/item/2025708085/
 - **Prise de la Bastille par les Citoyens de Paris...; C'est ainsi que l'on punit les traitres**, [1789]. No known restrictions on publication. Source: https://www.loc.gov/pictures/item/91480935/
+
+## Generated plates
+
+These are not period images. They are engraving-style plates generated with an image model (Gemini 3 Pro Image, via OpenRouter), using real 1790s prints from this list as style references. Marat's likeness follows the Boze portrait. Prompts and costs are logged in `assets/images/generated/spend.json`.
+
+- `sewer_writing`: Marat writing by sewer-light (verse 1)
+- `press_room`: the press of L'Ami du peuple (verse 1)

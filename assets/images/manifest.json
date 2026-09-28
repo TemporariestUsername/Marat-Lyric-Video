@@ -132,13 +132,13 @@
    "id": "ca_ira_1794",
    "src": "loc",
    "ref": "2009633479",
-   "use": "Ah! ça ira... les aristocrates à la raison (1794)"
+   "use": "Ah! \u00e7a ira... les aristocrates \u00e0 la raison (1794)"
   },
   {
    "id": "bombardement_trones",
    "src": "loc",
    "ref": "89708761",
-   "use": "Bombardement de tous les trônes de l'Europe (1792)"
+   "use": "Bombardement de tous les tr\u00f4nes de l'Europe (1792)"
   },
   {
    "id": "marat_portrait_b",
@@ -158,7 +158,7 @@
    "id": "marat_geneve",
    "src": "loc",
    "ref": "90712051",
-   "use": "Jean Paul Marat, né à Genève, député de Paris (c. 1793), cut-out",
+   "use": "Jean Paul Marat, n\u00e9 \u00e0 Gen\u00e8ve, d\u00e9put\u00e9 de Paris (c. 1793), cut-out",
    "cutout": true,
    "crop": [
     0.28,
@@ -232,13 +232,13 @@
    "id": "comite_scene_derniere",
    "src": "loc",
    "ref": "90712046",
-   "use": "L'Intérieur du comité révolutionnaire, scène dernière (c. 1794)"
+   "use": "L'Int\u00e9rieur du comit\u00e9 r\u00e9volutionnaire, sc\u00e8ne derni\u00e8re (c. 1794)"
   },
   {
    "id": "boze_marat",
    "src": "loc",
    "ref": "2025708085",
-   "use": "photograph of Joseph Boze's portrait of Marat (1793), Musée Carnavalet",
+   "use": "photograph of Joseph Boze's portrait of Marat (1793), Mus\u00e9e Carnavalet",
    "crop": [
     0.03,
     0.02,
@@ -258,6 +258,32 @@
     0.37
    ],
    "use": "Prise de la Bastille (1789, upper plate)"
+  },
+  {
+   "id": "sewer_writing",
+   "src": "generated/sewer_writing",
+   "crop": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "hires": true,
+   "generated": true,
+   "title": "Marat writing by sewer-light (generated plate)"
+  },
+  {
+   "id": "press_room",
+   "src": "generated/press_room",
+   "crop": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "hires": true,
+   "generated": true,
+   "title": "The press of L'Ami du peuple (generated plate)"
   }
  ]
 }

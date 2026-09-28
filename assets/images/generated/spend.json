@@ -1,0 +1,51 @@
+[
+ {
+  "id": "sewer_writing",
+  "model": "google/gemini-3-pro-image-preview",
+  "cost": 0.139496,
+  "prompt": "Jean-Paul Marat in hiding in a vaulted Paris sewer at night, 1790. He sits hunched on an upturned crate, writing furiously with a quill on sheets balanced on his knee, a single candle stub the only light, deep black cross-hatched shadow all around. Filthy water runs in a channel beside him; rats; dripping brick vault; stacks of his newspaper L'Ami du peuple tied with string. His head wrapped in a cloth bandana, gaunt, feverish, intense. Seen from low and to the side, wide composition with space on the right.",
+  "refs": [
+   "comite_revolutionnaire",
+   "marat_geneve",
+   "fouquier_tribunal"
+  ],
+  "edit": null,
+  "at": "2026-09-28 12:08:46",
+  "size": [
+   1376,
+   768
+  ]
+ },
+ {
+  "id": "sewer_writing",
+  "model": "google/gemini-3-pro-image-preview",
+  "cost": 0.13958,
+  "prompt": "Jean-Paul Marat in hiding in a vaulted Paris sewer at night, 1790. He sits hunched on an upturned crate, writing furiously with a quill on sheets balanced on a second crate, a single candle stub the only light, heavy cross-hatched darkness around it. Filthy water runs in a channel beside him; rats; dripping brick vault receding into darkness on the right; stacks of his newspaper tied with string. His head wrapped in a cloth bandana, gaunt, feverish, intense. Seen from low and to the side.",
+  "refs": [
+   "comite_revolutionnaire",
+   "fouquier_tribunal"
+  ],
+  "edit": null,
+  "at": "2026-09-28 12:09:29",
+  "size": [
+   2752,
+   1536
+  ]
+ },
+ {
+  "id": "press_room",
+  "model": "google/gemini-3-pro-image-preview",
+  "cost": 0.139096,
+  "prompt": "A cramped Paris print shop at night in 1791 printing the newspaper L'Ami du peuple. In the centre a massive wooden common hand press (screw press with a long iron bar); a brawny sans-culotte pressman hauls the bar with his whole body while another inks the forme with two leather ink balls. Wet printed sheets hang drying on lines overhead like laundry, filling the upper frame. Type cases on the left wall, a compositor setting type by candle. Jean-Paul Marat stands behind the press in his headscarf, pointing, urging them on. Oil lamps, deep hatched shadows, dramatic low angle looking up at the press.",
+  "refs": [
+   "comite_revolutionnaire",
+   "fouquier_tribunal"
+  ],
+  "edit": null,
+  "at": "2026-09-28 12:10:12",
+  "size": [
+   2752,
+   1536
+  ]
+ }
+]
