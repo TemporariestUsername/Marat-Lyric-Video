@@ -71,7 +71,12 @@ for e in manifest["images"]:
     if os.path.exists(out) and e["id"] in sources:
         continue
     try:
-        meta, data = (fetch_loc if e["src"] == "loc" else fetch_aic)(e["ref"])
+        if e["src"] == "commons":
+            import commons
+
+            meta, data = commons.fetch(e["ref"], 6000 if e.get("hires") else 3000)
+        else:
+            meta, data = (fetch_loc if e["src"] == "loc" else fetch_aic)(e["ref"])
         im = Image.open(io.BytesIO(data))
         im = im.convert("RGB")
         cap = 6000 if e.get("hires") else 3000  # storyboarded prints get close-ups

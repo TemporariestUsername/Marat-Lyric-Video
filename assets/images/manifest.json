@@ -132,13 +132,13 @@
    "id": "ca_ira_1794",
    "src": "loc",
    "ref": "2009633479",
-   "use": "Ah! \u00e7a ira... les aristocrates \u00e0 la raison (1794)"
+   "use": "Ah! ça ira... les aristocrates à la raison (1794)"
   },
   {
    "id": "bombardement_trones",
    "src": "loc",
    "ref": "89708761",
-   "use": "Bombardement de tous les tr\u00f4nes de l'Europe (1792)"
+   "use": "Bombardement de tous les trônes de l'Europe (1792)"
   },
   {
    "id": "marat_portrait_b",
@@ -158,7 +158,7 @@
    "id": "marat_geneve",
    "src": "loc",
    "ref": "90712051",
-   "use": "Jean Paul Marat, n\u00e9 \u00e0 Gen\u00e8ve, d\u00e9put\u00e9 de Paris (c. 1793), cut-out",
+   "use": "Jean Paul Marat, né à Genève, député de Paris (c. 1793), cut-out",
    "cutout": true,
    "crop": [
     0.28,
@@ -232,13 +232,13 @@
    "id": "comite_scene_derniere",
    "src": "loc",
    "ref": "90712046",
-   "use": "L'Int\u00e9rieur du comit\u00e9 r\u00e9volutionnaire, sc\u00e8ne derni\u00e8re (c. 1794)"
+   "use": "L'Intérieur du comité révolutionnaire, scène dernière (c. 1794)"
   },
   {
    "id": "boze_marat",
    "src": "loc",
    "ref": "2025708085",
-   "use": "photograph of Joseph Boze's portrait of Marat (1793), Mus\u00e9e Carnavalet",
+   "use": "photograph of Joseph Boze's portrait of Marat (1793), Musée Carnavalet",
    "crop": [
     0.03,
     0.02,
@@ -258,6 +258,175 @@
     0.37
    ],
    "use": "Prise de la Bastille (1789, upper plate)"
+  },
+  {
+   "id": "carceri_drawbridge",
+   "src": "commons",
+   "ref": "File:Piranesi-Carceri-07Zugbrücke.jpg",
+   "use": "sewer descent / prisons: vast vaulted dark",
+   "hires": true
+  },
+  {
+   "id": "carceri_smoke",
+   "src": "commons",
+   "ref": "File:Piranesi-Carceri-06RauchendesFeuer.jpg",
+   "use": "sewer / fever: smoke and fire below",
+   "hires": true
+  },
+  {
+   "id": "carceri_chains",
+   "src": "commons",
+   "ref": "File:Piranesi-Carceri-16Pfeiler mit Ketten.jpg",
+   "use": "September prisons: pillars and chains",
+   "hires": true
+  },
+  {
+   "id": "carceri_wheel",
+   "src": "commons",
+   "ref": "File:Piranesi-Carceri-09Das große Rad.jpg",
+   "use": "prisons: the great wheel",
+   "hires": true
+  },
+  {
+   "id": "carceri_tower",
+   "src": "commons",
+   "ref": "File:Piranesi-Carceri-03Der runde Turm.jpg",
+   "use": "sewer: the round tower",
+   "hires": true
+  },
+  {
+   "id": "carceri_xiv",
+   "src": "commons",
+   "ref": "File:Giovanni Battista Piranesi - Carceri Series, Plate XIV - Google Art Project.jpg",
+   "use": "prisons: landscape plate"
+  },
+  {
+   "id": "abbaye_massacre",
+   "src": "commons",
+   "ref": "File:Les massacres du 2 au 7 septembre 1792 à la prison de l'Abbaye.jpg",
+   "use": "verse 2: the Abbaye",
+   "hires": true
+  },
+  {
+   "id": "septembre_berthault",
+   "src": "commons",
+   "ref": "File:Massacres des 2, 3, 4, 5 et 6 septembre 1792.jpg",
+   "use": "verse 2: September massacres (Tableaux historiques)",
+   "hires": true
+  },
+  {
+   "id": "septembre_tribunal",
+   "src": "commons",
+   "ref": "File:Tribunal de prison lors des massacres de septembre 1792, à Paris. D.9097.jpg",
+   "use": "verse 2: the prison tribunal",
+   "hires": true,
+   "crop": [
+    0.02,
+    0.03,
+    0.98,
+    0.6
+   ]
+  },
+  {
+   "id": "septembre_episode",
+   "src": "commons",
+   "ref": "File:Épisode des massacres de septembre 1792.jpg",
+   "use": "verse 2: massacre episode",
+   "hires": true,
+   "crop": [
+    0.01,
+    0.04,
+    0.99,
+    0.93
+   ]
+  },
+  {
+   "id": "chatelet_bicetre",
+   "src": "commons",
+   "ref": "File:Massacre à la prison du Châtelet et à la maison de Bicêtre, les 2-3 septembre 1792. Estampe en deux tableaux p.427 et 42, G.28587.jpg",
+   "use": "verse 2: Châtelet and Bicêtre",
+   "crop": [
+    0.01,
+    0.06,
+    0.99,
+    0.86
+   ]
+  },
+  {
+   "id": "david_marat",
+   "src": "commons",
+   "ref": "File:Jacques-Louis David - Marat assassinated - Google Art Project 2.jpg",
+   "use": "the bath: David's Death of Marat",
+   "hires": true
+  },
+  {
+   "id": "triomphe_acquitte",
+   "src": "commons",
+   "ref": "File:Révolution française Jean-Paul Marat porté en triomphe par le peuple après son acquittement par le Tribunal révolution, G.28772.jpg",
+   "use": "acquittal: carried in triumph",
+   "hires": true
+  },
+  {
+   "id": "triomphe_bertaux",
+   "src": "commons",
+   "ref": "File:Jean Paul Marat, député de Paris a la Convention nationale... - estampe - Levachez sculp.. Marat porté en triomphe après avoir été acquitté par le tribunal revolutionnaire - Duplessi Bertaux inv. & del.... - btv1b6949743x.jpg",
+   "use": "acquittal: Duplessis-Bertaux",
+   "hires": true
+  },
+  {
+   "id": "assassinat_28807",
+   "src": "commons",
+   "ref": "File:Assassinat de Jean-Paul Marat par Charlotte Corday le 13 juillet 1793. Révolution française. G.28807.jpg",
+   "use": "the bath: assassination",
+   "hires": true,
+   "crop": [
+    0.02,
+    0.02,
+    0.98,
+    0.84
+   ]
+  },
+  {
+   "id": "assassinat_28811",
+   "src": "commons",
+   "ref": "File:Assassinat de Jean-Paul Marat par Charlotte Corday le 13 juillet 1793. Révolution française. G.28811.jpg",
+   "use": "the bath: assassination",
+   "hires": true
+  },
+  {
+   "id": "ami_du_peuple_n4",
+   "src": "commons",
+   "ref": "File:1789-09-14 - N4 - Ami du Peuple.djvu",
+   "use": "the paper itself: No. IV, 14 Sept 1789, 'rédigé par M. Marat'",
+   "hires": true,
+   "crop": [
+    0.04,
+    0.0,
+    0.96,
+    0.975
+   ],
+   "raw": "ami_du_peuple_n4_p3"
+  },
+  {
+   "id": "encyc_presse",
+   "src": "commons",
+   "ref": "File:Planche encyclopédie imprimerie 7 Presse vue du dehors.jpg",
+   "use": "the press seen from outside (Encyclopédie)",
+   "hires": true
+  },
+  {
+   "id": "encyc_casse",
+   "src": "loc",
+   "ref": "2006691774",
+   "use": "compositors at the type case (Encyclopédie)",
+   "hires": true
+  },
+  {
+   "id": "encyc_presse_dev",
+   "src": "commons",
+   "ref": "File:Planche encyclopédie imprimerie 8 Développement de la presse.jpg",
+   "use": "the press taken apart (Encyclopédie)",
+   "hires": true
   }
  ]
 }

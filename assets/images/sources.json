@@ -278,5 +278,285 @@
    3997,
    2721
   ]
+ },
+ "carceri_drawbridge": {
+  "title": "Piranesi-Carceri-07Zugbrücke",
+  "date": "2021-03-04",
+  "creator": "Giovanni Battista Piranesi (1720-1778)",
+  "medium": null,
+  "rights": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Piranesi-Carceri-07Zugbr%C3%BCcke.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Piranesi-Carceri-07Zugbr%C3%BCcke.jpg/3840px-Piranesi-Carceri-07Zugbr%C3%BCcke.jpg",
+  "use": "sewer descent / prisons: vast vaulted dark",
+  "size": [
+   3840,
+   5188
+  ]
+ },
+ "carceri_smoke": {
+  "title": "Piranesi-Carceri-06RauchendesFeuer",
+  "date": "2021-03-04",
+  "creator": "Giovanni Battista Piranesi (1720-1778)",
+  "medium": null,
+  "rights": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Piranesi-Carceri-06RauchendesFeuer.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Piranesi-Carceri-06RauchendesFeuer.jpg/3840px-Piranesi-Carceri-06RauchendesFeuer.jpg",
+  "use": "sewer / fever: smoke and fire below",
+  "size": [
+   3840,
+   5195
+  ]
+ },
+ "carceri_chains": {
+  "title": "Piranesi-Carceri-16Pfeiler mit Ketten.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3APiranesi-Carceri-16Pfeiler_mit_Ketten.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Piranesi-Carceri-16Pfeiler_mit_Ketten.jpg/3840px-Piranesi-Carceri-16Pfeiler_mit_Ketten.jpg",
+  "use": "September prisons: pillars and chains",
+  "size": [
+   3840,
+   2858
+  ]
+ },
+ "carceri_wheel": {
+  "title": "Piranesi-Carceri-09Das große Rad.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3APiranesi-Carceri-09Das_gro%C3%9Fe_Rad.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Piranesi-Carceri-09Das_gro%C3%9Fe_Rad.jpg/3840px-Piranesi-Carceri-09Das_gro%C3%9Fe_Rad.jpg",
+  "use": "prisons: the great wheel",
+  "size": [
+   3840,
+   5225
+  ]
+ },
+ "carceri_tower": {
+  "title": "Piranesi-Carceri-03Der runde Turm.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3APiranesi-Carceri-03Der_runde_Turm.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Piranesi-Carceri-03Der_runde_Turm.jpg/3840px-Piranesi-Carceri-03Der_runde_Turm.jpg",
+  "use": "sewer: the round tower",
+  "size": [
+   3840,
+   5078
+  ]
+ },
+ "carceri_xiv": {
+  "title": "Giovanni Battista Piranesi - Carceri Series, Plate XIV - Google Art Project.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AGiovanni_Battista_Piranesi_-_Carceri_Series%2C_Plate_XIV_-_Google_Art_Project.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Giovanni_Battista_Piranesi_-_Carceri_Series%2C_Plate_XIV_-_Google_Art_Project.jpg/3840px-Giovanni_Battista_Piranesi_-_Carceri_Series%2C_Plate_XIV_-_Google_Art_Project.jpg",
+  "use": "prisons: landscape plate",
+  "size": [
+   3000,
+   2328
+  ]
+ },
+ "abbaye_massacre": {
+  "title": "Les massacres du 2 au 7 septembre 1792 à la prison de l'Abbaye.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3ALes_massacres_du_2_au_7_septembre_1792_%C3%A0_la_prison_de_l%27Abbaye.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Les_massacres_du_2_au_7_septembre_1792_%C3%A0_la_prison_de_l%27Abbaye.jpg/3840px-Les_massacres_du_2_au_7_septembre_1792_%C3%A0_la_prison_de_l%27Abbaye.jpg",
+  "use": "verse 2: the Abbaye",
+  "size": [
+   3840,
+   3042
+  ]
+ },
+ "septembre_berthault": {
+  "title": "Massacres des 2, 3, 4, 5 et 6 septembre 1792.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AMassacres_des_2%2C_3%2C_4%2C_5_et_6_septembre_1792.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Massacres_des_2%2C_3%2C_4%2C_5_et_6_septembre_1792.jpg/3840px-Massacres_des_2%2C_3%2C_4%2C_5_et_6_septembre_1792.jpg",
+  "use": "verse 2: September massacres (Tableaux historiques)",
+  "size": [
+   3840,
+   3197
+  ]
+ },
+ "septembre_tribunal": {
+  "title": "Tribunal de prison lors des massacres de septembre 1792, à Paris. D.9097.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3ATribunal_de_prison_lors_des_massacres_de_septembre_1792%2C_%C3%A0_Paris._D.9097.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Tribunal_de_prison_lors_des_massacres_de_septembre_1792%2C_%C3%A0_Paris._D.9097.jpg/3840px-Tribunal_de_prison_lors_des_massacres_de_septembre_1792%2C_%C3%A0_Paris._D.9097.jpg",
+  "use": "verse 2: the prison tribunal",
+  "size": [
+   3840,
+   2623
+  ]
+ },
+ "septembre_episode": {
+  "title": "Épisode des massacres de septembre 1792.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3A%C3%89pisode_des_massacres_de_septembre_1792.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/%C3%89pisode_des_massacres_de_septembre_1792.jpg/3840px-%C3%89pisode_des_massacres_de_septembre_1792.jpg",
+  "use": "verse 2: massacre episode",
+  "size": [
+   3840,
+   2914
+  ]
+ },
+ "chatelet_bicetre": {
+  "title": "Massacre à la prison du Châtelet et à la maison de Bicêtre, les 2-3 septembre 1792. Estampe en deux tableaux p.427 et 42, G.28587.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AMassacre_%C3%A0_la_prison_du_Ch%C3%A2telet_et_%C3%A0_la_maison_de_Bic%C3%AAtre%2C_les_2-3_septembre_1792._Estampe_en_deux_tableaux_p.427_et_42%2C_G.28587.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Massacre_%C3%A0_la_prison_du_Ch%C3%A2telet_et_%C3%A0_la_maison_de_Bic%C3%AAtre%2C_les_2-3_septembre_1792._Estampe_en_deux_tableaux_p.427_et_42%2C_G.28587.jpg/3840px-Massacre_%C3%A0_la_prison_du_Ch%C3%A2telet_et_%C3%A0_la_maison_de_Bic%C3%AAtre%2C_les_2-3_septembre_1792._Estampe_en_deux_tableaux_p.427_et_42%2C_G.28587.jpg",
+  "use": "verse 2: Châtelet and Bicêtre",
+  "size": [
+   3000,
+   2088
+  ]
+ },
+ "david_marat": {
+  "title": "Jacques-Louis David - Marat assassinated - Google Art Project 2.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AJacques-Louis_David_-_Marat_assassinated_-_Google_Art_Project_2.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Jacques-Louis_David_-_Marat_assassinated_-_Google_Art_Project_2.jpg/3840px-Jacques-Louis_David_-_Marat_assassinated_-_Google_Art_Project_2.jpg",
+  "use": "the bath: David's Death of Marat",
+  "size": [
+   3840,
+   4941
+  ]
+ },
+ "triomphe_acquitte": {
+  "title": "Révolution française Jean-Paul Marat porté en triomphe par le peuple après son acquittement par le Tribunal révolution, G.28772.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AR%C3%A9volution_fran%C3%A7aise_Jean-Paul_Marat_port%C3%A9_en_triomphe_par_le_peuple_apr%C3%A8s_son_acquittement_par_le_Tribunal_r%C3%A9volution%2C_G.28772.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/R%C3%A9volution_fran%C3%A7aise_Jean-Paul_Marat_port%C3%A9_en_triomphe_par_le_peuple_apr%C3%A8s_son_acquittement_par_le_Tribunal_r%C3%A9volution%2C_G.28772.jpg/3840px-R%C3%A9volution_fran%C3%A7aise_Jean-Paul_Marat_port%C3%A9_en_triomphe_par_le_peuple_apr%C3%A8s_son_acquittement_par_le_Tribunal_r%C3%A9volution%2C_G.28772.jpg",
+  "use": "acquittal: carried in triumph",
+  "size": [
+   3840,
+   2549
+  ]
+ },
+ "triomphe_bertaux": {
+  "title": "Jean Paul Marat, député de Paris a la Convention nationale... - estampe - Levachez sculp.. Marat porté en triomphe après avoir été acquitté par le tribunal revolutionnaire - Duplessi Bertaux inv. & del.... - btv1b6949743x.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AJean_Paul_Marat%2C_d%C3%A9put%C3%A9_de_Paris_a_la_Convention_nationale..._-_estampe_-_Levachez_sculp.._Marat_port%C3%A9_en_triomphe_apr%C3%A8s_avoir_%C3%A9t%C3%A9_acquitt%C3%A9_par_le_tribunal_revolutionnaire_-_Duplessi_Bertaux_inv._%26_del...._-_btv1b6949743x.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Jean_Paul_Marat%2C_d%C3%A9put%C3%A9_de_Paris_a_la_Convention_nationale..._-_estampe_-_Levachez_sculp.._Marat_port%C3%A9_en_triomphe_apr%C3%A8s_avoir_%C3%A9t%C3%A9_acquitt%C3%A9_par_le_tribunal_revolutionnaire_-_Duplessi_Bertaux_inv._%26_del...._-_btv1b6949743x.jpg/3840px-Jean_Paul_Marat%2C_d%C3%A9put%C3%A9_de_Paris_a_la_Convention_nationale..._-_estampe_-_Levachez_sculp.._Marat_port%C3%A9_en_triomphe_apr%C3%A8s_avoir_%C3%A9t%C3%A9_acquitt%C3%A9_par_le_tribunal_revolutionnaire_-_Duplessi_Bertaux_inv._%26_del...._-_btv1b6949743x.jpg",
+  "use": "acquittal: Duplessis-Bertaux",
+  "size": [
+   3840,
+   5776
+  ]
+ },
+ "assassinat_28807": {
+  "title": "Assassinat de Jean-Paul Marat par Charlotte Corday le 13 juillet 1793. Révolution française. G.28807.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AAssassinat_de_Jean-Paul_Marat_par_Charlotte_Corday_le_13_juillet_1793._R%C3%A9volution_fran%C3%A7aise._G.28807.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Assassinat_de_Jean-Paul_Marat_par_Charlotte_Corday_le_13_juillet_1793._R%C3%A9volution_fran%C3%A7aise._G.28807.jpg/3840px-Assassinat_de_Jean-Paul_Marat_par_Charlotte_Corday_le_13_juillet_1793._R%C3%A9volution_fran%C3%A7aise._G.28807.jpg",
+  "use": "the bath: assassination",
+  "size": [
+   3840,
+   2703
+  ]
+ },
+ "assassinat_28811": {
+  "title": "Assassinat de Jean-Paul Marat par Charlotte Corday le 13 juillet 1793. Révolution française. G.28811.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3AAssassinat_de_Jean-Paul_Marat_par_Charlotte_Corday_le_13_juillet_1793._R%C3%A9volution_fran%C3%A7aise._G.28811.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Assassinat_de_Jean-Paul_Marat_par_Charlotte_Corday_le_13_juillet_1793._R%C3%A9volution_fran%C3%A7aise._G.28811.jpg/3840px-Assassinat_de_Jean-Paul_Marat_par_Charlotte_Corday_le_13_juillet_1793._R%C3%A9volution_fran%C3%A7aise._G.28811.jpg",
+  "use": "the bath: assassination",
+  "size": [
+   3840,
+   4948
+  ]
+ },
+ "ami_du_peuple_n4": {
+  "title": "1789-09-14 - N4 - Ami du Peuple.djvu",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3A1789-09-14_-_N4_-_Ami_du_Peuple.djvu",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/1789-09-14_-_N4_-_Ami_du_Peuple.djvu/page1-3840px-1789-09-14_-_N4_-_Ami_du_Peuple.djvu.jpg",
+  "use": "the newspaper itself: masthead and columns",
+  "size": [
+   3840,
+   5760
+  ]
+ },
+ "encyc_casse": {
+  "title": "Imprimerie en lettres, l'opération de la casse",
+  "date": "[between 1751 and 1772]",
+  "creator": null,
+  "medium": "1,  , p, r, i, n, t,  , :",
+  "rights": "No known restrictions on publication in the U.S. Use elsewhere may be restricted by other countries' laws. For general information see \"Copyright and Other Restrictions ...,\" http://www.loc.gov/rr/print/195_copr.html",
+  "page": "https://www.loc.gov/pictures/item/2006691774/",
+  "image": "https://cdn.loc.gov/master/pnp/cph/3c10000/3c10000/3c10300/3c10399u.tif",
+  "use": "compositors at the type case (Encyclopédie)",
+  "size": [
+   3283,
+   4096
+  ]
+ },
+ "encyc_presse": {
+  "title": "Planche encyclopédie imprimerie 7 Presse vue du dehors.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3APlanche_encyclop%C3%A9die_imprimerie_7_Presse_vue_du_dehors.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Planche_encyclop%C3%A9die_imprimerie_7_Presse_vue_du_dehors.jpg/3840px-Planche_encyclop%C3%A9die_imprimerie_7_Presse_vue_du_dehors.jpg",
+  "use": "the press seen from outside (Encyclopédie)",
+  "size": [
+   3745,
+   6000
+  ]
+ },
+ "encyc_presse_dev": {
+  "title": "Planche encyclopédie imprimerie 8 Développement de la presse.jpg",
+  "date": null,
+  "creator": null,
+  "medium": null,
+  "rights": "UNCHECKED (Commons API unavailable)",
+  "page": "https://commons.wikimedia.org/wiki/File%3APlanche_encyclop%C3%A9die_imprimerie_8_D%C3%A9veloppement_de_la_presse.jpg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Planche_encyclop%C3%A9die_imprimerie_8_D%C3%A9veloppement_de_la_presse.jpg/3840px-Planche_encyclop%C3%A9die_imprimerie_8_D%C3%A9veloppement_de_la_presse.jpg",
+  "use": "the press taken apart (Encyclopédie)",
+  "size": [
+   3840,
+   5971
+  ]
  }
 }
