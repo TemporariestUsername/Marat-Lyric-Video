@@ -77,7 +77,7 @@ export const CHORUS1_BOARDS: ChorusBoards = {
   count1: { id: "punit_traitres", boxes: [BOX.punit.heads12, BOX.punit.heads34, BOX.punit.all] },
   count2: { id: "heads_on_pikes", boxes: [BOX.pikes1789.right, BOX.pikes1789.mid, BOX.pikes1789.cluster] },
   blade: { id: "hell_broke_loose", top: BOX.guillotine.crossbeam, bottom: BOX.guillotine.lunette },
-  tub: { id: "assassinat_marat", wide: BOX.bathroom.wide, tub: BOX.bathroom.tub },
+  tub: { id: "supplice_louis", wide: [0, 0, 1, 1], tub: [0.3, 0.3, 0.7, 0.85] },
 };
 
 /**
@@ -91,7 +91,8 @@ export const CHORUS1_BOARDS: ChorusBoards = {
  *     good, and the body that remains is cauterised and sutured on the drums.
  *  3  Apply the blade: on the guillotine's crossbeam; on "blade" the camera drops
  *     with the blade to the lunette and stops dead; "loose the flood" lets the red in.
- *  4  WE'RE GONNA NEED A TUB: Marat's room (the 1793 assassination plate); on TUB the
+ *  4  WE'RE GONNA NEED A TUB: the aristocrats' blood (the king's execution; chorus 2
+ *     the Abbaye; only chorus 3 turns to Corday, and never Marat's death); on TUB the
  *     camera snaps onto his tub; on BLOOD it floods, and the headline bleeds.
  *
  * opts: section, numeral stages, heaviness (1..3), boards, prev (to tear)

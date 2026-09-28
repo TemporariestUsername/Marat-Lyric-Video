@@ -106,19 +106,23 @@ export const ACQUITTAL: ShotSpec[] = [
   { line: ["acquittal", 3], img: "ami_du_peuple_n4", from: PAPER.marat, to: PAPER.title, dark: 0.3 },
 ];
 
+// Corday's portrait (framed engraving): her face, and what she holds in her right hand
+const CORDAY = { face: [0.4, 0.17, 0.66, 0.36] as Box, hand: [0.3, 0.46, 0.5, 0.62] as Box };
+
 // ---- The bath, Corday, the death
 export const BATH: ShotSpec[] = [
   { line: ["bath", 0], img: "carceri_smoke", from: [0.25, 0.38, 0.75, 0.66], to: [0.35, 0.45, 0.6, 0.6], dark: 0.35, candle: [0.45, 0.55], type: "whisper", fade: 0.6 },
   { line: ["bath", 1], img: "marat_portrait_b", from: SCARF.head, to: SCARF.rag, dark: 0.3, type: "whisper" },
-  { line: ["bath", 2], img: "assassinat_marat", from: [0.02, 0.3, 0.98, 0.98], to: [0.33, 0.55, 0.61, 0.81], dark: 0.3, type: "whisper" },
+  { line: ["bath", 2], img: "boze_marat", from: BOZE.face, to: BOZE.eyes, dark: 0.45, candle: [0.3, 0.6], type: "whisper" },
   { line: ["bath", 3], img: "ami_du_peuple_n4", from: PAPER.columns, to: PAPER.foot, dark: 0.4, type: "whisper" },
-  { line: ["corday", 0], img: "corday_portrait", from: [0.1, 0.0, 0.9, 0.6], to: [0.2, 0.0, 0.8, 0.45], dark: 0.3, type: "whisper", fade: 0.4 },
-  { line: ["corday", 1], img: "assassinat_28811", from: [0.0, 0.15, 1.0, 0.75], to: [0.2, 0.25, 0.9, 0.6], dark: 0.3, type: "whisper" },
-  { line: ["corday", 2], img: "assassinat_28807", from: FULL, to: [0.4, 0.05, 0.95, 0.75], dark: 0.3, type: "whisper" },
-  { line: ["corday", 3], img: "assassinat_28807", from: [0.4, 0.05, 0.95, 0.75], to: [0.45, 0.05, 0.8, 0.5], dark: 0.3, type: "whisper" },
-  // the knife: the bars between Corday and the death, the room floods
-  { bars: 2, img: "assassinat_marat", from: [0.33, 0.55, 0.61, 0.81], to: [0.4, 0.6, 0.55, 0.76], dark: 0.35, soak: [0, 0.35] },
-  { bars: 3, img: "assassinat_marat", from: [0.02, 0.3, 0.98, 0.98], to: [0.33, 0.55, 0.61, 0.81], dark: 0.45, soak: [0.35, 0.8] },
+  // Corday arrives. Marat is alive and singing until her first line: no death on screen before it.
+  { line: ["corday", 0], img: "corday_portrait", from: [0.1, 0.0, 0.9, 0.6], to: [0.2, 0.05, 0.8, 0.5], dark: 0.3, type: "whisper", fade: 0.4 },
+  { line: ["corday", 1], img: "corday_portrait", from: [0.25, 0.1, 0.75, 0.45], to: CORDAY.face, dark: 0.3, type: "whisper" },
+  { line: ["corday", 2], img: "ami_du_peuple_n4", from: PAPER.columns, to: PAPER.date, dark: 0.4, type: "whisper" },
+  { line: ["corday", 3], img: "hell_broke_loose", from: [0.1, 0.0, 0.8, 0.75], to: [0.31, 0.0, 0.52, 0.17], dark: 0.35, type: "whisper" },
+  // the knife (instrumental): onto what is in her hand, then black, and the blood rises. Marat is not seen.
+  { bars: 2, img: "corday_portrait", from: CORDAY.face, to: CORDAY.hand, dark: 0.35, soak: [0, 0.2] },
+  { bars: 3, black: true, soak: [0.2, 0.85] },
   // David: the whole last address, one slow look at the painting
   { line: ["death", 0], img: "david_marat", from: DAVID.dark, to: DAVID.face, dark: 0.35, type: "whisper", fade: 1.2 },
   { line: ["death", 1], img: "david_marat", from: DAVID.face, to: DAVID.bath, dark: 0.3, type: "whisper", fade: 0.8 },

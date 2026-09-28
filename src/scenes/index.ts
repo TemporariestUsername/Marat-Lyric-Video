@@ -1,7 +1,7 @@
 // Scene list. Every boundary is derived from timing.json line times — no
 // hand-typed timestamps. A scene runs until the next one starts.
 import { DURATION, sectionLines } from "../timing";
-import { Chorus } from "./Chorus";
+import { Chorus, CHORUS1_BOARDS, ChorusBoards } from "./Chorus";
 import { PressRoom } from "./PressRoom";
 import { Board } from "./Board";
 import { INTRO, VERSE1, VERSE2, SPOKEN, TRIBUNAL, ACQUITTAL, BATH, CLIMAX } from "./boards";
@@ -10,17 +10,23 @@ import { SceneDef } from "./types";
 const first = (sid: string) => sectionLines(sid)[0].start;
 
 type Spec = Omit<SceneDef, "end">;
+// The hook's tub: choruses 1 and 2 are about the aristocrats' blood (the king's
+// execution, then September); only chorus 3 turns it on Marat, with Corday.
+const withTub = (tub: ChorusBoards["tub"]): ChorusBoards => ({ ...CHORUS1_BOARDS, tub });
+const TUB1 = withTub({ id: "supplice_louis", wide: [0, 0, 1, 1], tub: [0.3, 0.3, 0.7, 0.85] });
+const TUB2 = withTub({ id: "abbaye_massacre", wide: [0.0, 0.05, 1.0, 0.95], tub: [0.3, 0.45, 1.0, 0.95] });
+const TUB3 = withTub({ id: "corday_portrait", wide: [0.05, 0.05, 0.95, 0.85], tub: [0.36, 0.14, 0.7, 0.4] });
 const specs: Spec[] = [
   { id: "intro", start: 0, Comp: Board, opts: { shots: INTRO, punch: 0.4 } },
   { id: "verse1", start: first("verse1") - 0.1, Comp: Board, opts: { shots: VERSE1, punch: 0.35 } },
   { id: "prechorus", start: first("prechorus") - 0.25, Comp: PressRoom, opts: { section: "prechorus", fx: 1.0 } },
-  { id: "chorus1", start: first("chorus1") - 0.15, Comp: Chorus, opts: { section: "chorus1", numeral: [{ word: 0, text: "5" }, { word: 1, text: "500" }], heaviness: 1, pageTurnOut: true, fx: 1.4 } },
+  { id: "chorus1", start: first("chorus1") - 0.15, Comp: Chorus, opts: { section: "chorus1", numeral: [{ word: 0, text: "5" }, { word: 1, text: "500" }], heaviness: 1, pageTurnOut: true, fx: 1.4, boards: TUB1 } },
   { id: "verse2", start: first("verse2") - 0.2, Comp: Board, opts: { shots: VERSE2, punch: 0.4, shake: 18 } },
   { id: "letter", start: first("spoken"), Comp: Board, opts: { shots: SPOKEN, shake: 22 } },
-  { id: "chorus2", start: first("chorus2") - 0.15, Comp: Chorus, opts: { section: "chorus2", numeral: [{ word: 0, text: "1" }, { word: 1, text: "1,000" }], heaviness: 2, pageTurnOut: true, fx: 1.6 } },
+  { id: "chorus2", start: first("chorus2") - 0.15, Comp: Chorus, opts: { section: "chorus2", numeral: [{ word: 0, text: "1" }, { word: 1, text: "1,000" }], heaviness: 2, pageTurnOut: true, fx: 1.6, boards: TUB2 } },
   { id: "tribunal", start: first("tribunal"), Comp: Board, opts: { shots: TRIBUNAL, shake: 20 } },
   { id: "acquittal", start: first("acquittal"), Comp: Board, opts: { shots: ACQUITTAL, punch: 0.6, shake: 18 } },
-  { id: "chorus3", start: first("chorus3") - 0.15, Comp: Chorus, opts: { section: "chorus3", numeral: [{ word: 1, text: "100" }, { word: 2, text: "100,000" }], heaviness: 3, fx: 1.8 } },
+  { id: "chorus3", start: first("chorus3") - 0.15, Comp: Chorus, opts: { section: "chorus3", numeral: [{ word: 1, text: "100" }, { word: 2, text: "100,000" }], heaviness: 3, fx: 1.8, boards: TUB3 } },
   { id: "bath", start: first("bath"), Comp: Board, opts: { shots: BATH, shake: 8 } },
   { id: "climax", start: first("climax") - 0.1, Comp: Board, opts: { shots: CLIMAX, punch: 0.3 } },
 ];
