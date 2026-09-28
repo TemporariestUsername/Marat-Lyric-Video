@@ -1,19 +1,10 @@
 """Build the review page (HTML with the preview clips embedded) for the Artifact.
 
-Usage: python3 tools/build_preview_page.py <out.html> <chorus720.mp4> <sync720.mp4> <images.jpg> [styleframe.jpg ...]
+Usage: python3 tools/build_preview_page.py <out.html> <chorus720.mp4> <sync720.mp4> <images.jpg>
 """
 import base64, sys
 
 out, chorus, sync, sil = sys.argv[1:5]
-frames = sys.argv[5:]
-b64 = lambda p: base64.b64encode(open(p, "rb").read()).decode()
-frames_html = "" if not frames else (
-    '  <section>\n    <h2>Style frames: the new look</h2>\n'
-    "    <p>The first two finished stills for verse 1, on new engraving-style plates generated with real 1790s prints as style references "
-    "(Marat's face follows the Boze portrait). Everything else stays period prints. Tell me if this is the direction.</p>\n"
-    + "".join(f'    <img alt="Style frame" src="data:image/jpeg;base64,{b64(f)}">\n' for f in frames)
-    + "  </section>"
-)
 b64 = lambda p: base64.b64encode(open(p, "rb").read()).decode()
 
 html = f"""<title>Marat Chorus Preview</title>
@@ -40,7 +31,6 @@ html = f"""<title>Marat Chorus Preview</title>
     <h1>Gonna Need a Tub <em>(For All This Blood)</em></h1>
     <span class="sc">Pre-chorus + chorus 1 · 1:03 – 1:25 of the song</span>
   </header>
-{frames_html}
   <section>
     <h2>Every move has a reason, and now the drums push them</h2>
     <video id="chorus" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(chorus)}"></video>

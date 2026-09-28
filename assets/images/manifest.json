@@ -258,32 +258,6 @@
     0.37
    ],
    "use": "Prise de la Bastille (1789, upper plate)"
-  },
-  {
-   "id": "sewer_writing",
-   "src": "generated/sewer_writing",
-   "crop": [
-    0,
-    0,
-    1,
-    1
-   ],
-   "hires": true,
-   "generated": true,
-   "title": "Marat writing by sewer-light (generated plate)"
-  },
-  {
-   "id": "press_room",
-   "src": "generated/press_room",
-   "crop": [
-    0,
-    0,
-    1,
-    1
-   ],
-   "hires": true,
-   "generated": true,
-   "title": "The press of L'Ami du peuple (generated plate)"
   }
  ]
 }
