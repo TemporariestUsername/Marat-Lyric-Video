@@ -6,7 +6,8 @@ import { frameT } from "../motion";
 import { C, H, W } from "../theme";
 import layerIndex from "../../public/img/layers-index.json";
 
-const LAYERS = layerIndex as Record<string, { n: number }>;
+// parallax layers exist only for clear, single human figures (tools/make_layers.sh)
+const LAYERS = layerIndex as Record<string, { n: number; method: string }>;
 
 /**
  * How the camera gets to a keyframe. Every move ARRIVES on its time (a word
@@ -162,7 +163,7 @@ export const Shot: React.FC<{
   const ghosts = [1, 2].map((k) => place(t - k / 30)).filter((g) => Math.hypot(g.x - now.x, g.y - now.y) + Math.abs(g.s / now.s - 1) * 900 > 14);
   const roll = rollAt(id, keys, t);
   const src = staticFile(`img/${id}.jpg`);
-  const n = parallax > 0 && LAYERS[id] ? LAYERS[id].n : 1;
+  const n = parallax > 0 && LAYERS[id]?.method === "cut" ? LAYERS[id].n : 1;
   // parallax reference: the camera as it was at the last cut (a cut resets depth)
   const lastKey = [...keys].reverse().find((k) => frameT(k.at) <= t && (k.ease === "cut" || k === keys[0])) ?? keys[0];
   const t0 = frameT(lastKey.at);
@@ -170,13 +171,16 @@ export const Shot: React.FC<{
   const since = Math.max(0, t - t0);
   const layerBox = (d: number) => {
     // nearer layers move further and scale faster than the camera
+    // the separation is small and capped however big the camera move, so a
+    // figure never slides out of register with its own picture
     const k = parallax * d;
-    const z = Math.pow(now.s / ref.s, k);
+    const cap = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+    const z = Math.max(0.95, Math.min(1.05, Math.pow(now.s / ref.s, k * 0.5)));
     const cx = W / 2,
       cy = H / 2;
     const s2 = now.s * z;
-    const x = cx - (cx - now.x) * z + (now.x - ref.x) * k + drift[0] * since * d;
-    const y = cy - (cy - now.y) * z + (now.y - ref.y) * k + drift[1] * since * d;
+    const x = cx - (cx - now.x) * z + cap((now.x - ref.x) * k + drift[0] * since * d, 70);
+    const y = cy - (cy - now.y) * z + cap((now.y - ref.y) * k + drift[1] * since * d, 45);
     return { x, y, s: s2 * (1 + 0.012 * d) };
   };
   return (

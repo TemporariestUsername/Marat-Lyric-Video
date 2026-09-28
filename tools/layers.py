@@ -5,8 +5,9 @@ Methods
   density  engravers draw depth with ink: near things are heavier and darker,
            far things lighter and hazier. Depth = smoothed ink density, plus a
            ground-plane prior (lower in the frame = nearer). Sliced into bands.
-  cut      a figure (a head, a crowd) lifted out with the same segmentation
-           model the cut-outs use, as the near layer.
+  cut      a single clear figure lifted out with the same segmentation model
+           the cut-outs use (plus the manifest's cut_exclude polygons), as the
+           near layer. Parallax is only used for these.
 
 The base plate is the whole print, darkened and softened where a nearer
 layer was lifted, so when layers slide apart the gap reads as shadow.
@@ -56,11 +57,18 @@ def density_masks(rgb, n, prior):
     return masks
 
 
-def cut_mask(rgb, model):
+def cut_mask(rgb, model, exclude=None):
     from rembg import new_session, remove
+    from PIL import ImageDraw
 
     im = Image.fromarray(rgb)
     a = np.array(remove(im, session=new_session(model)))[..., 3].astype(float) / 255.0
+    if exclude:  # manual exclusions (manifest cut_exclude: polygons in fractions of the crop)
+        mk = Image.new("L", im.size, 255)
+        dr = ImageDraw.Draw(mk)
+        for poly in exclude:
+            dr.polygon([(x * im.width, y * im.height) for x, y in poly], fill=0)
+        a *= np.array(mk) / 255.0
     return [ndimage.gaussian_filter(a, 1.2)]
 
 
@@ -75,7 +83,8 @@ def main():
         prior = float(sys.argv[4]) if len(sys.argv) > 4 else 0.35
         masks = density_masks(rgb, n, prior)
     else:
-        masks = cut_mask(rgb, sys.argv[3] if len(sys.argv) > 3 else "u2net_human_seg")
+        man = {e["id"]: e for e in json.load(open(os.path.join(ROOT, "assets", "images", "manifest.json")))["images"]}
+        masks = cut_mask(rgb, sys.argv[3] if len(sys.argv) > 3 else "u2net_human_seg", man.get(k, {}).get("cut_exclude"))
     soft = np.stack([ndimage.gaussian_filter(rgb[..., c].astype(float), 6) for c in range(3)], 2)
 
     def shadowed(cover):
