@@ -4,4 +4,3 @@ out/
 *.wav
 __pycache__/
 assets/images/raw/
-public/img/layers/
