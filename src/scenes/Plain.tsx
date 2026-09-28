@@ -1,32 +1,32 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { useT } from "../time";
-import { Paper, Vignette } from "../components/Paper";
-import { TimedLine } from "../components/Type";
+import { Paper } from "../components/Paper";
+import { KineticLine } from "../components/Kinetic";
 import { TIMING } from "../timing";
-import { C } from "../theme";
 import { F } from "../fonts";
 import { SceneProps } from "./types";
 
-/** Stand-in for scenes not designed yet: the current line, centred on the page. */
+/** Stand-in for scenes not designed yet: each line, one at a time, printed on the page. */
 export const Plain: React.FC<SceneProps> = ({ scene }) => {
   const t = useT();
   const lines = TIMING.lines.filter((l) => l.start >= scene.start - 0.01 && l.start < scene.end);
-  const cur = [...lines].reverse().find((l) => l.start <= t);
+  const i = lines.findIndex((l, k) => l.start - 0.2 <= t && (k + 1 >= lines.length || lines[k + 1].start - 0.2 > t));
+  const cur = lines[i];
   return (
     <AbsoluteFill>
       <Paper />
-      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: 160 }}>
-        {cur ? (
-          <TimedLine
-            key={cur.id}
-            line={cur}
-            style={{ justifyContent: "center", fontFamily: F.caslon, fontSize: 64, color: C.ink, textAlign: "center" }}
-            shoutStyle={{ color: C.blood, fontWeight: 700 }}
-          />
-        ) : null}
-      </AbsoluteFill>
-      <Vignette />
+      {cur ? (
+        <KineticLine
+          key={cur.id}
+          line={cur}
+          face={{ family: F.fell, size: 96 }}
+          entrance="print"
+          exitAt={lines[i + 1]?.start}
+          fitW={1400}
+          maxScale={1.3}
+        />
+      ) : null}
     </AbsoluteFill>
   );
 };

@@ -18,7 +18,8 @@ export const BloodDrips: React.FC<{
   seed: string;
   color?: string;
   reach?: number; // max drip length in px at heaviness 1
-}> = ({ start, x0, x1, y, heaviness, seed, color = C.blood, reach = 380 }) => {
+  bar?: boolean; // a pooled band along the top edge
+}> = ({ start, x0, x1, y, heaviness, seed, color = C.blood, reach = 380, bar = true }) => {
   const t = useT();
   if (t < start) return null;
   const d = t - start;
@@ -55,7 +56,7 @@ export const BloodDrips: React.FC<{
           </filter>
         </defs>
         <g filter={`url(#${id})`} fill={color}>
-          <rect x={x0} y={y - 6} width={(x1 - x0) * pool} height={4 + heaviness * 3} rx={4} />
+          {bar ? <rect x={x0} y={y - 6} width={(x1 - x0) * pool} height={4 + heaviness * 3} rx={4} /> : null}
           {drips}
         </g>
       </svg>

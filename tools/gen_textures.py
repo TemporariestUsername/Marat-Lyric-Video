@@ -1,9 +1,14 @@
-"""Generate the static textures the video uses (so Chrome never runs per-frame
-SVG turbulence over the full frame).
+"""Generate the static textures (so Chrome never runs per-frame SVG turbulence).
 
-  public/tex/paper.jpg    aged newsprint, slightly larger than the frame for camera moves
-  public/tex/grunge.png   alpha mask with ink dropouts, for rubber stamps / heavy type
-  public/tex/speckle.png  sparse ink specks + dust on transparent, overlaid on the page
+Style reference: the track cover, an 18th-century engraving. Sepia paper with
+burnt edges and foxing, tone built from line hatching whose line WIDTH carries
+the tone, the way a burin engraving does.
+
+  public/tex/paper.jpg          sepia plate paper, larger than the frame for camera moves
+  public/tex/hatch_vignette.png transparent ink crosshatch, dense at the edges, open in the centre
+  public/tex/hatch_{1,2,3}.png  seamless 512px hatch tiles (light / mid / dense) for fills
+  public/tex/grunge.png         alpha mask with ink dropouts, for stamps and heavy type
+  public/tex/speckle.png        ink specks + dust on transparent, overlaid on the page
 
 Usage: python3 tools/gen_textures.py
 """
@@ -15,6 +20,8 @@ from scipy.ndimage import gaussian_filter
 rng = np.random.default_rng(1793)
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "tex")
 os.makedirs(OUT, exist_ok=True)
+INK = np.array([23, 18, 13], float)
+
 
 def fbm(h, w, scales, weights):
     acc = np.zeros((h, w))
@@ -23,56 +30,73 @@ def fbm(h, w, scales, weights):
         acc += wt * n / (n.std() + 1e-9)
     return acc
 
+
+def hatch(h, w, angle_deg, period, width, wobble=None):
+    """Ink coverage 0..1 of parallel lines. `width` (px, scalar or array) sets the tone."""
+    yy, xx = np.mgrid[:h, :w].astype(float)
+    a = np.deg2rad(angle_deg)
+    u = xx * np.cos(a) + yy * np.sin(a)
+    if wobble is not None:
+        u = u + wobble
+    d = np.abs(((u / period) % 1.0) - 0.5) * period  # distance to line centre, px
+    half = np.maximum(np.asarray(width, float) / 2, 0.0)
+    # anti-aliased edge; lines thinner than ~0.4 px fade out instead of leaving a faint screen
+    return np.clip(half + 0.5 - d, 0, 1) * np.clip(half * 2.5, 0, 1)
+
+
 # ---------- paper ----------
 W, H = 2304, 1296
-base = np.array([234, 221, 188], float)
-mott = fbm(H, W, [120, 40, 12, 2], [1.0, 0.6, 0.35, 0.25])
-img = base[None, None, :] + mott[..., None] * np.array([7.0, 7.5, 8.5])
-
-# foxing: brown blotches
-for _ in range(26):
-    cx, cy = rng.uniform(0, W), rng.uniform(0, H)
-    r = rng.uniform(8, 70)
-    yy, xx = np.ogrid[:H, :W]
-    d = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2) / r
-    m = np.exp(-d ** 2) * rng.uniform(0.15, 0.5)
-    img -= m[..., None] * np.array([30, 45, 70])
-
-# fibres
-fib = np.zeros((H, W))
-for _ in range(9000):
-    x, y = rng.uniform(0, W), rng.uniform(0, H)
-    a = rng.uniform(0, np.pi)
-    L = rng.uniform(6, 30)
-    v = rng.choice([-1, 1]) * rng.uniform(0.3, 1.0)
-    for s in np.linspace(0, L, int(L)):
-        xi, yi = int(x + np.cos(a) * s), int(y + np.sin(a) * s)
-        if 0 <= xi < W and 0 <= yi < H:
-            fib[yi, xi] += v
-fib = gaussian_filter(fib, 0.6)
-img += fib[..., None] * 10
-
-# folds: one vertical + one horizontal crease
 yy, xx = np.mgrid[:H, :W]
-for pos, axis in [(W * 0.5, xx), (H * 0.52, yy)]:
-    d = axis - pos
-    img -= (np.exp(-(d / 3) ** 2) * 14 - np.exp(-((d - 6) / 10) ** 2) * 5)[..., None]
-
-# edge burn / vignette
 nx, ny = (xx / W - 0.5) * 2, (yy / H - 0.5) * 2
-v = np.clip((nx ** 2 + ny ** 2) ** 1.4 * 0.55, 0, 1) + 0.15 * np.clip(np.abs(nx) ** 8 + np.abs(ny) ** 8, 0, 1)
-img = img * (1 - v[..., None] * np.array([0.30, 0.38, 0.52]))
-
-grain = rng.normal(0, 3.2, (H, W))
-img += grain[..., None]
+centre = np.array([219, 199, 158], float)
+edge = np.array([140, 108, 66], float)
+r = np.clip((nx ** 2 * 0.8 + ny ** 2) ** 0.9, 0, 1.4)
+burn = np.clip(r + fbm(H, W, [90, 25], [0.07, 0.03]), 0, 1) ** 2.2
+img = centre * (1 - burn[..., None]) + edge * burn[..., None]
+img += fbm(H, W, [60, 14, 3], [0.6, 0.45, 0.35])[..., None] * np.array([4.0, 4.5, 5.5])
+for _ in range(34):  # foxing
+    cx, cy, rad = rng.uniform(0, W), rng.uniform(0, H), rng.uniform(6, 60)
+    m = np.exp(-(((xx - cx) ** 2 + (yy - cy) ** 2) / rad ** 2)) * rng.uniform(0.15, 0.5)
+    img -= m[..., None] * np.array([28, 42, 62])
+fib = gaussian_filter((rng.random((H, W)) < 0.002).astype(float), 0.8)
+img -= fib[..., None] * 40
+img += rng.normal(0, 3.0, (H, W))[..., None]
 Image.fromarray(np.clip(img, 0, 255).astype(np.uint8)).save(os.path.join(OUT, "paper.jpg"), quality=90)
+
+# ---------- engraved vignette: tone -> line width ----------
+tone = np.clip((nx ** 2 * 0.7 + ny ** 2) ** 1.5 * 0.85 - 0.2 + fbm(H, W, [70], [0.07]), 0, 1)
+wob = fbm(H, W, [30], [1.2])
+cov = np.zeros((H, W))
+cov = np.maximum(cov, hatch(H, W, 38, 6.5, 3.4 * np.clip(tone / 0.8, 0, 1), wob))
+cov = np.maximum(cov, hatch(H, W, -52, 7.0, 2.8 * np.clip((tone - 0.4) / 0.5, 0, 1), wob * 0.8))
+cov = np.maximum(cov, hatch(H, W, 90, 6.0, 2.2 * np.clip((tone - 0.7) / 0.3, 0, 1), wob * 0.6))
+rgba = np.zeros((H, W, 4), np.uint8)
+rgba[..., :3] = INK
+rgba[..., 3] = (np.clip(cov, 0, 1) * 235).astype(np.uint8)
+Image.fromarray(rgba).save(os.path.join(OUT, "hatch_vignette.png"))
+
+# ---------- seamless hatch tiles (angles chosen to tile at 512px) ----------
+T = 512
+for name, layers in {
+    "hatch_1": [(45, T / 64, 1.1)],
+    "hatch_2": [(45, T / 64, 1.6), (-45, T / 64, 1.0)],
+    "hatch_3": [(45, T / 64, 2.2), (-45, T / 64, 1.6), (0, T / 64, 1.0)],
+}.items():
+    cov = np.zeros((T, T))
+    for ang, per, wd in layers:
+        # 45/-45/0 degree lines with a period dividing 512*sqrt2 tile cleanly
+        p = per * (np.sqrt(2) if ang % 90 else 1)
+        cov = np.maximum(cov, hatch(T, T, ang, p, wd))
+    rgba = np.zeros((T, T, 4), np.uint8)
+    rgba[..., :3] = INK
+    rgba[..., 3] = (np.clip(cov, 0, 1) * 255).astype(np.uint8)
+    Image.fromarray(rgba).save(os.path.join(OUT, f"{name}.png"))
 
 # ---------- grunge mask (for stamps) ----------
 GW, GH = 1024, 512
 n = fbm(GH, GW, [18, 5, 1.2], [1.0, 0.8, 0.9])
 holes = (n < -1.35).astype(float)
-specks = (rng.random((GH, GW)) < 0.004).astype(float)
-specks = gaussian_filter(specks, 1.2) > 0.05
+specks = gaussian_filter((rng.random((GH, GW)) < 0.004).astype(float), 1.2) > 0.05
 alpha = 1 - np.clip(gaussian_filter(holes, 0.8) * 1.4 + specks * 0.9, 0, 1)
 alpha = np.clip(alpha * (0.82 + 0.18 * (fbm(GH, GW, [40], [1.0]) > -0.4)), 0, 1)
 rgba = np.zeros((GH, GW, 4), np.uint8)
@@ -83,18 +107,11 @@ Image.fromarray(rgba).save(os.path.join(OUT, "grunge.png"))
 # ---------- speckle overlay ----------
 SW, SH = 1920, 1080
 a = np.zeros((SH, SW))
-pts = rng.random((SH, SW)) < 0.0009
+pts = rng.random((SH, SW)) < 0.0007
 a[pts] = rng.uniform(0.3, 1.0, pts.sum())
 a = gaussian_filter(a, 0.9) * 3
-for _ in range(40):  # a few hairlines / scratches
-    x0, y0 = rng.uniform(0, SW), rng.uniform(0, SH)
-    ang = rng.uniform(0, np.pi); L = rng.uniform(20, 140)
-    for s in np.linspace(0, L, int(L * 2)):
-        xi, yi = int(x0 + np.cos(ang) * s), int(y0 + np.sin(ang) * s)
-        if 0 <= xi < SW and 0 <= yi < SH:
-            a[yi, xi] = max(a[yi, xi], 0.35)
 rgba = np.zeros((SH, SW, 4), np.uint8)
-rgba[..., :3] = [27, 22, 17]
-rgba[..., 3] = (np.clip(a, 0, 1) * 200).astype(np.uint8)
+rgba[..., :3] = INK
+rgba[..., 3] = (np.clip(a, 0, 1) * 190).astype(np.uint8)
 Image.fromarray(rgba).save(os.path.join(OUT, "speckle.png"))
 print("textures written to", OUT)
