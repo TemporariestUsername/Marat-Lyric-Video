@@ -30,7 +30,8 @@
     0.07,
     0.82,
     0.93
-   ]
+   ],
+   "hires": true
   },
   {
    "id": "corday_trial",
@@ -49,7 +50,8 @@
    "id": "heads_on_pikes",
    "src": "loc",
    "ref": "2004679083",
-   "use": "heads of Delaunay, Flesselles, Berthier, Foulon on pikes (1789)"
+   "use": "heads of Delaunay, Flesselles, Berthier, Foulon on pikes (1789)",
+   "hires": true
   },
   {
    "id": "vengeance_traitres",
@@ -73,7 +75,8 @@
     0.5,
     0.84,
     0.84
-   ]
+   ],
+   "hires": true
   },
   {
    "id": "sansculotte_horreurs",
@@ -103,7 +106,8 @@
    "id": "hell_broke_loose",
    "src": "loc",
    "ref": "2006680657",
-   "use": "Hell broke loose, or, The murder of Louis (1793)"
+   "use": "Hell broke loose, or, The murder of Louis (1793)",
+   "hires": true
   },
   {
    "id": "comite_revolutionnaire",
@@ -121,7 +125,8 @@
     0.03,
     0.925,
     0.94
-   ]
+   ],
+   "hires": true
   },
   {
    "id": "ca_ira_1794",

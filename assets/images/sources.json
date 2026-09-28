@@ -27,20 +27,6 @@
    1536
   ]
  },
- "assassinat_marat": {
-  "title": "Assassinat de J.P. Marat, le 13 Juillet 1793, ou 25 Messidor, an 1er de la République",
-  "date": "[between 1793 and 1804]",
-  "creator": "Berthault, Pierre Gabriel, 1748-1819",
-  "medium": "1,  , p, r, i, n, t,  , :",
-  "rights": "No known restrictions on publication in the U.S. Use elsewhere may be restricted by other countries' laws. For general information see \"Copyright and Other Restrictions...,\" http://www.loc.gov/rr/print/195_copr.html",
-  "page": "https://www.loc.gov/pictures/item/2005691831/",
-  "image": "https://cdn.loc.gov/master/pnp/cph/3f00000/3f06000/3f06400/3f06482u.tif",
-  "use": "the assassination, Tableaux historiques",
-  "size": [
-   3000,
-   2012
-  ]
- },
  "corday_trial": {
   "title": "The heroic Charlotte la Cordé, upon her trial, at the bar of the revolutionary tribunal of Paris, July 17, 1793",
   "date": "1793 July 29th.",
@@ -69,20 +55,6 @@
    3000
   ]
  },
- "heads_on_pikes": {
-  "title": "Messieurs Delaunay, Flexelles, Berthier, Foulon, et les deux Gardes du Corps qui ont été decolés par le peuple, voudraient passer jusqu'aux Champs Eliseés en depit de Caron qui ne recoit dans sa barque que le Sr. Remy François boulanger victime innocente de la fureur aristocratique: l'infortuné Calas et autres viennent le recevoir a l'autre bord",
-  "date": "[1789]",
-  "creator": null,
-  "medium": "1,  , p, r, i, n, t,  , :",
-  "rights": "No known restrictions on publication.",
-  "page": "https://www.loc.gov/pictures/item/2004679083/",
-  "image": "https://tile.loc.gov/storage-services/master/pnp/ppmsca/07100/07190u.tif",
-  "use": "heads of Delaunay, Flesselles, Berthier, Foulon on pikes (1789)",
-  "size": [
-   3000,
-   2042
-  ]
- },
  "vengeance_traitres": {
   "title": "C'est ainsi qu'on se venge des traitres",
   "date": "1789.",
@@ -94,20 +66,6 @@
   "use": "C'est ainsi qu'on se venge des traitres (1789)",
   "size": [
    2454,
-   3000
-  ]
- },
- "punit_traitres": {
-  "title": "Prise de la Bastille par les Citoyens de Paris...; C'est ainsi que l'on punit les traitres",
-  "date": "[1789]",
-  "creator": null,
-  "medium": "1,  , p, r, i, n, t,  , :",
-  "rights": "No known restrictions on publication.",
-  "page": "https://www.loc.gov/pictures/item/91480935/",
-  "image": "https://cdn.loc.gov/master/pnp/cph/3b50000/3b51000/3b51500/3b51512u.tif",
-  "use": "Prise de la Bastille: c'est ainsi que l'on punit les traitres (1789)",
-  "size": [
-   2065,
    3000
   ]
  },
@@ -153,20 +111,6 @@
    1155
   ]
  },
- "hell_broke_loose": {
-  "title": "Hell broke loose, or, The murder of Louis, vide, the account of that unfortunate monarch's execution",
-  "date": "1793.",
-  "creator": "Dent, William, active 1783-1793",
-  "medium": "1,  , p, r, i, n, t,  , :",
-  "rights": "No known restrictions on publication.",
-  "page": "https://www.loc.gov/pictures/item/2006680657/",
-  "image": "https://cdn.loc.gov/master/pnp/ppmsca/10700/10742u.tif",
-  "use": "Hell broke loose, or, The murder of Louis (1793)",
-  "size": [
-   3000,
-   2148
-  ]
- },
  "comite_revolutionnaire": {
   "title": "Intérieur d'un comité révolutionnaire sous le régime de la terreur",
   "date": "[1794?, printed 1804]",
@@ -179,20 +123,6 @@
   "size": [
    3000,
    2441
-  ]
- },
- "fouquier_tribunal": {
-  "title": "Fouquier-Thinville jugé par le tribunal révolutionnaire, le 12 Floréal au 3eme de la République",
-  "date": "[1795?]",
-  "creator": "Berthault, Pierre Gabriel, 1748-1819",
-  "medium": "1,  , p, r, i, n, t,  , :",
-  "rights": "No known restrictions on publication in the U.S. Use elsewhere may be restricted by other countries' laws. For general information see \"Copyright and Other Restrictions...\" (http://lcweb.loc.gov/rr/print/195_copr.html)",
-  "page": "https://www.loc.gov/pictures/item/2002695358/",
-  "image": "https://cdn.loc.gov/master/pnp/cph/3c20000/3c28000/3c28800/3c28803u.tif",
-  "use": "the Revolutionary Tribunal in session (1795)",
-  "size": [
-   3000,
-   2397
   ]
  },
  "ca_ira_1794": {
@@ -277,6 +207,76 @@
   "size": [
    1968,
    3000
+  ]
+ },
+ "assassinat_marat": {
+  "title": "Assassinat de J.P. Marat, le 13 Juillet 1793, ou 25 Messidor, an 1er de la République",
+  "date": "[between 1793 and 1804]",
+  "creator": "Berthault, Pierre Gabriel, 1748-1819",
+  "medium": "1,  , p, r, i, n, t,  , :",
+  "rights": "No known restrictions on publication in the U.S. Use elsewhere may be restricted by other countries' laws. For general information see \"Copyright and Other Restrictions...,\" http://www.loc.gov/rr/print/195_copr.html",
+  "page": "https://www.loc.gov/pictures/item/2005691831/",
+  "image": "https://cdn.loc.gov/master/pnp/cph/3f00000/3f06000/3f06400/3f06482u.tif",
+  "use": "the assassination, Tableaux historiques",
+  "size": [
+   5149,
+   3453
+  ]
+ },
+ "punit_traitres": {
+  "title": "Prise de la Bastille par les Citoyens de Paris...; C'est ainsi que l'on punit les traitres",
+  "date": "[1789]",
+  "creator": null,
+  "medium": "1,  , p, r, i, n, t,  , :",
+  "rights": "No known restrictions on publication.",
+  "page": "https://www.loc.gov/pictures/item/91480935/",
+  "image": "https://cdn.loc.gov/master/pnp/cph/3b50000/3b51000/3b51500/3b51512u.tif",
+  "use": "the heads of the traitors paraded on pikes (1789, lower plate)",
+  "size": [
+   2819,
+   4096
+  ]
+ },
+ "hell_broke_loose": {
+  "title": "Hell broke loose, or, The murder of Louis, vide, the account of that unfortunate monarch's execution",
+  "date": "1793.",
+  "creator": "Dent, William, active 1783-1793",
+  "medium": "1,  , p, r, i, n, t,  , :",
+  "rights": "No known restrictions on publication.",
+  "page": "https://www.loc.gov/pictures/item/2006680657/",
+  "image": "https://cdn.loc.gov/master/pnp/ppmsca/10700/10742u.tif",
+  "use": "Hell broke loose, or, The murder of Louis (1793)",
+  "size": [
+   6000,
+   4296
+  ]
+ },
+ "fouquier_tribunal": {
+  "title": "Fouquier-Thinville jugé par le tribunal révolutionnaire, le 12 Floréal au 3eme de la République",
+  "date": "[1795?]",
+  "creator": "Berthault, Pierre Gabriel, 1748-1819",
+  "medium": "1,  , p, r, i, n, t,  , :",
+  "rights": "No known restrictions on publication in the U.S. Use elsewhere may be restricted by other countries' laws. For general information see \"Copyright and Other Restrictions...\" (http://lcweb.loc.gov/rr/print/195_copr.html)",
+  "page": "https://www.loc.gov/pictures/item/2002695358/",
+  "image": "https://cdn.loc.gov/master/pnp/cph/3c20000/3c28000/3c28800/3c28803u.tif",
+  "use": "the Revolutionary Tribunal in session (1795)",
+  "size": [
+   4096,
+   3273
+  ]
+ },
+ "heads_on_pikes": {
+  "title": "Messieurs Delaunay, Flexelles, Berthier, Foulon, et les deux Gardes du Corps qui ont été decolés par le peuple, voudraient passer jusqu'aux Champs Eliseés en depit de Caron qui ne recoit dans sa barque que le Sr. Remy François boulanger victime innocente de la fureur aristocratique: l'infortuné Calas et autres viennent le recevoir a l'autre bord",
+  "date": "[1789]",
+  "creator": null,
+  "medium": "1,  , p, r, i, n, t,  , :",
+  "rights": "No known restrictions on publication.",
+  "page": "https://www.loc.gov/pictures/item/2004679083/",
+  "image": "https://tile.loc.gov/storage-services/master/pnp/ppmsca/07100/07190u.tif",
+  "use": "heads of Delaunay, Flesselles, Berthier, Foulon on pikes (1789)",
+  "size": [
+   3997,
+   2721
   ]
  }
 }

@@ -74,8 +74,9 @@ for e in manifest["images"]:
         meta, data = (fetch_loc if e["src"] == "loc" else fetch_aic)(e["ref"])
         im = Image.open(io.BytesIO(data))
         im = im.convert("RGB")
-        if max(im.size) > 3000:
-            im.thumbnail((3000, 3000), Image.LANCZOS)
+        cap = 6000 if e.get("hires") else 3000  # storyboarded prints get close-ups
+        if max(im.size) > cap:
+            im.thumbnail((cap, cap), Image.LANCZOS)
         im.save(out)
         sources[e["id"]] = {**meta, "use": e["use"], "size": im.size}
         print(f"ok   {e['id']:24} {im.size} {meta['date']} | {meta['title'][:60]} | {meta['rights'][:40] if meta['rights'] else ''}")

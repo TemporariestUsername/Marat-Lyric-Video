@@ -1,6 +1,6 @@
 // Motion primitives. The rule everywhere: an entrance ANTICIPATES its word, so
 // the impact frame is the onset frame. Nothing lands late.
-import { FPS, beatPulse, barPulse, energyAt, clamp01 } from "./timing";
+import { FPS, clamp01 } from "./timing";
 
 /** Snap a time to the frame it will be drawn on. */
 export const frameT = (t: number) => Math.round(t * FPS) / FPS;
@@ -46,22 +46,6 @@ export const keyed = (t: number, keys: { t: number; v: number }[], lead = 0.14):
   }
   return v;
 };
-
-/** Continuous hand-held camera: slow drift + beat nudges + bar kicks, scaled by song energy. */
-export const camera = (t: number, anchor: number, amt = 1) => {
-  const e = 0.4 + 0.8 * energyAt(t);
-  const bp = beatPulse(t, 0.14);
-  const br = barPulse(t, anchor, 0.25);
-  return {
-    x: (Math.sin(t * 0.37) * 18 + Math.sin(t * 1.13) * 6) * amt,
-    y: (Math.cos(t * 0.29) * 12 + Math.sin(t * 0.91) * 5) * amt - bp * 4 * e * amt,
-    rot: (Math.sin(t * 0.21) * 0.8 + br * 0.5 * Math.sin(t * 7)) * amt,
-    zoom: 1 + (0.012 * bp + 0.03 * br) * e * amt,
-  };
-};
-
-export const cameraTransform = (c: { x: number; y: number; rot: number; zoom: number }) =>
-  `translate(${c.x}px, ${c.y}px) rotate(${c.rot}deg) scale(${c.zoom})`;
 
 /**
  * Jaw opening 0..1 for a silhouette singing these words: snaps open on each

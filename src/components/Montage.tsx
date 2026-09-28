@@ -2,17 +2,16 @@ import React from "react";
 import { useT } from "../time";
 import { Box, FOCUS } from "../images";
 import { frameT } from "../motion";
-import { kickPulse, rnd } from "../timing";
 import { Plate } from "./Plate";
 
 export type Shot = { id: string; focus?: number };
 
 /**
- * Hard-cut montage of period prints. `cuts` are the cut times (drum hits or
- * line starts, from timing.json); each cut advances to the next shot, framing
- * one of that print's focus boxes, with a punch-in on every kick.
+ * Backdrop montage of period prints for the verses: each cut (a line start)
+ * advances to the next print, framed on its authored focus box, and the
+ * camera travels left to right across it, the way the lines are read.
  */
-export const Montage: React.FC<{ shots: Shot[]; cuts: number[]; start: number; end: number; dim?: number; seed: string }> = ({
+export const Montage: React.FC<{ shots: Shot[]; cuts: number[]; start: number; end: number; dim?: number; seed?: string }> = ({
   shots,
   cuts,
   start,
@@ -28,7 +27,7 @@ export const Montage: React.FC<{ shots: Shot[]; cuts: number[]; start: number; e
   });
   const shot = shots[k % shots.length];
   const boxes: Box[] = FOCUS[shot.id] ?? [[0, 0, 1, 1]];
-  const box = boxes[shot.focus ?? Math.floor(rnd(seed, k) * boxes.length)];
+  const box = boxes[shot.focus ?? 0];
   return (
     <Plate
       key={k}
@@ -36,9 +35,7 @@ export const Montage: React.FC<{ shots: Shot[]; cuts: number[]; start: number; e
       focus={box}
       t0={cs[k]}
       t1={cs[k + 1] ?? end}
-      push={0.05 * kickPulse(t, 0.12)}
-      drift={rnd(seed, k, "d") - 0.5}
-      flip={rnd(seed, k, "f") < 0.25}
+      drift={-1}
       dim={dim}
     />
   );

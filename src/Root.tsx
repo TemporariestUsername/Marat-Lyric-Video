@@ -7,10 +7,10 @@ import { SyncCheck } from "./SyncCheck";
 
 const f = (s: number) => Math.round(s * FPS);
 
-// Chorus 1 preview: from the last pre-chorus line (so the page shatter is in
-// frame) to a couple of seconds into verse 2.
+// Chorus 1 preview: the whole pre-chorus (it sets up the chorus) to a couple
+// of seconds into verse 2.
 const pre = sectionLines("prechorus");
-const previewStart = pre[pre.length - 1].start - 0.5;
+const previewStart = pre[0].start - 0.6;
 const previewEnd = sectionLines("verse2")[1].start;
 
 export const RemotionRoot: React.FC = () => (

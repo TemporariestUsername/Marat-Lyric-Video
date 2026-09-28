@@ -93,7 +93,7 @@ for e in manifest["images"]:
     box = e.get("crop") or auto_crop(rgb)
     W, H = im.size
     im = im.crop((int(box[0] * W), int(box[1] * H), int(box[2] * W), int(box[3] * H)))
-    im.thumbnail((2400, 2400), Image.LANCZOS)
+    im.thumbnail((4200, 4200) if e.get("hires") else (2400, 2400), Image.LANCZOS)
     g = Image.fromarray(grade(np.array(im)))
     g.save(os.path.join(OUT, k + ".jpg"), quality=88)
     entry = {"w": g.size[0], "h": g.size[1], "crop": [round(v, 3) for v in box]}

@@ -2,85 +2,120 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { useT } from "../time";
 import { Paper } from "../components/Paper";
-import { Montage } from "../components/Montage";
+import { Shot, Key, impactsOf } from "../components/Shot";
+import { Headline } from "../components/Headline";
 import { Cutout } from "../components/Cutout";
-import { KineticLine, engraved } from "../components/Kinetic";
-import { arrive, camera, cameraTransform } from "../motion";
-import { easeIn, easeInOut, energyAt, isShout, kickPulse, kicksBetween, prog, sectionLines, shake } from "../timing";
-import { C } from "../theme";
+import { engraved } from "../components/Kinetic";
+import { arrive, frameT, keyed } from "../motion";
+import { easeIn, isShout, prog, sectionLines, shake } from "../timing";
+import { BOX, MARAT_EYES, img } from "../images";
+import { C, W } from "../theme";
 import { F } from "../fonts";
-import { SceneProps } from "./types";
+import { SceneProps, SceneComp } from "./types";
+
+const onPaper: React.CSSProperties = { color: C.paperLight, textShadow: `0 0 16px ${C.ink}, 0 0 5px ${C.ink}` };
+const shoutStyle = { ...engraved({ tint: C.paperLight, ink: C.ink, tile: 1, stroke: 3 }), textShadow: "none" };
 
 /**
- * Pre-chorus: Marat, cut from a 1793 portrait, headbangs in front of engravings
- * of the revolutionary committees; the prints cut on each line and then on
- * every kick; the room shakes harder bar by bar and the last beat rushes the
- * camera into the page.
+ * Pre-chorus, two shots.
  *
- * opts: section
+ * 1. "I am the anger — the JUST anger — of the people,"
+ *    The people: one slow dolly left to right along the crowd in the tribunal
+ *    print; the words slide in with the dolly. On JUST, the only accent in the
+ *    line, the dolly stops dead with a single shake; "of the people" carries
+ *    it on to the thickest part of the crowd.
+ * 2. "that's why they listen... that's why they BELIEVE..."
+ *    Hard cut to Marat. Every word is one step closer to his face (a step
+ *    zoom landing on each onset). On BELIEVE his head jerks back once; the room
+ *    darkens and the camera pushes into his eye, into the tear of the chorus.
  */
-export const PressRoom: React.FC<SceneProps> = ({ scene }) => {
+export const PressRoom: SceneComp = ({ scene }) => {
   const t = useT();
-  const lines = sectionLines(scene.opts.section);
-  const words = lines.flatMap((l) => l.words);
+  const [l1, l2] = sectionLines(scene.opts.section);
+  const just = l1.words.find((w) => w.text === "JUST") ?? l1.words[0];
+  const believe = l2.words[l2.words.length - 1];
 
-  const build = easeInOut(prog(t, scene.start, scene.end - scene.start));
-  const rush = easeIn(prog(t, scene.end - 0.45, 0.45)); // into the chorus
-  const cam = camera(t, lines[0].start, 1.5 + build * 1.5);
-  const hits = words.filter((w) => isShout(w.text)).map((w) => w.start);
-  const sh = shake(t, hits, 26, 0.12);
-  const quake = (3 + build * build * 14) * energyAt(t);
-  const tx = cam.x + sh.x + Math.sin(t * 67) * quake;
-  const ty = cam.y + sh.y + Math.cos(t * 59) * quake;
-  const zoom = cam.zoom * (1 + 0.1 * build + 0.6 * rush);
+  // shot 1: the dolly along the crowd
+  const keys1: Key[] = [
+    { at: scene.start, box: BOX.crowd.left },
+    { at: just.start, box: BOX.crowd.mid, ease: "dolly", impact: true },
+    { at: l1.words[l1.words.length - 1].start, box: BOX.crowd.right, ease: "glide" },
+  ];
 
-  const cur = lines.findIndex((l, k) => l.start - 0.2 <= t && (k + 1 >= lines.length || lines[k + 1].start - 0.2 > t));
-  const wordHit = Math.max(0, ...words.map((w) => arrive(t, w.start).hit));
-  const k = kickPulse(t, 0.14);
+  // shot 2: step closer on every word, then into the eye
+  const cutTo2 = frameT(l2.start);
+  const steps = l2.words.map((w, i) => ({ t: w.start, v: Math.pow(1.12, i + 1) }));
+  // the steps land on the words; underneath, a steady push keeps the tension building
+  const zoom = keyed(t, [{ t: cutTo2 - 1, v: 1 }, ...steps], 0.12) * (1 + 0.05 * Math.max(0, t - cutTo2));
+  const dive = easeIn(prog(t, frameT(believe.start) + 0.35, scene.end - (frameT(believe.start) + 0.35)));
+  const jerk = arrive(t, believe.start, 0.05, 0.4);
+  const eyesX = 470,
+    eyesY = 400;
+  const cutH = 1080;
+  const c = img("marat_geneve").cut!;
+  const cutW = (c.w / c.h) * cutH;
+
+  const sh = shake(t, [...impactsOf(keys1), believe.start], 20, 0.12);
 
   return (
     <AbsoluteFill style={{ backgroundColor: C.night, overflow: "hidden" }}>
-      <AbsoluteFill
-        style={{
-          transform: cameraTransform({ ...cam, x: tx, y: ty, zoom, rot: cam.rot + sh.r + rush * 6 }),
-          transformOrigin: "50% 50%",
-          filter: rush > 0.05 ? `blur(${rush * 10}px)` : undefined,
-        }}
-      >
-        {/* the committee rooms of the Terror, cutting on each line — and on every kick in the last one */}
-        <Montage
-          shots={[{ id: "comite_scene_derniere" }, { id: "comite_revolutionnaire" }, { id: "fouquier_tribunal" }, { id: "comite_scene_derniere", focus: 1 }]}
-          cuts={[...lines.map((l) => l.start), ...kicksBetween(lines[lines.length - 1].start + 0.5, scene.end)]}
-          start={scene.start}
-          end={scene.end}
-          dim={0.2 + 0.25 * build}
-          seed="pre"
-        />
-        <Paper hatch={1.2 + 0.5 * build} style={{ mixBlendMode: "multiply", opacity: 0.55 }} drift={{ x: -tx * 0.3, y: -ty * 0.3 }} />
-        {/* Marat, cut from the 1793 portrait, headbanging */}
-        <Cutout id="marat_geneve" height={930 * (1 + 0.04 * wordHit)} x={390 - tx * 0.4} y={1130 + k * 18} nod={-(7 * k + 5 * wordHit)} />
-        {cur >= 0 ? (
-          <KineticLine
-            key={lines[cur].id}
-            line={lines[cur]}
-            face={{ family: F.fell, size: 120 }}
-            faceFor={(w) => (isShout(w.text) ? { family: F.didone, weight: 900, size: 170 } : undefined)}
-            styleFor={(w) => (isShout(w.text) ? { ...engraved({ tint: C.paperLight, ink: C.ink, tile: 1, stroke: 3 }), textShadow: "none" } : { color: C.paperLight, textShadow: `0 0 14px ${C.ink}, 0 0 4px ${C.ink}` })}
-            entrance="slam"
-            entranceFor={(w, i) => (isShout(w.text) ? "slam" : i % 2 ? "drop" : "rise")}
-            cx={1180}
-            cy={460}
-            fitW={1250}
-            fitH={620}
-            maxScale={2.2}
-            maxRowWidth={900}
-            lineHeight={1.08}
-            exitAt={lines[cur + 1]?.start}
-            exit="zoom"
-            seed="pre"
-          />
-        ) : null}
+      <AbsoluteFill style={{ transform: `translate(${sh.x}px, ${sh.y}px)` }}>
+        {t < cutTo2 ? (
+          <>
+            <Shot id="fouquier_tribunal" keys={keys1} dim={0.35} creep={0.045} />
+            <Headline
+              line={l1}
+              face={{ family: F.fell, size: 110 }}
+              faceFor={(w) => (isShout(w.text) ? { family: F.didone, weight: 900, size: 150 } : undefined)}
+              styleFor={(w) => (isShout(w.text) ? shoutStyle : onPaper)}
+              rows={[l1.words.findIndex((w) => w.text === "the" && l1.words.indexOf(w) > 3)]}
+              cx={W / 2}
+              cy={250}
+              fitW={1700}
+              fitH={380}
+              dir={[1, 0]}
+            />
+          </>
+        ) : (
+          <>
+            <Paper hatch={1.8} tint={C.ink} tintOpacity={0.55} />
+            {/* Marat, scaled about his eyes: the step zoom and the dive */}
+            <AbsoluteFill
+              style={{
+                transform: `scale(${zoom * (1 + dive * 5)})`,
+                transformOrigin: `${eyesX}px ${eyesY}px`,
+              }}
+            >
+              <Cutout
+                id="marat_geneve"
+                height={cutH}
+                x={eyesX - (MARAT_EYES.x - 0.5) * cutW}
+                y={eyesY + (1 - MARAT_EYES.y) * cutH}
+                nod={jerk.shown ? 7 * jerk.hit : 0}
+              />
+            </AbsoluteFill>
+            <AbsoluteFill style={{ backgroundColor: C.night, opacity: 0.15 + 0.3 * prog(t, cutTo2, believe.start - cutTo2) + 0.55 * dive }} />
+            <div style={{ opacity: 1 - dive }}>
+              <Headline
+                line={l2}
+                face={{ family: F.fell, size: 130 }}
+                faceFor={(w) => (isShout(w.text) ? { family: F.didone, weight: 900, size: 190 } : undefined)}
+                styleFor={(w) => (isShout(w.text) ? shoutStyle : onPaper)}
+                rows={[4, l2.words.length - 1]}
+                lineHeight={1.05}
+                cx={1370}
+                cy={600}
+                fitW={1050}
+                fitH={640}
+                dir={[-1, 0]}
+              />
+            </div>
+          </>
+        )}
       </AbsoluteFill>
     </AbsoluteFill>
   );
 };
+
+PressRoom.cues = () => ({});
+

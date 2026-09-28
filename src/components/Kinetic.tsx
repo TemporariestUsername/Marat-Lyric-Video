@@ -2,7 +2,7 @@ import React from "react";
 import { staticFile } from "remotion";
 import { measureText } from "@remotion/layout-utils";
 import { useT } from "../time";
-import { Line, Word, isShout, rnd } from "../timing";
+import { Line, Word, isShout } from "../timing";
 import { arrive, depart, keyed } from "../motion";
 import { C } from "../theme";
 
@@ -219,7 +219,7 @@ export const KineticLine: React.FC<{
         const a = arrive(t, p.w.start, lead);
         if (!a.shown) return null;
         const mode = entranceFor?.(p.w, p.i) ?? entrance;
-        const j = rnd(seed, line.id, p.i) - 0.5;
+        const j = 0; // no random tilt: entrances are straight
         let tf = "";
         let op = 1;
         let blur = 0;
@@ -239,7 +239,7 @@ export const KineticLine: React.FC<{
           tf = `translateY(${q * 260}px) rotate(${j * 10 * q}deg)`;
           op = Math.min(1, a.p * 2);
         } else if (mode === "whip") {
-          tf = `translateX(${(j > 0 ? 1 : -1) * q * 700}px) skewX(${(j > 0 ? -1 : 1) * q * 25}deg)`;
+          tf = `translateX(${q * 700}px) skewX(${-q * 25}deg)`; // always from the right, into the reading flow
           op = Math.min(1, a.p * 2);
           blur = q * 10;
         } else {

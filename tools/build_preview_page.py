@@ -27,21 +27,23 @@ html = f"""<title>Marat Chorus Preview</title>
 </style>
 <main>
   <header>
-    <span class="sc">L'Ami du peuple · fourth pass</span>
+    <span class="sc">L'Ami du peuple · fifth pass</span>
     <h1>Gonna Need a Tub <em>(For All This Blood)</em></h1>
-    <span class="sc">Chorus 1 · 1:07 – 1:25 of the song</span>
+    <span class="sc">Pre-chorus + chorus 1 · 1:03 – 1:25 of the song</span>
   </header>
   <section>
-    <h2>Chorus 1, fourth pass: period images</h2>
+    <h2>Every move has a reason</h2>
     <video id="chorus" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(chorus)}"></video>
     <ol>
-      <li><span class="t">0:00</span> Marat, cut out of a 1793 portrait in his kerchief, headbangs in front of engravings of the revolutionary committees, which cut on each line and then on every kick.</li>
-      <li><span class="t">0:05</span> The page rips open. Heads on pikes (1789), the lanterne, the dancing sans-culotte and Gillray's Corday trial cut on every kick under the slammed words.</li>
-      <li><span class="t">0:06</span> (AMPUTATE!) and (OPERATE!) stamp across the frame with a blood flash.</li>
-      <li><span class="t">0:10</span> “Apply the blade”: the guillotine prints (the execution of Louis XVI, <em>Hell Broke Loose</em>) cut on each word as a slash of light cuts the board in two.</li>
-      <li><span class="t">0:12</span> The headline slams word by word, BLOOD flashes red, and the whole headline bleeds.</li>
-      <li><span class="t">0:15</span> Page turn to verse 2: the September prints printed into the newspaper, with Marat's 1793 oval portrait in the corner.</li>
+      <li><span class="t">0:00</span> “I am the anger… of the people”: one dolly along the crowd at the Revolutionary Tribunal. It stops dead on JUST, the line's only accent.</li>
+      <li><span class="t">0:05</span> “that's why they listen… BELIEVE”: Marat. Every word is one step closer to his face; his head jerks back on BELIEVE; the camera goes into his eye.</li>
+      <li><span class="t">0:09</span> FIVE HUNDRED HEADS!: the page tears open on a parade of heads on pikes, and the camera counts them. FIVE frames the first, HUNDRED snaps to the next, HEADS! pulls back to all eight, while the tally builds 5 → 500.</li>
+      <li><span class="t">0:11</span> (AMPUTATE!) cuts the whole picture through below the heads and wrenches the top away.</li>
+      <li><span class="t">0:12</span> The repeat is the same count, mirrored, on the 1789 heads, seen through the wound. (OPERATE!) slams the halves together and stitches them in blood.</li>
+      <li><span class="t">0:14</span> “Apply the blade”: on the guillotine's crossbeam. On “blade” the camera falls with the blade and stops dead on the king's head. “loose the flood” lets the red in.</li>
+      <li><span class="t">0:16</span> “WE'RE GONNA NEED A TUB”: Marat's room, from the 1793 assassination plate. On TUB the camera snaps onto his bath, where he will die. BLOOD floods it.</li>
     </ol>
+    <p>What's gone: random tilts, random crops, the constant camera wobble, and strobes and glitches on every line. What's left fires on purpose: one rupture on the tear, a strobe on each downbeat of the hook, and blood on AMPUTATE, OPERATE and BLOOD.</p>
   </section>
   <section>
     <h2>Sync check</h2>

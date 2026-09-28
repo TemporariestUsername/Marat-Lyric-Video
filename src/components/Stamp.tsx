@@ -53,13 +53,15 @@ export const Stamp: React.FC<{
   return (
     <div style={{ position: "absolute", left: x, top: y, width: 0, height: 0 }}>
       {spatter}
+      {[0.45, 1].map((layerOpacity, li) => (
       <div
+        key={li}
         style={{
           position: "absolute",
           left: 0,
           top: 0,
           transform: `translate(-50%, -50%) rotate(${rot}deg) scale(${s})`,
-          opacity: Math.min(1, a.p * 2.5) * 0.95,
+          opacity: Math.min(1, a.p * 2.5) * 0.95 * layerOpacity,
           color,
           fontFamily: font,
           fontWeight: 900,
@@ -69,7 +71,8 @@ export const Stamp: React.FC<{
           padding: `${size * 0.14}px ${size * 0.24}px ${size * 0.1}px`,
           border: `${Math.max(4, size * 0.07)}px solid ${color}`,
           borderRadius: size * 0.06,
-          WebkitMaskImage: `url(${staticFile("tex/grunge.png")})`,
+          // a faint solid impression under the grunge-masked one keeps the call legible
+          WebkitMaskImage: li === 0 ? undefined : `url(${staticFile("tex/grunge.png")})`,
           WebkitMaskSize: "1024px 512px",
           WebkitMaskPosition: `-${mx}px -${my}px`,
           filter: a.hit > 0.05 ? `blur(${a.hit * 0.6}px)` : undefined,
@@ -77,6 +80,7 @@ export const Stamp: React.FC<{
       >
         {text}
       </div>
+      ))}
     </div>
   );
 };
