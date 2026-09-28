@@ -11,7 +11,7 @@ import { Montage, Shot } from "../components/Montage";
 import { isShout, sectionLines, shake } from "../timing";
 import { C } from "../theme";
 import { F } from "../fonts";
-import { SceneProps } from "./types";
+import { SceneComp } from "./types";
 
 /**
  * Verse on the front page (first pass): the masthead rides at the top of the
@@ -22,7 +22,7 @@ import { SceneProps } from "./types";
  *
  * opts: section, issue, date, denounce?: line ids
  */
-export const Verse: React.FC<SceneProps> = ({ scene }) => {
+export const Verse: SceneComp = ({ scene }) => {
   const t = useT();
   const o = scene.opts;
   const lines = sectionLines(o.section);
@@ -89,3 +89,6 @@ export const Verse: React.FC<SceneProps> = ({ scene }) => {
     </AbsoluteFill>
   );
 };
+
+/** The page pounds lightly on the kick: the presses are running. */
+Verse.cues = () => ({ punch: 0.35 });

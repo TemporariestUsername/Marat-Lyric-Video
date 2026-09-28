@@ -68,17 +68,19 @@ export const BloodDrips: React.FC<{
  * The page soaking red from the bottom up like bathwater. `level` 0..1 of the
  * frame height; the surface ripples slowly.
  */
-export const SoakLayer: React.FC<{ level: number; t: number; color?: string; opacity?: number }> = ({
+export const SoakLayer: React.FC<{ level: number; t: number; color?: string; opacity?: number; surge?: number }> = ({
   level,
   t,
   color = C.blood,
   opacity = 0.88,
+  surge = 0,
 }) => {
   if (level <= 0) return null;
-  const top = H * (1 - level);
+  const top = H * (1 - level - 0.03 * surge);
+  const amp = 1 + 3 * surge; // the surface slops harder on each surge
   const pts: string[] = [];
   for (let x = 0; x <= W; x += 40) {
-    const yy = top + Math.sin(x / 190 + t * 0.9) * 7 + Math.sin(x / 83 - t * 0.6) * 4;
+    const yy = top + (Math.sin(x / 190 + t * 0.9) * 7 + Math.sin(x / 83 - t * 0.6) * 4) * amp;
     pts.push(`${x},${yy.toFixed(1)}`);
   }
   const path = `M0,${H} L${pts.join(" L")} L${W},${H} Z`;

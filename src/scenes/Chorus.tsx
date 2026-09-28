@@ -8,7 +8,7 @@ import { Stamp } from "../components/Stamp";
 import { BloodDrips, SoakLayer } from "../components/Blood";
 import { engraved, layoutLine, wordBoxes } from "../components/Kinetic";
 import { arrive, frameT } from "../motion";
-import { FPS, Line, easeOut, kickPulse, prog, rnd, sectionLines, shake } from "../timing";
+import { FPS, Line, easeOut, kickPulse, kicksBetween, prog, rnd, sectionLines, shake } from "../timing";
 import { BOX, Box } from "../images";
 import { C, H, W } from "../theme";
 import { F } from "../fonts";
@@ -118,8 +118,21 @@ export const Chorus: SceneComp = ({ scene }) => {
     { at: words[Math.min(1, words.length - 1)].start, box: bd.boxes[1], ease: "snap", sx: 0.5 + side * 0.13, impact: true },
     { at: words[words.length - 1].start, box: bd.boxes[2], ease: "snap", sx: 0.5 + side * 0.1, impact: true },
   ];
-  const keysA = count(m1, B.count1, +1);
-  const keysB = count(m2, B.count2, -1);
+  // held frames cut on the kick between the framing and a tighter crop of the SAME subject
+  const tighter = (b: Box, f: number): Box => {
+    const cx = (b[0] + b[2]) / 2,
+      cy = (b[1] + b[3]) / 2,
+      hw = ((b[2] - b[0]) / 2) * f,
+      hh = ((b[3] - b[1]) / 2) * f;
+    return [cx - hw, cy - hh, cx + hw, cy + hh];
+  };
+  const onKicks = (keys: Key[], from: number, until: number): Key[] => {
+    const last = keys[keys.length - 1];
+    const ks = kicksBetween(from + 0.14, until - 0.06);
+    return [...keys, ...ks.map((k, i) => ({ ...last, at: k, ease: "cut" as const, impact: false, box: i % 2 ? last.box : tighter(last.box, 0.8) }))];
+  };
+  const keysA = onKicks(count(m1, B.count1, +1), m1[m1.length - 1].start, amputate);
+  const keysB = onKicks(count(m2, B.count2, -1), m2[m2.length - 1].start, operate);
   // ---- the blade
   const keysC: Key[] = [
     { at: l3.start, box: B.blade.top, ease: "cut", sx: 0.4 },
@@ -130,6 +143,7 @@ export const Chorus: SceneComp = ({ scene }) => {
     { at: l4.start, box: B.tub.wide, ease: "cut" },
     { at: tubWord.start, box: B.tub.tub, ease: "snap", impact: true },
   ];
+  const keysDk = onKicks(keysD, tubWord.start, bloodWord.start);
 
   const sh = shake(t, [...impactsOf(keysA), ...impactsOf(keysB), ...impactsOf(keysC), ...impactsOf(keysD), amputate, operate, bloodWord.start], 24 + heavy * 5, 0.11);
 
@@ -138,9 +152,26 @@ export const Chorus: SceneComp = ({ scene }) => {
   const tally = (words: typeof m1) => {
     let text = "";
     let hitAt = -1;
-    for (const s of stages) if (t >= frameT(words[s.word].start) - 0.06) ((text = s.text), (hitAt = words[s.word].start));
+    let first = true;
+    let prevVal = 0;
+    for (const s of stages) {
+      const at = frameT(words[s.word].start);
+      const val = Number(s.text.replace(/,/g, ""));
+      if (t >= at) ((text = s.text), (hitAt = words[s.word].start), (first = s === stages[0]));
+      else if (t >= at - 0.16 && text) {
+        // the counter runs up to the next figure and lands on the word
+        const x = (t - (at - 0.16)) / 0.16;
+        const v = Math.round(prevVal + (val - prevVal) * x * x);
+        text = s.text.includes(",") ? v.toLocaleString("en-US") : String(v);
+      }
+      if (t >= at) prevVal = val;
+    }
     const a = arrive(t, hitAt, 0.06, 0.4);
-    return { text, scale: (1 + (1 - a.p) * 1.2 + a.ring * 0.05) * (1 + 0.05 * kickPulse(t, 0.12)) };
+    return {
+      text,
+      drop: first ? (1 - a.p) * -320 : 0, // the first figure drops in from above
+      scale: (1 + (1 - a.p) * 1.2 + a.ring * 0.05) * (1 + 0.09 * kickPulse(t, 0.12)),
+    };
   };
 
   const countShot = (keys: Key[], bd: ChorusBoards["count1"], side: number) => (
@@ -167,7 +198,7 @@ export const Chorus: SceneComp = ({ scene }) => {
               fontWeight: 900,
               fontSize: 260,
               lineHeight: 1,
-              transform: `scale(${tl.scale})`,
+              transform: `translateY(${tl.drop}px) scale(${tl.scale})`,
               ...engraved({ tint: C.paperDark, ink: C.paperLight, tile: 2, stroke: 4, tileSize: 48 }),
             }}
           >
@@ -208,7 +239,9 @@ export const Chorus: SceneComp = ({ scene }) => {
         ) : t < frameT(l4.start) ? (
           <>
             <Shot id={B.blade.id} keys={keysC} dim={0.25} />
-            <SoakLayer level={floodL3} t={t} color={C.bloodBright} opacity={0.92} />
+            <SoakLayer level={floodL3} t={t} color={C.bloodBright} opacity={0.92} surge={kickPulse(t, 0.15)} />
+            {/* the steel: a white flash on the edge as the blade lands */}
+            {t >= frameT(bladeWord.start) && t < frameT(bladeWord.start) + 2 / 30 ? <AbsoluteFill style={{ backgroundColor: C.paperLight, opacity: 0.45, mixBlendMode: "screen" }} /> : null}
             <Headline
               line={l3}
               face={{ family: F.fell, size: 120, italic: true }}
@@ -223,8 +256,8 @@ export const Chorus: SceneComp = ({ scene }) => {
           </>
         ) : (
           <>
-            <Shot id={B.tub.id} keys={keysD} dim={0.22} creep={0.03} />
-            <SoakLayer level={floodL4} t={t} color={C.blood} opacity={0.88} />
+            <Shot id={B.tub.id} keys={keysDk} dim={0.22} creep={0.03} />
+            <SoakLayer level={floodL4} t={t} color={C.blood} opacity={0.88} surge={kickPulse(t, 0.15)} />
             {t >= frameT(bloodWord.start) ? (
               <>
                 <BloodDrips start={frameT(bloodWord.start)} x0={row2[0].x0 + 20} x1={bloodBox.x0 - 10} y={row2[0].baseline + 4} heaviness={heavy * 0.6} seed={`${o.section}-row`} reach={200} bar={false} />
@@ -247,11 +280,12 @@ export const Chorus: SceneComp = ({ scene }) => {
   );
 };
 
-/** Accents: the tear (a rupture), the strobe on each hook's downbeat, blood on the calls and on BLOOD. */
+/** Accents: the kick punch (the hook pounds), the tear (a rupture), the strobe on each hook's downbeat, blood on the calls and on BLOOD. */
 Chorus.cues = (scene: SceneDef) => {
   const [l1, l2, , l4] = sectionLines(scene.opts.section);
   const stampOf = (l: Line) => l.words.filter((w) => w.text.startsWith("(")).map((w) => w.start);
   return {
+    punch: 0.8, // the hook pounds on the kick
     glitches: [l1.start],
     strobes: [l1.start, l2.start],
     flashes: [...stampOf(l1), ...stampOf(l2), l4.words[l4.words.length - 1].start],

@@ -7,7 +7,7 @@ import { Headline } from "../components/Headline";
 import { Cutout } from "../components/Cutout";
 import { engraved } from "../components/Kinetic";
 import { arrive, frameT, keyed } from "../motion";
-import { easeIn, isShout, prog, sectionLines, shake } from "../timing";
+import { easeIn, isShout, kickPulse, prog, sectionLines, shake, snarePulse } from "../timing";
 import { BOX, MARAT_EYES, img } from "../images";
 import { C, W } from "../theme";
 import { F } from "../fonts";
@@ -21,12 +21,12 @@ const shoutStyle = { ...engraved({ tint: C.paperLight, ink: C.ink, tile: 1, stro
  *
  * 1. "I am the anger — the JUST anger — of the people,"
  *    The people: one slow dolly left to right along the crowd in the tribunal
- *    print; the words slide in with the dolly. On JUST, the only accent in the
+ *    print, surging forward on each snare; the words slide in with the dolly. On JUST, the only accent in the
  *    line, the dolly stops dead with a single shake; "of the people" carries
  *    it on to the thickest part of the crowd.
  * 2. "that's why they listen... that's why they BELIEVE..."
- *    Hard cut to Marat. Every word is one step closer to his face (a step
- *    zoom landing on each onset). On BELIEVE his head jerks back once; the room
+ *    Hard cut to Marat, headbanging on the kick. Every word is one step closer
+ *    to his face (a step zoom landing on each onset), and the push accelerates. On BELIEVE his head jerks back once; the room
  *    darkens and the camera pushes into his eye, into the tear of the chorus.
  */
 export const PressRoom: SceneComp = ({ scene }) => {
@@ -34,6 +34,11 @@ export const PressRoom: SceneComp = ({ scene }) => {
   const [l1, l2] = sectionLines(scene.opts.section);
   const just = l1.words.find((w) => w.text === "JUST") ?? l1.words[0];
   const believe = l2.words[l2.words.length - 1];
+
+  // the snare surges the camera forward (dolly in shot 1, the push in shot 2)
+  const snare = snarePulse(t, 0.12);
+  // Marat headbangs on the kick while he preaches
+  const kick = kickPulse(t, 0.13);
 
   // shot 1: the dolly along the crowd
   const keys1: Key[] = [
@@ -46,7 +51,9 @@ export const PressRoom: SceneComp = ({ scene }) => {
   const cutTo2 = frameT(l2.start);
   const steps = l2.words.map((w, i) => ({ t: w.start, v: Math.pow(1.12, i + 1) }));
   // the steps land on the words; underneath, a steady push keeps the tension building
-  const zoom = keyed(t, [{ t: cutTo2 - 1, v: 1 }, ...steps], 0.12) * (1 + 0.05 * Math.max(0, t - cutTo2));
+  // (and it accelerates: the push grows bar by bar, with the snare driving extra steps)
+  const d2 = Math.max(0, t - cutTo2);
+  const zoom = keyed(t, [{ t: cutTo2 - 1, v: 1 }, ...steps], 0.12) * (1 + 0.04 * d2 + 0.02 * d2 * d2) * (1 + 0.035 * snare);
   const dive = easeIn(prog(t, frameT(believe.start) + 0.35, scene.end - (frameT(believe.start) + 0.35)));
   const jerk = arrive(t, believe.start, 0.05, 0.4);
   const eyesX = 470,
@@ -62,7 +69,7 @@ export const PressRoom: SceneComp = ({ scene }) => {
       <AbsoluteFill style={{ transform: `translate(${sh.x}px, ${sh.y}px)` }}>
         {t < cutTo2 ? (
           <>
-            <Shot id="fouquier_tribunal" keys={keys1} dim={0.35} creep={0.045} />
+            <Shot id="fouquier_tribunal" keys={keys1} dim={0.35} creep={0.045} nudge={[-70 * snare, 0, 0.025 * snare]} />
             <Headline
               line={l1}
               face={{ family: F.fell, size: 110 }}
@@ -91,10 +98,10 @@ export const PressRoom: SceneComp = ({ scene }) => {
                 height={cutH}
                 x={eyesX - (MARAT_EYES.x - 0.5) * cutW}
                 y={eyesY + (1 - MARAT_EYES.y) * cutH}
-                nod={jerk.shown ? 7 * jerk.hit : 0}
+                nod={(jerk.shown ? 7 * jerk.hit : 0) + 5 * kick}
               />
             </AbsoluteFill>
-            <AbsoluteFill style={{ backgroundColor: C.night, opacity: 0.15 + 0.3 * prog(t, cutTo2, believe.start - cutTo2) + 0.55 * dive }} />
+            <AbsoluteFill style={{ backgroundColor: C.night, opacity: 0.05 + 0.3 * Math.pow(prog(t, cutTo2, believe.start - cutTo2), 2) + 0.55 * dive }} />
             <div style={{ opacity: 1 - dive }}>
               <Headline
                 line={l2}

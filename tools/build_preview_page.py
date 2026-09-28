@@ -27,23 +27,23 @@ html = f"""<title>Marat Chorus Preview</title>
 </style>
 <main>
   <header>
-    <span class="sc">L'Ami du peuple · fifth pass</span>
+    <span class="sc">L'Ami du peuple · sixth pass</span>
     <h1>Gonna Need a Tub <em>(For All This Blood)</em></h1>
     <span class="sc">Pre-chorus + chorus 1 · 1:03 – 1:25 of the song</span>
   </header>
   <section>
-    <h2>Every move has a reason</h2>
+    <h2>Every move has a reason, and now the drums push them</h2>
     <video id="chorus" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(chorus)}"></video>
     <ol>
-      <li><span class="t">0:00</span> “I am the anger… of the people”: one dolly along the crowd at the Revolutionary Tribunal. It stops dead on JUST, the line's only accent.</li>
-      <li><span class="t">0:05</span> “that's why they listen… BELIEVE”: Marat. Every word is one step closer to his face; his head jerks back on BELIEVE; the camera goes into his eye.</li>
-      <li><span class="t">0:09</span> FIVE HUNDRED HEADS!: the page tears open on a parade of heads on pikes, and the camera counts them. FIVE frames the first, HUNDRED snaps to the next, HEADS! pulls back to all eight, while the tally builds 5 → 500.</li>
-      <li><span class="t">0:11</span> (AMPUTATE!) cuts the whole picture through below the heads and wrenches the top away.</li>
-      <li><span class="t">0:12</span> The repeat is the same count, mirrored, on the 1789 heads, seen through the wound. (OPERATE!) slams the halves together and stitches them in blood.</li>
-      <li><span class="t">0:14</span> “Apply the blade”: on the guillotine's crossbeam. On “blade” the camera falls with the blade and stops dead on the king's head. “loose the flood” lets the red in.</li>
-      <li><span class="t">0:16</span> “WE'RE GONNA NEED A TUB”: Marat's room, from the 1793 assassination plate. On TUB the camera snaps onto his bath, where he will die. BLOOD floods it.</li>
+      <li><span class="t">0:00</span> “I am the anger… of the people”: the dolly along the crowd at the Revolutionary Tribunal. Each snare shoves it forward. It stops dead on JUST, and every word that lands knocks the ones already standing.</li>
+      <li><span class="t">0:05</span> “that's why they listen… BELIEVE”: Marat nods on the kick while the camera steps closer on every word. The push speeds up bar by bar. His head jerks back on BELIEVE and the camera dives into his eye.</li>
+      <li><span class="t">0:09</span> FIVE HUNDRED HEADS!: the camera counts the heads on pikes. The moves overshoot and spring back, leaving a speed trail. The tally rolls up like a counter (5 … 500) and pumps on every kick. While a frame holds, it cuts on the kick between wide and tight on the same heads.</li>
+      <li><span class="t">0:11</span> (AMPUTATE!) throws the top half of the picture up and away. The wound breathes open on each kick.</li>
+      <li><span class="t">0:12</span> The repeat counts again, mirrored, on the 1789 heads. (OPERATE!) slams the halves shut, and the stitches go in one per drum hit.</li>
+      <li><span class="t">0:14</span> “Apply the blade”: the camera falls with the blade and stops dead with a flash of steel. The flood rises in surges on the kick.</li>
+      <li><span class="t">0:16</span> “WE'RE GONNA NEED A TUB”: Marat's bath, cutting on the kick, then BLOOD floods it.</li>
     </ol>
-    <p>What's gone: random tilts, random crops, the constant camera wobble, and strobes and glitches on every line. What's left fires on purpose: one rupture on the tear, a strobe on each downbeat of the hook, and blood on AMPUTATE, OPERATE and BLOOD.</p>
+    <p>Nothing here is random. Every added motion is either a sung word, a kick or snare from the separated drum track, or the momentum of a camera move already under way.</p>
   </section>
   <section>
     <h2>Sync check</h2>
