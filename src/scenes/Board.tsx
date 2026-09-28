@@ -11,6 +11,7 @@ import { Box } from "../images";
 import { C, H, W } from "../theme";
 import { F } from "../fonts";
 import { SceneComp, SceneDef } from "./types";
+import { TypoProps } from "../components/Typo";
 
 /**
  * A storyboarded section as data: one shot per lyric line (or per few bars in
@@ -46,6 +47,8 @@ export type ShotSpec = {
   place?: "top" | "bottom" | "center" | "left" | "right";
   black?: boolean;
   title?: string; // a printed card (the song title), not a lyric
+  typo?: React.FC<TypoProps & Record<string, any>>; // a type behaviour draws the line instead of the headline
+  typoProps?: Record<string, any>;
 };
 
 type Resolved = ShotSpec & { start: number; end: number; ln?: Line };
@@ -147,7 +150,8 @@ const ShotView: React.FC<{ r: Resolved; t: number }> = ({ r, t }) => {
           </div>
         </AbsoluteFill>
       ) : null}
-      {r.ln && kind !== "none" ? (
+      {r.ln && r.typo ? <r.typo ln={r.ln} t={t} {...(r.typoProps ?? {})} /> : null}
+      {r.ln && kind !== "none" && !r.typo ? (
         <Headline
           line={r.ln}
           face={tp.face}

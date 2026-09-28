@@ -2,6 +2,8 @@
 // graded print [x0, y0, x1, y1]. Lines are [section, index] into timing.json.
 import { ShotSpec } from "./Board";
 import { Box } from "../images";
+import { sectionLines } from "../timing";
+import { Fall, Lens, NameList, ListHeader, Rise, SetPrint, Sewer, TorchColumn } from "../components/Typo";
 
 const FULL: Box = [0, 0, 1, 1];
 // L'Ami du peuple No. IV (14 Sept 1789): the paper the whole video is printed on
@@ -47,10 +49,12 @@ export const INTRO: ShotSpec[] = [
 
 // ---- Verse 1: the paper, the names, the sewer, the fever
 export const VERSE1: ShotSpec[] = [
-  { line: ["verse1", 0], img: "ami_du_peuple_n4", from: PAPER.masthead, to: PAPER.marat, dark: 0.3 },
-  { line: ["verse1", 1], img: "prise_bastille_1789", from: [0.2, 0.0, 0.8, 0.7], to: FULL },
-  { line: ["verse1", 2], img: "comite_revolutionnaire", from: FULL, to: [0.1, 0.35, 0.6, 0.95] },
-  // hoarders! deserters! royalists! suspects!: each name, a face in the committee's net
+  // T1: set backwards in the stick, printed on "printed"
+  { line: ["verse1", 0], img: "encyc_casse", from: [0.0, 0.0, 1.0, 0.36], to: [0.2, 0.05, 0.8, 0.3], dark: 0.7, typo: SetPrint },
+  // T13: a newspaper column; torch catches fire, column draws the rules
+  { line: ["verse1", 1], img: "prise_bastille_1789", from: [0.0, 0.0, 0.7, 0.8], to: [0.05, 0.05, 0.6, 0.7], dark: 0.3, typo: TorchColumn },
+  // T2: the proscription list is ruled in, then the names go on it
+  { line: ["verse1", 2], img: "comite_revolutionnaire", from: FULL, to: [0.1, 0.35, 0.6, 0.95], dark: 0.4, typo: ListHeader },
   {
     line: ["verse1", 3],
     img: "comite_revolutionnaire",
@@ -58,14 +62,18 @@ export const VERSE1: ShotSpec[] = [
     cuts: [[0.0, 0.3, 0.35, 0.7], [0.3, 0.3, 0.65, 0.7], [0.6, 0.3, 0.95, 0.7], [0.3, 0.55, 0.7, 0.95]],
     cutOn: "bang",
     move: "hold",
-    type: "print",
-    place: "top",
+    dark: 0.45,
+    typo: NameList,
+    typoProps: { header: sectionLines("verse1")[2] },
   },
-  // "so I went below": the camera goes down through Piranesi's prison
-  { line: ["verse1", 4], img: "carceri_drawbridge", from: [0.0, 0.0, 1.0, 0.42], to: [0.0, 0.58, 1.0, 1.0], move: "glide", dark: 0.35 },
-  { line: ["verse1", 5], img: "carceri_smoke", from: [0.1, 0.3, 0.9, 0.75], to: [0.25, 0.38, 0.75, 0.66], dark: 0.2, candle: [0.4, 0.55], type: "whisper", place: "right" },
-  { line: ["verse1", 6], img: "carceri_tower", from: [0.0, 0.55, 1.0, 1.0], to: [0.0, 0.0, 1.0, 0.45], move: "glide", dark: 0.3 },
-  { line: ["verse1", 7], img: "boze_marat", from: BOZE.face, to: BOZE.eyes, cuts: [BOZE.eye], place: "bottom" },
+  // "so I went below": the line falls out of the frame as the camera goes down
+  { line: ["verse1", 4], img: "carceri_drawbridge", from: [0.0, 0.0, 1.0, 0.42], to: [0.0, 0.58, 1.0, 1.0], move: "glide", dark: 0.35, typo: Fall },
+  // T4: sewer-light on black water; shadow sinks
+  { line: ["verse1", 5], img: "carceri_smoke", from: [0.1, 0.3, 0.9, 0.75], to: [0.25, 0.38, 0.75, 0.66], dark: 0.3, candle: [0.3, 0.45], typo: Sewer },
+  // T3: rising out of the water, burning, blotted with sores
+  { line: ["verse1", 6], img: "carceri_tower", from: [0.0, 0.55, 1.0, 1.0], to: [0.0, 0.0, 1.0, 0.45], move: "glide", dark: 0.4, typo: Rise },
+  // T3: the fever builds; YOURS at the lens
+  { line: ["verse1", 7], img: "boze_marat", from: BOZE.face, to: BOZE.eyes, dark: 0.3, typo: Lens },
 ];
 
 // ---- Verse 2: September
