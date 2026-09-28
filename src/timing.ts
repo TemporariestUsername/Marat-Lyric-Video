@@ -31,6 +31,8 @@ export const TIMING = raw as unknown as Timing;
 export const FPS = TIMING.fps;
 export const BEAT = TIMING.beatPeriod;
 export const DURATION = TIMING.duration;
+/** Bar starts (beat 1 of each bar). */
+export const DOWNBEATS: number[] = (raw as unknown as { downbeats: number[] }).downbeats;
 
 const lineMap = new Map(TIMING.lines.map((l) => [l.id, l]));
 export const line = (id: string): Line => {

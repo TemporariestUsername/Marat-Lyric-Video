@@ -3,36 +3,26 @@
 import { DURATION, sectionLines } from "../timing";
 import { Chorus } from "./Chorus";
 import { PressRoom } from "./PressRoom";
-import { Verse } from "./Verse";
-import { Plain } from "./Plain";
+import { Board } from "./Board";
+import { INTRO, VERSE1, VERSE2, SPOKEN, TRIBUNAL, ACQUITTAL, BATH, CLIMAX } from "./boards";
 import { SceneDef } from "./types";
 
 const first = (sid: string) => sectionLines(sid)[0].start;
-const lastLineEnd = (sid: string) => {
-  const ls = sectionLines(sid);
-  return ls[ls.length - 1].end;
-};
 
 type Spec = Omit<SceneDef, "end">;
 const specs: Spec[] = [
-  { id: "intro", start: 0, Comp: Plain, opts: {} },
-  {
-    id: "verse1",
-    start: Math.min(lastLineEnd("caira_intro"), first("verse1") - 1),
-    Comp: Verse,
-    opts: { section: "verse1", issue: "N° 1", date: "Du samedi 12 septembre 1789", denounce: ["verse1.4"], fx: 0.8, shots: [{ id: "prise_bastille_1789" }, { id: "comite_revolutionnaire" }, { id: "bombardement_trones" }, { id: "triomphe_marat", focus: 0 }] },
-  },
+  { id: "intro", start: 0, Comp: Board, opts: { shots: INTRO, punch: 0.4 } },
+  { id: "verse1", start: first("verse1") - 0.1, Comp: Board, opts: { shots: VERSE1, punch: 0.35 } },
   { id: "prechorus", start: first("prechorus") - 0.25, Comp: PressRoom, opts: { section: "prechorus", fx: 1.0 } },
   { id: "chorus1", start: first("chorus1") - 0.15, Comp: Chorus, opts: { section: "chorus1", numeral: [{ word: 0, text: "5" }, { word: 1, text: "500" }], heaviness: 1, pageTurnOut: true, fx: 1.4 } },
-  { id: "verse2", start: first("verse2") - 0.2, Comp: Verse, opts: { section: "verse2", issue: "Paris", date: "Septembre 1792", fx: 0.9, shots: [{ id: "vengeance_traitres" }, { id: "sansculotte_horreurs" }, { id: "comite_scene_derniere" }, { id: "heads_on_pikes", focus: 2 }] } },
-  { id: "letter", start: first("spoken"), Comp: Plain, opts: {} },
+  { id: "verse2", start: first("verse2") - 0.2, Comp: Board, opts: { shots: VERSE2, punch: 0.4, shake: 18 } },
+  { id: "letter", start: first("spoken"), Comp: Board, opts: { shots: SPOKEN, shake: 22 } },
   { id: "chorus2", start: first("chorus2") - 0.15, Comp: Chorus, opts: { section: "chorus2", numeral: [{ word: 0, text: "1" }, { word: 1, text: "1,000" }], heaviness: 2, pageTurnOut: true, fx: 1.6 } },
-  { id: "tribunal", start: first("tribunal"), Comp: Plain, opts: {} },
-  { id: "acquittal", start: first("acquittal"), Comp: Plain, opts: {} },
+  { id: "tribunal", start: first("tribunal"), Comp: Board, opts: { shots: TRIBUNAL, shake: 20 } },
+  { id: "acquittal", start: first("acquittal"), Comp: Board, opts: { shots: ACQUITTAL, punch: 0.6, shake: 18 } },
   { id: "chorus3", start: first("chorus3") - 0.15, Comp: Chorus, opts: { section: "chorus3", numeral: [{ word: 1, text: "100" }, { word: 2, text: "100,000" }], heaviness: 3, fx: 1.8 } },
-  { id: "bath", start: first("bath"), Comp: Plain, opts: {} },
-  { id: "climax", start: first("climax"), Comp: Plain, opts: {} },
-  { id: "reprise", start: first("caira_reprise"), Comp: Plain, opts: {} },
+  { id: "bath", start: first("bath"), Comp: Board, opts: { shots: BATH, shake: 8 } },
+  { id: "climax", start: first("climax") - 0.1, Comp: Board, opts: { shots: CLIMAX, punch: 0.3 } },
 ];
 
 export const SCENES: SceneDef[] = specs.map((s, i) => ({ ...s, end: specs[i + 1]?.start ?? DURATION }));

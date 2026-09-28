@@ -85,14 +85,21 @@ export const layoutLine = (line: Line, o: LayoutOpts): Layout => {
     rowOf.push(r);
   });
   const nRows = r + 1;
-  const rowH = face.size * lineHeight;
+  // each row is as tall as its largest word, so a row of shouts never overlaps the next
+  const rowSize = Array.from({ length: nRows }, (_, row) => Math.max(face.size, ...faces.filter((_, k) => rowOf[k] === row).map((f) => f.size)));
+  const rowY: number[] = [];
+  let yAcc = 0;
+  rowSize.forEach((sz, row) => {
+    if (row > 0) yAcc += ((rowSize[row - 1] + sz) / 2) * lineHeight;
+    rowY.push(yAcc);
+  });
   const placed: Placed[] = [];
   for (let row = 0; row < nRows; row++) {
     const ks = idxs.map((_, k) => k).filter((k) => rowOf[k] === row);
     const total = ks.reduce((a2, k, j) => a2 + widths[k] + (j ? space : 0), 0);
     let x = -total / 2;
     for (const k of ks) {
-      placed.push({ w: line.words[idxs[k]], i: idxs[k], x, y: (row - (nRows - 1) / 2) * rowH, width: widths[k], face: faces[k] });
+      placed.push({ w: line.words[idxs[k]], i: idxs[k], x, y: rowY[row] - yAcc / 2, width: widths[k], face: faces[k] });
       x += widths[k] + space;
     }
   }
