@@ -3,7 +3,6 @@ import { Composition } from "remotion";
 import { MaratVideo } from "./Video";
 import { DURATION, FPS, sectionLines } from "./timing";
 import { SCENES } from "./scenes";
-import { SilhouetteSheet } from "./SilhouetteSheet";
 import { SyncCheck } from "./SyncCheck";
 
 const f = (s: number) => Math.round(s * FPS);
@@ -44,7 +43,6 @@ export const RemotionRoot: React.FC = () => (
       height={1080}
       defaultProps={{ startSec: previewStart }}
     />
-    <Composition id="SilhouetteSheet" component={SilhouetteSheet} durationInFrames={1} fps={FPS} width={1920} height={1080} />
     {/* one composition per scene, for section-by-section review renders */}
     {SCENES.map((s) => (
       <Composition

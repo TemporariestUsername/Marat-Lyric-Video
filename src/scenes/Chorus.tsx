@@ -1,16 +1,15 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { TimeProvider, useT } from "../time";
-import { Paper, cutShadow } from "../components/Paper";
+import { Paper } from "../components/Paper";
 import { KineticLine, engraved, layoutLine, wordBoxes } from "../components/Kinetic";
 import { SlamWords } from "../components/Slam";
 import { Stamp } from "../components/Stamp";
 import { BloodDrips } from "../components/Blood";
-import { Crowd } from "../silhouettes/Crowd";
-import { Blade } from "../silhouettes/Guillotine";
-import { Marat } from "../silhouettes/Marat";
-import { arrive, camera, cameraTransform, frameT, mouth } from "../motion";
-import { FPS, Line, barPulse, easeIn, easeOut, kickPulse, prog, rnd, sectionLines, shake, snarePulse } from "../timing";
+import { Montage } from "../components/Montage";
+import { Cutout } from "../components/Cutout";
+import { arrive, camera, cameraTransform, frameT } from "../motion";
+import { FPS, Line, barPulse, easeIn, easeOut, kickPulse, kicksBetween, prog, rnd, sectionLines, shake } from "../timing";
 import { C, H, W } from "../theme";
 import { F } from "../fonts";
 import { SceneDef, SceneProps } from "./types";
@@ -62,6 +61,25 @@ const splitStamp = (l: Line) => {
 };
 
 const shout = { family: F.didone, size: 200, weight: 900 };
+const GORE = [
+  { id: "heads_on_pikes", focus: 0 },
+  { id: "vengeance_traitres" },
+  { id: "punit_traitres", focus: 0 },
+  { id: "sansculotte_horreurs" },
+  { id: "corday_trial", focus: 0 },
+  { id: "heads_on_pikes", focus: 1 },
+  { id: "punit_traitres", focus: 1 },
+  { id: "prise_bastille_1789" },
+];
+const BLADE = [
+  { id: "hell_broke_loose", focus: 0 },
+  { id: "supplice_louis", focus: 0 },
+  { id: "guillotine_woodcut" },
+  { id: "hell_broke_loose", focus: 1 },
+  { id: "heads_on_pikes", focus: 0 },
+  { id: "vengeance_traitres" },
+  { id: "punit_traitres", focus: 0 },
+];
 const halo: React.CSSProperties = { textShadow: `0 0 26px ${C.paperLight}, 0 0 10px ${C.paperLight}` };
 
 /**
@@ -94,13 +112,8 @@ export const Chorus: React.FC<SceneProps> = ({ scene }) => {
   const kick = kickPulse(t, 0.12);
   const hit = Math.max(0, ...shoutHits.map((h) => arrive(t, h).hit));
 
-  // crowd moshes: bodies bounce on the kick, arms thrust on every shout
-  const pump = (ph: number) => Math.min(1, kickPulse(t - ph * 0.06, 0.18) + hit * (0.7 + 0.3 * ph));
-  const bob = (ph: number) => Math.min(2.5, kickPulse(t - ph * 0.08, 0.16) * 2.5 + snarePulse(t, 0.1));
-
-  // Marat: headbangs on the kick, screams the words
-  const nod = 16 * kickPulse(t, 0.14) + 6 * barPulse(t, t0, 0.3);
-  const jaw = mouth(t, allWords);
+  // Marat headbangs on the kick
+  const nod = 9 * kickPulse(t, 0.14) + 4 * barPulse(t, t0, 0.3);
 
   // numeral: lands on the first shout, re-hits on line 2, pumps on the kick
   const na = arrive(t, t0, 0.1, 0.5);
@@ -180,7 +193,13 @@ export const Chorus: React.FC<SceneProps> = ({ scene }) => {
           transform: cameraTransform({ ...cam, x: cam.x + sh.x, y: cam.y + sh.y, rot: cam.rot + sh.r, zoom: cam.zoom * (1 + hit * 0.05 + kick * 0.04) }),
         }}
       >
-        <Paper hatch={1.6} tint={C.paperDark} tintOpacity={0.4} drift={{ x: -cam.x * 0.4, y: -cam.y * 0.4 }} />
+        {/* period prints, cut on every kick: heads on pikes, the lanterne, the dancing sans-culotte;
+            the guillotine on the blade line; the heads again under the headline */}
+        <Montage shots={GORE} cuts={kicksBetween(t0, l3.start)} start={scene.start} end={l3.start - 0.05} dim={0.3} seed={`${o.section}g`} />
+        {t >= frameT(l3.start) - 0.05 ? (
+          <Montage shots={BLADE} cuts={[...l3.words.map((w) => w.start), ...l4.words.map((w) => w.start)]} start={l3.start - 0.05} end={scene.end} dim={0.32} seed={`${o.section}b`} />
+        ) : null}
+        <Paper hatch={1.6} style={{ mixBlendMode: "multiply", opacity: 0.5 }} drift={{ x: -cam.x * 0.4, y: -cam.y * 0.4 }} />
 
         {t < cut + 0.7 ? (
           <AbsoluteFill style={{ transform: `translateY(${-recede * 90}px) scale(${1 - recede * 0.25})`, opacity: 1 - recede * 0.3 }}>
@@ -188,21 +207,8 @@ export const Chorus: React.FC<SceneProps> = ({ scene }) => {
           </AbsoluteFill>
         ) : null}
 
-        {/* Marat, huge, left of frame, headbanging */}
-        <div style={{ position: "absolute", inset: 0, filter: cutShadow, transform: `translate(${-cam.x * 0.5 + kick * -10}px, ${kick * 18}px)` }}>
-          <Marat width={1000} nod={nod} jaw={jaw} style={{ left: -230, top: 180 }} />
-        </div>
-
-        {/* the mob, three depths */}
-        <div style={{ position: "absolute", inset: 0, transform: `translate(${-cam.x * 0.3}px, 0)` }}>
-          <Crowd seed={`${o.section}-back`} width={2600} count={22} scale={0.5} color="rgba(23,18,13,0.42)" style={{ left: -220, top: H - 470 }} pump={pump} bob={bob} />
-        </div>
-        <div style={{ position: "absolute", inset: 0, transform: `translate(${-cam.x * 0.6}px, 0)` }}>
-          <Crowd seed={`${o.section}-mid`} width={2600} count={17} scale={0.62} color="rgba(23,18,13,0.72)" style={{ left: -300, top: H - 560 }} pump={pump} bob={bob} />
-        </div>
-        <div style={{ position: "absolute", inset: 0, filter: cutShadow, transform: `translate(${-cam.x}px, 0)` }}>
-          <Crowd seed={`${o.section}-front`} width={2400} count={11} scale={0.8} style={{ left: -200, top: H - 700 }} pump={pump} bob={bob} />
-        </div>
+        {/* Marat, cut from the 1793 portrait, headbanging */}
+        <Cutout id="marat_geneve" height={900} x={300 - cam.x * 0.5} y={1150 + kick * 22} nod={-nod} scale={1 + 0.05 * hit} />
 
         {/* the hook (cut with the board) */}
         {t < cut + 0.7 ? <AbsoluteFill>{cutLayer(hook)}</AbsoluteFill> : null}
@@ -249,9 +255,18 @@ export const Chorus: React.FC<SceneProps> = ({ scene }) => {
         ) : null}
 
         {bladeOn ? (
-          <div style={{ position: "absolute", inset: 0, filter: cutShadow }}>
-            <Blade width={820} gleam={0.8} style={{ left: 960 - 410, top: bladeY(t) - 820 * 1.3 * 0.8 }} />
-          </div>
+          <div
+            style={{
+              position: "absolute",
+              left: -300,
+              width: W + 600,
+              top: bladeY(t) - 700,
+              height: 14,
+              background: C.paperLight,
+              boxShadow: `0 0 40px 14px rgba(255,236,200,0.7)`,
+              transform: "rotate(-24deg)",
+            }}
+          />
         ) : null}
       </AbsoluteFill>
       {o.prev ? <TearIn prev={o.prev} at={t0} seed={o.section} /> : null}

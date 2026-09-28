@@ -27,22 +27,21 @@ html = f"""<title>Marat Chorus Preview</title>
 </style>
 <main>
   <header>
-    <span class="sc">L'Ami du peuple · third pass</span>
+    <span class="sc">L'Ami du peuple · fourth pass</span>
     <h1>Gonna Need a Tub <em>(For All This Blood)</em></h1>
     <span class="sc">Chorus 1 · 1:07 – 1:25 of the song</span>
   </header>
   <section>
-    <h2>Chorus 1, third pass: more energy</h2>
+    <h2>Chorus 1, fourth pass: period images</h2>
     <video id="chorus" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(chorus)}"></video>
     <ol>
-      <li><span class="t">0:00</span> Marat, in silhouette, spits the pre-chorus in the print shop; the press slams on the kick and on every word; the camera rushes into the page.</li>
-      <li><span class="t">0:05</span> The page rips open onto the mob. Every shouted word slams full-frame with strobes; Marat headbangs and screams it.</li>
-      <li><span class="t">0:06</span> (AMPUTATE!) and (OPERATE!) stamp across the whole frame with a blood flash.</li>
-      <li><span class="t">0:10</span> The guillotine blade drops on “blade” and cuts the board in two.</li>
-      <li><span class="t">0:12</span> The headline slams word by word, BLOOD flashes the frame red, then the whole headline bleeds.</li>
-      <li><span class="t">0:15</span> Page turn to verse 2, with Marat singing from the corner.</li>
+      <li><span class="t">0:00</span> Marat, cut out of a 1793 portrait in his kerchief, headbangs in front of engravings of the revolutionary committees, which cut on each line and then on every kick.</li>
+      <li><span class="t">0:05</span> The page rips open. Heads on pikes (1789), the lanterne, the dancing sans-culotte and Gillray's Corday trial cut on every kick under the slammed words.</li>
+      <li><span class="t">0:06</span> (AMPUTATE!) and (OPERATE!) stamp across the frame with a blood flash.</li>
+      <li><span class="t">0:10</span> “Apply the blade”: the guillotine prints (the execution of Louis XVI, <em>Hell Broke Loose</em>) cut on each word as a slash of light cuts the board in two.</li>
+      <li><span class="t">0:12</span> The headline slams word by word, BLOOD flashes red, and the whole headline bleeds.</li>
+      <li><span class="t">0:15</span> Page turn to verse 2: the September prints printed into the newspaper, with Marat's 1793 oval portrait in the corner.</li>
     </ol>
-    <p>Camera punches, shakes and the crowd's moshing are driven by the kick and snare from the separated drum track, so they land on the real drums.</p>
   </section>
   <section>
     <h2>Sync check</h2>
@@ -50,9 +49,9 @@ html = f"""<title>Marat Chorus Preview</title>
     <video id="sync" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(sync)}"></video>
   </section>
   <section>
-    <h2>Silhouettes</h2>
-    <p>Drawn in the cover's paper-cut style: Marat in his kerchief (with a hinged jaw, so he can sing and scream), the hand press, the guillotine blade, and the crowd with bonnets rouges, tricornes and pikes. Corday comes next.</p>
-    <img alt="Silhouette sheet: printing press, guillotine, blade, crowd with pikes" src="data:image/jpeg;base64,{b64(sil)}">
+    <h2>Period images</h2>
+    <p>Prints from 1789 to about 1804 (Library of Congress, public domain / no known restrictions), plus a photograph of Boze's 1793 portrait of Marat. Everything is graded to ink and sepia with only the reds kept; red on this sheet marks cut-outs. Full credits are in CREDITS.md in the repository.</p>
+    <img alt="Contact sheet of the graded period images and cut-outs" src="data:image/jpeg;base64,{b64(sil)}">
   </section>
 </main>
 """

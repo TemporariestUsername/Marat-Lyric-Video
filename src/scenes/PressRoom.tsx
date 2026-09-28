@@ -1,20 +1,21 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { useT } from "../time";
-import { Paper, cutShadow } from "../components/Paper";
+import { Paper } from "../components/Paper";
+import { Montage } from "../components/Montage";
+import { Cutout } from "../components/Cutout";
 import { KineticLine, engraved } from "../components/Kinetic";
-import { Press } from "../silhouettes/Press";
-import { Marat } from "../silhouettes/Marat";
-import { arrive, camera, cameraTransform, frameT, mouth } from "../motion";
-import { easeIn, easeInOut, energyAt, isShout, kickPulse, prog, sectionLines, shake } from "../timing";
+import { arrive, camera, cameraTransform } from "../motion";
+import { easeIn, easeInOut, energyAt, isShout, kickPulse, kicksBetween, prog, sectionLines, shake } from "../timing";
 import { C } from "../theme";
 import { F } from "../fonts";
 import { SceneProps } from "./types";
 
 /**
- * Pre-chorus in the print shop. Marat, in silhouette, spits the lines; the hand
- * press behind him slams on every kick and every word; the room shakes harder
- * bar by bar and the last beat rushes the camera into the page.
+ * Pre-chorus: Marat, cut from a 1793 portrait, headbangs in front of engravings
+ * of the revolutionary committees; the prints cut on each line and then on
+ * every kick; the room shakes harder bar by bar and the last beat rushes the
+ * camera into the page.
  *
  * opts: section
  */
@@ -22,14 +23,6 @@ export const PressRoom: React.FC<SceneProps> = ({ scene }) => {
   const t = useT();
   const lines = sectionLines(scene.opts.section);
   const words = lines.flatMap((l) => l.words);
-
-  // Platen: bottoms out on each word onset and on each kick.
-  let down = 0.6 * kickPulse(t, 0.12);
-  for (const w of words) {
-    const o = frameT(w.start);
-    if (t >= o - 0.08 && t < o) down = Math.max(down, Math.pow((t - (o - 0.08)) / 0.08, 2));
-    else if (t >= o && t < o + 0.22) down = Math.max(down, 1 - (t - o) / 0.22);
-  }
 
   const build = easeInOut(prog(t, scene.start, scene.end - scene.start));
   const rush = easeIn(prog(t, scene.end - 0.45, 0.45)); // into the chorus
@@ -54,22 +47,25 @@ export const PressRoom: React.FC<SceneProps> = ({ scene }) => {
           filter: rush > 0.05 ? `blur(${rush * 10}px)` : undefined,
         }}
       >
-        <Paper hatch={1.2 + 0.5 * build} drift={{ x: -tx * 0.3, y: -ty * 0.3 }} />
-        {/* the press, farther back, paler ink */}
-        <div style={{ position: "absolute", inset: 0, transform: `translate(${-tx * 0.15}px, ${-ty * 0.15 + wordHit * 8}px)`, opacity: 0.55 }}>
-          <Press down={down} width={760} style={{ left: 1180, top: 230 }} />
-        </div>
-        {/* Marat, singing his own words */}
-        <div style={{ position: "absolute", inset: 0, filter: cutShadow, transform: `translate(${-tx * 0.4}px, ${k * 14}px)` }}>
-          <Marat width={820} nod={10 * k + 8 * wordHit} jaw={mouth(t, words)} style={{ left: -120, top: 260 }} />
-        </div>
+        {/* the committee rooms of the Terror, cutting on each line — and on every kick in the last one */}
+        <Montage
+          shots={[{ id: "comite_scene_derniere" }, { id: "comite_revolutionnaire" }, { id: "fouquier_tribunal" }, { id: "comite_scene_derniere", focus: 1 }]}
+          cuts={[...lines.map((l) => l.start), ...kicksBetween(lines[lines.length - 1].start + 0.5, scene.end)]}
+          start={scene.start}
+          end={scene.end}
+          dim={0.2 + 0.25 * build}
+          seed="pre"
+        />
+        <Paper hatch={1.2 + 0.5 * build} style={{ mixBlendMode: "multiply", opacity: 0.55 }} drift={{ x: -tx * 0.3, y: -ty * 0.3 }} />
+        {/* Marat, cut from the 1793 portrait, headbanging */}
+        <Cutout id="marat_geneve" height={930 * (1 + 0.04 * wordHit)} x={390 - tx * 0.4} y={1130 + k * 18} nod={-(7 * k + 5 * wordHit)} />
         {cur >= 0 ? (
           <KineticLine
             key={lines[cur].id}
             line={lines[cur]}
             face={{ family: F.fell, size: 120 }}
             faceFor={(w) => (isShout(w.text) ? { family: F.didone, weight: 900, size: 170 } : undefined)}
-            styleFor={(w) => (isShout(w.text) ? { ...engraved({ tint: C.ink, tile: 1, stroke: 2 }), textShadow: "none" } : { textShadow: `0 0 18px ${C.paperLight}` })}
+            styleFor={(w) => (isShout(w.text) ? { ...engraved({ tint: C.paperLight, ink: C.ink, tile: 1, stroke: 3 }), textShadow: "none" } : { color: C.paperLight, textShadow: `0 0 14px ${C.ink}, 0 0 4px ${C.ink}` })}
             entrance="slam"
             entranceFor={(w, i) => (isShout(w.text) ? "slam" : i % 2 ? "drop" : "rise")}
             cx={1180}

@@ -30,5 +30,5 @@ export const Paper: React.FC<{
   </AbsoluteFill>
 );
 
-/** Paper-cut drop shadow for silhouettes. */
+/** Paper-cut drop shadow for cut-out figures. */
 export const cutShadow = "drop-shadow(5px 7px 3px rgba(20,12,4,0.38))";

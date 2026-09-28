@@ -5,9 +5,9 @@ import { Paper } from "../components/Paper";
 import { Masthead } from "../components/Masthead";
 import { KineticLine, engraved } from "../components/Kinetic";
 import { Stamp } from "../components/Stamp";
-import { camera, cameraTransform, mouth } from "../motion";
-import { Marat } from "../silhouettes/Marat";
-import { cutShadow } from "../components/Paper";
+import { camera, cameraTransform } from "../motion";
+import { Cutout } from "../components/Cutout";
+import { Montage, Shot } from "../components/Montage";
 import { isShout, kickPulse, rnd, sectionLines, shake } from "../timing";
 import { C } from "../theme";
 import { F } from "../fonts";
@@ -17,7 +17,8 @@ import { SceneProps } from "./types";
  * Verse on the front page (first pass): the masthead rides at the top of a
  * drifting sheet, each line is struck onto the page one at a time and thrown
  * off by the next, shouted words slam in engraved Bodoni, and denounced names
- * are rubber-stamped across the sheet in ink.
+ * are rubber-stamped across the sheet in ink. Period prints (opts.shots) are
+ * printed into the page behind the type, cutting on each line.
  *
  * opts: section, issue, date, denounce?: line ids
  */
@@ -46,6 +47,11 @@ export const Verse: React.FC<SceneProps> = ({ scene }) => {
         }}
       >
         <Paper drift={{ x: -cam.x * 0.4, y: -cam.y * 0.4 }} />
+        {o.shots ? (
+          <div style={{ position: "absolute", inset: 0, mixBlendMode: "multiply", opacity: 0.55 }}>
+            <Montage shots={o.shots as Shot[]} cuts={lines.map((l) => l.start)} start={scene.start} end={scene.end} dim={0} seed={o.section} />
+          </div>
+        ) : null}
         <Masthead issue={o.issue} date={o.date} style={{ transform: `translateY(${-8 + Math.sin(t * 0.5) * 6}px) scale(0.9)`, opacity: 0.92 }} />
         {stamps.map(({ w, k, l }) => (
           <Stamp
@@ -60,10 +66,8 @@ export const Verse: React.FC<SceneProps> = ({ scene }) => {
             seed={`${l.id}${k}`}
           />
         ))}
-        {/* Marat sings the verse from the bottom corner, headbanging on the kick */}
-        <div style={{ position: "absolute", inset: 0, filter: cutShadow, transform: `translate(${-cam.x * 0.5}px, ${k * 16}px)` }}>
-          <Marat width={640} nod={12 * k} jaw={mouth(t, lines.flatMap((l) => l.words))} style={{ left: -90, top: 420 }} />
-        </div>
+        {/* Marat, cut from a 1793 portrait, headbanging from the corner */}
+        <Cutout id="marat_oval_1793" height={620} x={250 - cam.x * 0.5} y={1110 + k * 16} nod={-9 * k} />
         {cur >= 0 ? (
           <KineticLine
             key={lines[cur].id}

@@ -1,0 +1,258 @@
+{
+ "_note": "Period imagery for the video. Every entry is public domain or has no known restrictions; fetch with tools/fetch_images.py, grade with tools/prep_images.py. 'focus' boxes are fractions of the image (x0,y0,x1,y1) used for punch-zooms; 'cutout' asks prep_images.py for a figure with transparent background.",
+ "images": [
+  {
+   "id": "triomphe_marat",
+   "src": "loc",
+   "ref": "91480926",
+   "use": "acquittal: Marat carried in triumph",
+   "crop": [
+    0.105,
+    0.1,
+    0.905,
+    0.88
+   ]
+  },
+  {
+   "id": "marat_oval_1793",
+   "src": "loc",
+   "ref": "2013646711",
+   "use": "Marat head-and-shoulders, cut-out",
+   "cutout": true
+  },
+  {
+   "id": "assassinat_marat",
+   "src": "loc",
+   "ref": "2005691831",
+   "use": "the assassination, Tableaux historiques",
+   "crop": [
+    0.18,
+    0.07,
+    0.82,
+    0.93
+   ]
+  },
+  {
+   "id": "corday_trial",
+   "src": "loc",
+   "ref": "2004669791",
+   "use": "Corday before the Revolutionary Tribunal"
+  },
+  {
+   "id": "corday_portrait",
+   "src": "loc",
+   "ref": "2003689334",
+   "use": "Corday portrait, cut-out",
+   "cutout": true
+  },
+  {
+   "id": "heads_on_pikes",
+   "src": "loc",
+   "ref": "2004679083",
+   "use": "heads of Delaunay, Flesselles, Berthier, Foulon on pikes (1789)"
+  },
+  {
+   "id": "vengeance_traitres",
+   "src": "loc",
+   "ref": "90712048",
+   "use": "C'est ainsi qu'on se venge des traitres (1789)",
+   "crop": [
+    0.15,
+    0.08,
+    0.845,
+    0.93
+   ]
+  },
+  {
+   "id": "punit_traitres",
+   "src": "loc",
+   "ref": "91480935",
+   "use": "the heads of the traitors paraded on pikes (1789, lower plate)",
+   "crop": [
+    0.14,
+    0.5,
+    0.84,
+    0.84
+   ]
+  },
+  {
+   "id": "sansculotte_horreurs",
+   "src": "loc",
+   "ref": "91482373",
+   "use": "a sans-culotte dancing amid horrors (1793)"
+  },
+  {
+   "id": "guillotine_woodcut",
+   "src": "loc",
+   "ref": "2007680140",
+   "use": "Massacre of the French king! View of la guillotine (1793)",
+   "crop": [
+    0.3,
+    0.075,
+    0.7,
+    0.335
+   ]
+  },
+  {
+   "id": "supplice_louis",
+   "src": "loc",
+   "ref": "2013651033",
+   "use": "execution of Louis XVI, Tableaux historiques"
+  },
+  {
+   "id": "hell_broke_loose",
+   "src": "loc",
+   "ref": "2006680657",
+   "use": "Hell broke loose, or, The murder of Louis (1793)"
+  },
+  {
+   "id": "comite_revolutionnaire",
+   "src": "loc",
+   "ref": "2015646325",
+   "use": "interior of a revolutionary committee under the Terror"
+  },
+  {
+   "id": "fouquier_tribunal",
+   "src": "loc",
+   "ref": "2002695358",
+   "use": "the Revolutionary Tribunal in session (1795)",
+   "crop": [
+    0.08,
+    0.03,
+    0.925,
+    0.94
+   ]
+  },
+  {
+   "id": "ca_ira_1794",
+   "src": "loc",
+   "ref": "2009633479",
+   "use": "Ah! ça ira... les aristocrates à la raison (1794)"
+  },
+  {
+   "id": "bombardement_trones",
+   "src": "loc",
+   "ref": "89708761",
+   "use": "Bombardement de tous les trônes de l'Europe (1792)"
+  },
+  {
+   "id": "marat_portrait_b",
+   "src": "loc",
+   "ref": "2004672484",
+   "use": "Jean Paul Marat portrait, cut-out",
+   "cutout": true,
+   "crop": [
+    0.16,
+    0.1,
+    0.84,
+    0.62
+   ],
+   "cutmodel": "u2net_human_seg"
+  },
+  {
+   "id": "marat_geneve",
+   "src": "loc",
+   "ref": "90712051",
+   "use": "Jean Paul Marat, né à Genève, député de Paris (c. 1793), cut-out",
+   "cutout": true,
+   "crop": [
+    0.28,
+    0.16,
+    0.72,
+    0.58
+   ],
+   "cutmodel": "u2net_human_seg",
+   "cut_exclude": [
+    [
+     [
+      0.78,
+      0
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      0.66
+     ],
+     [
+      0.93,
+      0.66
+     ],
+     [
+      0.84,
+      0.4
+     ]
+    ],
+    [
+     [
+      0,
+      0.935
+     ],
+     [
+      1,
+      0.935
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    [
+     [
+      0,
+      0
+     ],
+     [
+      0.12,
+      0
+     ],
+     [
+      0.05,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "comite_scene_derniere",
+   "src": "loc",
+   "ref": "90712046",
+   "use": "L'Intérieur du comité révolutionnaire, scène dernière (c. 1794)"
+  },
+  {
+   "id": "boze_marat",
+   "src": "loc",
+   "ref": "2025708085",
+   "use": "photograph of Joseph Boze's portrait of Marat (1793), Musée Carnavalet",
+   "crop": [
+    0.03,
+    0.02,
+    0.97,
+    0.9
+   ]
+  },
+  {
+   "id": "prise_bastille_1789",
+   "src": "loc",
+   "ref": "91480935",
+   "raw": "punit_traitres",
+   "crop": [
+    0.14,
+    0.05,
+    0.84,
+    0.37
+   ],
+   "use": "Prise de la Bastille (1789, upper plate)"
+  }
+ ]
+}

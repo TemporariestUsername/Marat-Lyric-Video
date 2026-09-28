@@ -3,3 +3,4 @@ out/
 .remotion/
 *.wav
 __pycache__/
+assets/images/raw/

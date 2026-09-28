@@ -6,6 +6,9 @@ animation is driven by `timing.json` (line/word times + beat grid). No timestamp
 ## Layout
 - `assets/lyrics.txt` — lyrics (source of truth for text & capitalisation)
 - `public/song.mp3` — the track; `public/tex/` — generated paper/stamp textures (`tools/gen_textures.py`)
+- `assets/images/manifest.json` — the period prints used (Library of Congress, public domain / no known
+  restrictions); `tools/fetch_images.py` downloads them and writes `CREDITS.md`; `tools/prep_images.py`
+  crops, grades (ink/sepia, reds kept) and cuts out figures into `public/img/`
 - `timing/` — timing pipeline
   - `beats.py` → `timing/beats.json` (librosa beat tracking)
   - `align.py` → `timing/raw_alignment.json` (stable-ts: rough line layout against a Demucs vocal stem)
