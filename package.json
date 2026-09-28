@@ -1,0 +1,26 @@
+{
+  "name": "marat-lyric-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Kinetic-typography video for \"Gonna Need a Tub (For All This Blood)\"",
+  "scripts": {
+    "studio": "remotion studio",
+    "timing": "python3 timing/build_timing.py",
+    "render:chorus1": "remotion render src/index.ts Chorus1 out/chorus1-preview.mp4",
+    "render": "remotion render src/index.ts Full out/marat-lyric-video.mp4"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "@fontsource/libre-caslon-text": "^5.3.0",
+    "@fontsource/petit-formal-script": "^5.3.0",
+    "@remotion/cli": "4.0.529",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.0",
+    "typescript": "5.8.3"
+  }
+}

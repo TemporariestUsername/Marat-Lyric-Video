@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tap to Sync</title>
+<style>
+  :root { --paper:#efe4c8; --ink:#1b1712; --red:#9e1b14; --mute:#7a6e58; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.4 Georgia, serif; }
+  header { position:sticky; top:0; background:var(--ink); color:var(--paper); padding:12px 16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; z-index:2; }
+  header button, header label { font:inherit; background:var(--paper); color:var(--ink); border:0; padding:6px 10px; cursor:pointer; }
+  header input[type=file] { display:none; }
+  #clock { font-variant-numeric:tabular-nums; min-width:7ch; }
+  main { max-width:900px; margin:0 auto; padding:16px; }
+  .help { color:var(--mute); font-size:14px; }
+  .line { display:grid; grid-template-columns:5rem 6rem 1fr; gap:8px; padding:4px 8px; border-left:4px solid transparent; }
+  .line.next { border-left-color:var(--red); background:#e6d7b3; }
+  .line.done .t { color:var(--red); }
+  .line .id { color:var(--mute); font-size:13px; }
+  .t { font-variant-numeric:tabular-nums; cursor:pointer; }
+  .sec { margin-top:14px; font-weight:bold; text-transform:uppercase; letter-spacing:.08em; font-size:13px; color:var(--mute); }
+</style>
+</head>
+<body>
+<header>
+  <label>Song <input id="song" type="file" accept="audio/*"></label>
+  <label>Lyrics <input id="lyr" type="file" accept=".txt"></label>
+  <button id="play">Play / Pause (P)</button>
+  <span id="clock">0:00.00</span>
+  <button id="export">Export overrides.json</button>
+  <button id="exportFull">Export timing (lines).json</button>
+</header>
+<main>
+  <p class="help">Load the song and lyrics.txt. Press <b>Space</b> at the start of each line (the highlighted one).
+  <b>Backspace</b> undoes the last tap and jumps back 3 s. <b>←/→</b> seek 2 s. Click a timestamp to re-tap from that line
+  (playback jumps 2 s before it). Export <code>overrides.json</code>, save it as <code>timing/overrides.json</code>, then run
+  <code>npm run timing</code> — every tapped line replaces the aligned start (words shift with it).</p>
+  <div id="list"></div>
+</main>
+<audio id="audio"></audio>
+<script>
+const SECTIONS = ["caira_intro","verse1","prechorus","chorus1","verse2","spoken","chorus2","tribunal","answer","acquittal","chorus3","bath","corday","death","climax","caira_reprise"];
+const audio = document.getElementById('audio');
+let lines = [], taps = [], next = 0;
+const fmt = t => `${Math.floor(t/60)}:${(t%60).toFixed(2).padStart(5,'0')}`;
+
+document.getElementById('song').onchange = e => { audio.src = URL.createObjectURL(e.target.files[0]); };
+document.getElementById('lyr').onchange = async e => {
+  const txt = await e.target.files[0].text();
+  const blocks = txt.split(/\n\s*\n/).map(b => b.split('\n').map(s => s.trimEnd()).filter(Boolean)).filter(b => b.length);
+  lines = [];
+  blocks.forEach((b, bi) => b.forEach((text, j) => lines.push({ id: `${SECTIONS[bi] || 'block'+bi}.${j+1}`, sec: SECTIONS[bi] || 'block'+bi, text })));
+  taps = new Array(lines.length).fill(null); next = 0; render();
+};
+function render() {
+  const el = document.getElementById('list'); el.innerHTML = ''; let prev = null;
+  lines.forEach((l, i) => {
+    if (l.sec !== prev) { const s = document.createElement('div'); s.className = 'sec'; s.textContent = l.sec; el.appendChild(s); prev = l.sec; }
+    const d = document.createElement('div');
+    d.className = 'line' + (i === next ? ' next' : '') + (taps[i] != null ? ' done' : '');
+    d.innerHTML = `<span class="id">${l.id}</span><span class="t">${taps[i] != null ? fmt(taps[i]) : '—'}</span><span></span>`;
+    d.lastChild.textContent = l.text;
+    d.querySelector('.t').onclick = () => { next = i; if (taps[i] != null) audio.currentTime = Math.max(0, taps[i] - 2); render(); };
+    el.appendChild(d);
+    if (i === next) requestAnimationFrame(() => d.scrollIntoView({ block: 'center', behavior: 'smooth' }));
+  });
+}
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); if (next < lines.length) { taps[next] = +audio.currentTime.toFixed(3); next++; render(); } }
+  else if (e.code === 'Backspace') { e.preventDefault(); if (next > 0) { next--; taps[next] = null; audio.currentTime = Math.max(0, audio.currentTime - 3); render(); } }
+  else if (e.code === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 2);
+  else if (e.code === 'ArrowRight') audio.currentTime += 2;
+  else if (e.key === 'p' || e.key === 'P') audio.paused ? audio.play() : audio.pause();
+});
+document.getElementById('play').onclick = () => audio.paused ? audio.play() : audio.pause();
+(function tick(){ document.getElementById('clock').textContent = fmt(audio.currentTime || 0); requestAnimationFrame(tick); })();
+function download(name, obj) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(obj, null, 1)], { type: 'application/json' }));
+  a.download = name; a.click();
+}
+document.getElementById('export').onclick = () => {
+  const o = {}; lines.forEach((l, i) => { if (taps[i] != null) o[l.id] = taps[i]; }); download('overrides.json', o);
+};
+document.getElementById('exportFull').onclick = () => {
+  download('timing.json', { lines: lines.map((l, i) => ({ id: l.id, section: l.sec, text: l.text, start: taps[i], end: taps[i+1] ?? null })) });
+};
+</script>
+</body>
+</html>
