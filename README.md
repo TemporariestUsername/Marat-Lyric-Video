@@ -8,9 +8,12 @@ animation is driven by `timing.json` (line/word times + beat grid). No timestamp
 - `public/song.mp3` — the track; `public/tex/` — generated paper/stamp textures (`tools/gen_textures.py`)
 - `timing/` — timing pipeline
   - `beats.py` → `timing/beats.json` (librosa beat tracking)
-  - `align.py` → `timing/raw_alignment.json` (stable-ts forced alignment against a Demucs vocal stem)
+  - `align.py` → `timing/raw_alignment.json` (stable-ts: rough line layout against a Demucs vocal stem)
+  - `ctc_align.py` → `timing/ctc_alignment.json` (precise CTC forced alignment, torchaudio MMS_FA, per section)
+  - `refine_onsets.py` → `timing/refined_onsets.json` (final word onsets: CTC prior + vocal onsets + 16th-note
+    grid; repeated hooks fitted jointly; first words pulled to voice entries)
   - `realign_line.py` — re-align one line inside a window when the global pass slips
-  - `overrides.json` — manual line fixes (also what the tap tool exports)
+  - `overrides.json` — optional manual line fixes (what the tap tool exports); always wins
   - `build_timing.py` → `timing.json` + `timing/TIMING.md` (the spot-check table)
 - `tools/tap-sync.html` — open in a browser, load song + lyrics, press Space on each line start, export `overrides.json`
 - `src/` — Remotion project; `src/scenes/index.ts` lists scenes (boundaries derived from line times)
@@ -21,12 +24,16 @@ pip install librosa soundfile stable-ts demucs
 python3 -m demucs --two-stems=vocals -n htdemucs -o /tmp/sep public/song.mp3
 python3 timing/beats.py public/song.mp3
 python3 timing/align.py /tmp/sep/htdemucs/song/vocals.wav medium
+python3 timing/build_timing.py          # rough pass (needed by the next two)
+python3 timing/ctc_align.py /tmp/sep/htdemucs/song/vocals.wav
+python3 timing/refine_onsets.py /tmp/sep/htdemucs/song/vocals.wav
 python3 timing/build_timing.py
 ```
 
 **Beat grid note:** tempo averages ~129.2 BPM, but a single rigid grid drifts up to ~0.2 s off
 the beat in places (the phase wanders between sections), so the grid uses librosa's tracked beats
-instead. Word onsets snap to the nearest half-beat only when within 90 ms.
+instead. Vocal word onsets are not snapped to the grid (that pulled words off the voice); the grid
+drives the non-vocal motion.
 
 ## Rendering
 ```

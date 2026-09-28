@@ -4,6 +4,7 @@ Inputs
   assets/lyrics.txt            lyrics, one line per line, blank line between sections
   timing/raw_alignment.json    stable-ts word alignment (timing/align.py)
   timing/beats.json            beat grid (timing/beats.py)
+  timing/refined_onsets.json   final word onsets (timing/ctc_align.py + timing/refine_onsets.py)
   timing/overrides.json        optional manual fixes: {"<line id>": start_seconds}
                                or {"<line id>": {"start": s, "words": [s, s, ...]}}
                                (the tap-to-sync tool exports this format too)
@@ -11,16 +12,17 @@ Outputs
   timing.json                  everything the video needs (src/ imports this)
   timing/TIMING.md             human-readable line -> timestamp table
 
-Snapping: each word onset is moved to the nearest half-beat if it is within
-SNAP_TOL seconds of it; otherwise it keeps the aligned time. Line start = first
-word start. Line end = next line's start (capped at last word end + 1 beat).
+Word onsets come from timing/refined_onsets.json when present (CTC forced
+alignment refined against vocal-stem onsets); otherwise from stable-ts. Words
+are NOT snapped to the beat grid: snapping pulled sung words off the voice.
+A manual override (tap tool) always wins. Line start = first word start.
+Line end = next line's start (capped at last word end + 1 beat).
 
 Usage: python3 timing/build_timing.py
 """
 import json, os, re
 import numpy as np
 
-SNAP_TOL = 0.09
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = lambda *a: os.path.join(ROOT, *a)
 
@@ -57,12 +59,7 @@ assert len(blocks) == len(SECTIONS), f"{len(blocks)} lyric blocks vs {len(SECTIO
 
 beats = json.load(open(P("timing/beats.json")))
 bt = np.array(beats["beats"])
-half = np.sort(np.concatenate([bt, (bt[:-1] + bt[1:]) / 2]))
 period = beats["beatPeriod"]
-
-def snap(t):
-    i = int(np.argmin(np.abs(half - t)))
-    return (float(half[i]), True) if abs(half[i] - t) <= SNAP_TOL else (float(t), False)
 
 def beat_index(t):
     """Fractional beat index of time t on the tracked grid."""
@@ -75,6 +72,9 @@ segs = aln["segments"]
 flat_lines = [l for b in blocks for l in b]
 assert len(segs) == len(flat_lines), f"{len(segs)} aligned segments vs {len(flat_lines)} lyric lines"
 
+refined = {}
+if os.path.exists(P("timing/refined_onsets.json")):
+    refined = json.load(open(P("timing/refined_onsets.json")))
 overrides = {}
 if os.path.exists(P("timing/overrides.json")):
     overrides = json.load(open(P("timing/overrides.json")))
@@ -113,9 +113,9 @@ for (sid, sname), block in zip(SECTIONS, blocks):
         ov = overrides.get(lid)
         words = []
         for ti, (tok, w) in enumerate(zip(tokens, wt)):
-            s, snapped = snap(w["start"])
+            s = refined[lid][ti] if lid in refined and len(refined[lid]) == len(tokens) else w["start"]
             words.append({"text": tok, "start": round(s, 3), "rawStart": round(w["start"], 3),
-                          "snapped": snapped, "beat": round(beat_index(s), 2)})
+                          "beat": round(beat_index(s), 2)})
         source = "aligned"
         if ov is not None:
             source = "manual"
@@ -123,7 +123,7 @@ for (sid, sname), block in zip(SECTIONS, blocks):
             ov_words = None if isinstance(ov, (int, float)) else ov.get("words")
             if ov_words and len(ov_words) == len(words):
                 for w, s in zip(words, ov_words):
-                    w["start"] = round(float(s), 3); w["snapped"] = False
+                    w["start"] = round(float(s), 3)
             else:
                 # shift the whole line so its first word lands on the override
                 shift = ov_start - words[0]["start"]
@@ -180,7 +180,8 @@ def mmss(t):
 
 md = ["# Timing spot-check", "",
       f"Tempo ≈ {beats['bpm']} BPM (tracked beats; see README for why not a rigid grid). "
-      f"Word onsets snapped to the nearest half-beat when within {int(SNAP_TOL*1000)} ms.", "",
+      "Word onsets: CTC forced alignment (torchaudio MMS_FA) against the Demucs vocal stem, refined "
+      "to the nearest strong vocal onset; repeated lines (chorus hooks, ça ira) are fitted jointly.", "",
       "`conf` = mean whisper word probability for the line (alignment against the Demucs vocal stem). "
       "⚠ marks lines worth checking by ear.", ""]
 for s in sections_out:
