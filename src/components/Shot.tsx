@@ -4,6 +4,9 @@ import { useT } from "../time";
 import { Box, img } from "../images";
 import { frameT } from "../motion";
 import { C, H, W } from "../theme";
+import layerIndex from "../../public/img/layers-index.json";
+
+const LAYERS = layerIndex as Record<string, { n: number }>;
 
 /**
  * How the camera gets to a keyframe. Every move ARRIVES on its time (a word
@@ -136,8 +139,11 @@ export const Shot: React.FC<{
   creep?: number;
   dim?: number;
   nudge?: [number, number, number]; // external push (px, px, zoom fraction), e.g. a drum surge
+  parallax?: number; // depth separation of the print's layers (0 = flat); needs tools/layers.py output
+  drift?: [number, number]; // px/s the nearest layer drifts, so depth shows even on a hold
+  between?: React.ReactNode; // drawn behind the nearest layer (type the foreground passes in front of)
   children?: React.ReactNode;
-}> = ({ id, keys, creep = 0.012, dim = 0, nudge = [0, 0, 0], children }) => {
+}> = ({ id, keys, creep = 0.012, dim = 0, nudge = [0, 0, 0], parallax = 0, drift = [-44, -6], between, children }) => {
   const t = useT();
   const e = img(id);
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
@@ -156,15 +162,63 @@ export const Shot: React.FC<{
   const ghosts = [1, 2].map((k) => place(t - k / 30)).filter((g) => Math.hypot(g.x - now.x, g.y - now.y) + Math.abs(g.s / now.s - 1) * 900 > 14);
   const roll = rollAt(id, keys, t);
   const src = staticFile(`img/${id}.jpg`);
+  const n = parallax > 0 && LAYERS[id] ? LAYERS[id].n : 1;
+  // parallax reference: the camera as it was at the last cut (a cut resets depth)
+  const lastKey = [...keys].reverse().find((k) => frameT(k.at) <= t && (k.ease === "cut" || k === keys[0])) ?? keys[0];
+  const t0 = frameT(lastKey.at);
+  const ref = place(t0);
+  const since = Math.max(0, t - t0);
+  const layerBox = (d: number) => {
+    // nearer layers move further and scale faster than the camera
+    const k = parallax * d;
+    const z = Math.pow(now.s / ref.s, k);
+    const cx = W / 2,
+      cy = H / 2;
+    const s2 = now.s * z;
+    const x = cx - (cx - now.x) * z + (now.x - ref.x) * k + drift[0] * since * d;
+    const y = cy - (cy - now.y) * z + (now.y - ref.y) * k + drift[1] * since * d;
+    return { x, y, s: s2 * (1 + 0.012 * d) };
+  };
   return (
     <AbsoluteFill style={{ overflow: "hidden", backgroundColor: C.paper }}>
       <AbsoluteFill style={{ transform: roll ? `rotate(${roll}deg) scale(${1 + Math.abs(roll) * 0.012})` : undefined }}>
-        {ghosts.map((g, i) => (
-          <Img key={i} src={src} style={{ position: "absolute", left: g.x, top: g.y, width: e.w * g.s, height: e.h * g.s, opacity: 0.26 - i * 0.1 }} />
-        ))}
-        <Img src={src} style={{ position: "absolute", left: now.x, top: now.y, width: e.w * now.s, height: e.h * now.s, opacity: ghosts.length ? 0.86 : 1 }} />
+        {n === 1 ? (
+          <>
+            {ghosts.map((g, i) => (
+              <Img key={i} src={src} style={{ position: "absolute", left: g.x, top: g.y, width: e.w * g.s, height: e.h * g.s, opacity: 0.26 - i * 0.1 }} />
+            ))}
+            <Img src={src} style={{ position: "absolute", left: now.x, top: now.y, width: e.w * now.s, height: e.h * now.s, opacity: ghosts.length ? 0.86 : 1 }} />
+          </>
+        ) : (
+          Array.from({ length: n }, (_, d) => {
+            const b = d === 0 ? now : layerBox(d);
+            const file = staticFile(`img/layers/${id}_${d}.${d === 0 ? "jpg" : "png"}`);
+            return (
+              <React.Fragment key={d}>
+                {d === n - 1 && between ? (
+                  <AbsoluteFill>
+                    {dim > 0 ? <AbsoluteFill style={{ backgroundColor: C.ink, opacity: dim }} /> : null}
+                    {between}
+                  </AbsoluteFill>
+                ) : null}
+                <Img
+                  src={file}
+                  style={{
+                    position: "absolute",
+                    left: b.x,
+                    top: b.y,
+                    width: e.w * b.s,
+                    height: e.h * b.s,
+                    // the nearest layer casts a soft shadow onto what is behind it
+                    filter: d > 0 ? `drop-shadow(${10 * d}px ${14 * d}px ${12 * d}px rgba(10,6,3,0.4))${d === n - 1 && between ? ` brightness(${1 - dim * 0.8})` : ""}` : undefined,
+                  }}
+                />
+              </React.Fragment>
+            );
+          })
+        )}
       </AbsoluteFill>
-      {dim > 0 ? <AbsoluteFill style={{ backgroundColor: C.ink, opacity: dim }} /> : null}
+      {dim > 0 && !(n > 1 && between) ? <AbsoluteFill style={{ backgroundColor: C.ink, opacity: dim }} /> : null}
       {children}
     </AbsoluteFill>
   );

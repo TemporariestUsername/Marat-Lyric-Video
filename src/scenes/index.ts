@@ -4,8 +4,7 @@ import { DURATION, sectionLines } from "../timing";
 import { Chorus } from "./Chorus";
 import { PressRoom } from "./PressRoom";
 import { Board } from "./Board";
-import { Verse1Space } from "./Verse1Space";
-import { INTRO, VERSE2, SPOKEN, TRIBUNAL, ACQUITTAL, BATH, CLIMAX } from "./boards";
+import { INTRO, VERSE1, VERSE2, SPOKEN, TRIBUNAL, ACQUITTAL, BATH, CLIMAX } from "./boards";
 import { SceneDef } from "./types";
 
 const first = (sid: string) => sectionLines(sid)[0].start;
@@ -13,7 +12,7 @@ const first = (sid: string) => sectionLines(sid)[0].start;
 type Spec = Omit<SceneDef, "end">;
 const specs: Spec[] = [
   { id: "intro", start: 0, Comp: Board, opts: { shots: INTRO, punch: 0.4 } },
-  { id: "verse1", start: first("verse1") - 0.1, Comp: Verse1Space, opts: {} },
+  { id: "verse1", start: first("verse1") - 0.1, Comp: Board, opts: { shots: VERSE1, punch: 0.35 } },
   { id: "prechorus", start: first("prechorus") - 0.25, Comp: PressRoom, opts: { section: "prechorus", fx: 1.0 } },
   { id: "chorus1", start: first("chorus1") - 0.15, Comp: Chorus, opts: { section: "chorus1", numeral: [{ word: 0, text: "5" }, { word: 1, text: "500" }], heaviness: 1, pageTurnOut: true, fx: 1.4 } },
   { id: "verse2", start: first("verse2") - 0.2, Comp: Board, opts: { shots: VERSE2, punch: 0.4, shake: 18 } },

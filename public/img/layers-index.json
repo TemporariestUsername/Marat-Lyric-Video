@@ -1,0 +1,30 @@
+{
+ "carceri_drawbridge": {
+  "n": 3,
+  "method": "density"
+ },
+ "carceri_smoke": {
+  "n": 3,
+  "method": "density"
+ },
+ "carceri_tower": {
+  "n": 3,
+  "method": "density"
+ },
+ "boze_marat": {
+  "n": 2,
+  "method": "cut"
+ },
+ "comite_revolutionnaire": {
+  "n": 3,
+  "method": "density"
+ },
+ "prise_bastille_1789": {
+  "n": 3,
+  "method": "density"
+ },
+ "encyc_casse": {
+  "n": 3,
+  "method": "density"
+ }
+}

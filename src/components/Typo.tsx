@@ -373,7 +373,7 @@ export const Rise: React.FC<TypoProps & { waterY?: number }> = ({ ln, t, waterY 
 
 // ---------------------------------------------------------------- T3 FEVER (YOURS)
 /** The fever builds as heat haze; the shouted word comes straight at the lens and fills the frame. */
-export const Lens: React.FC<TypoProps> = ({ ln, t }) => {
+export const Lens: React.FC<TypoProps & { heroY?: number; restY?: number; heroW?: number }> = ({ ln, t, heroY = 540, restY = 880, heroW = 0.98 }) => {
   const face: Face = { family: F.fell, size: 116 };
   const hero = ln.words.find((w) => isShout(w.text)) ?? ln.words[ln.words.length - 1];
   const rest = ln.words.filter((w) => w !== hero);
@@ -386,23 +386,23 @@ export const Lens: React.FC<TypoProps> = ({ ln, t }) => {
   const hz = hit ? easeOut(prog(t, heroT - 0.02, 0.18)) : 0;
   const hf: Face = { family: F.didone, size: 300, weight: 900 };
   const hw = widthOf(hero.text, hf);
-  const target = (W * 0.98) / hw;
+  const target = (W * heroW) / hw;
   return (
     <AbsoluteFill>
       <Haze id={id} scale={4 + 22 * fever * fever} />
       <Haze id={`${id}-hero`} scale={5 + 4 * kickPulse(t, 0.15)} freq="0.006 0.04" />
-      <div style={{ position: "absolute", inset: 0, transformOrigin: `${W / 2}px 880px`, transform: `scale(${s})`, filter: `url(#${id})`, opacity: 1 - hz }}>
+      <div style={{ position: "absolute", inset: 0, transformOrigin: `${W / 2}px ${restY}px`, transform: `scale(${s})`, filter: `url(#${id})`, opacity: 1 - hz }}>
         {rest.map((w, i) => {
           const a = arrive(t, w.start, 0.07, 0.3);
           return a.shown ? (
-            <Txt key={i} face={face} x={W / 2 - width / 2 + xs[i]} y={880} style={{ ...onDark, opacity: a.p }}>
+            <Txt key={i} face={face} x={W / 2 - width / 2 + xs[i]} y={restY} style={{ ...onDark, opacity: a.p }}>
               {w.text}
             </Txt>
           ) : null;
         })}
       </div>
       {hit ? (
-        <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
+        <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", transform: `translateY(${heroY - H / 2}px)` }}>
           <div
             style={{
               fontFamily: hf.family,

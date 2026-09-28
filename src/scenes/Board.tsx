@@ -49,6 +49,9 @@ export type ShotSpec = {
   title?: string; // a printed card (the song title), not a lyric
   typo?: React.FC<TypoProps & Record<string, any>>; // a type behaviour draws the line instead of the headline
   typoProps?: Record<string, any>;
+  parallax?: number; // depth separation of the print's layers (default 0.45 where layers exist)
+  behind?: boolean; // the type sits behind the print's nearest layer
+  drift?: [number, number];
 };
 
 type Resolved = ShotSpec & { start: number; end: number; ln?: Line };
@@ -132,9 +135,32 @@ const ShotView: React.FC<{ r: Resolved; t: number }> = ({ r, t }) => {
   const kind = r.type ?? "print";
   const tp = typeFor(kind);
   const pl = PLACE[r.place ?? "bottom"];
+  const typeEl =
+    r.ln && r.typo ? (
+      <r.typo ln={r.ln} t={t} {...(r.typoProps ?? {})} />
+    ) : r.ln && kind !== "none" ? (
+      <Headline
+        line={r.ln}
+        face={tp.face}
+        faceFor={(w) => (isShout(w.text) ? tp.shout : undefined)}
+        styleFor={tp.style}
+        maxRowWidth={pl.fitW * 1.05}
+        lineHeight={1.3}
+        cx={pl.cx}
+        cy={pl.cy}
+        fitW={pl.fitW}
+        fitH={pl.fitH}
+        maxScale={1.15}
+        dir={kind === "hand" || kind === "whisper" || kind === "judge" ? [0, 0] : [1, 0]}
+        exitAt={r.end}
+      />
+    ) : null;
+  const behind = !!r.behind && !r.black && !!r.img;
   return (
     <AbsoluteFill style={{ backgroundColor: C.night }}>
-      {!r.black && r.img ? <Shot id={r.img} keys={keysFor(r)} dim={r.dark ?? 0.25} creep={0.02} /> : null}
+      {!r.black && r.img ? (
+        <Shot id={r.img} keys={keysFor(r)} dim={r.dark ?? 0.25} creep={0.02} parallax={r.parallax ?? 0.7} drift={r.drift} between={behind ? typeEl : undefined} />
+      ) : null}
       {r.candle ? (
         <>
           <AbsoluteFill style={{ background: `radial-gradient(circle at ${r.candle[0] * 100}% ${r.candle[1] * 100}%, rgba(14,10,7,0) 0px, rgba(14,10,7,0.2) 240px, rgba(14,10,7,0.8) 700px, rgba(14,10,7,0.95) 1200px)` }} />
@@ -150,24 +176,7 @@ const ShotView: React.FC<{ r: Resolved; t: number }> = ({ r, t }) => {
           </div>
         </AbsoluteFill>
       ) : null}
-      {r.ln && r.typo ? <r.typo ln={r.ln} t={t} {...(r.typoProps ?? {})} /> : null}
-      {r.ln && kind !== "none" && !r.typo ? (
-        <Headline
-          line={r.ln}
-          face={tp.face}
-          faceFor={(w) => (isShout(w.text) ? tp.shout : undefined)}
-          styleFor={tp.style}
-          maxRowWidth={pl.fitW * 1.05}
-          lineHeight={1.3}
-          cx={pl.cx}
-          cy={pl.cy}
-          fitW={pl.fitW}
-          fitH={pl.fitH}
-          maxScale={1.15}
-          dir={kind === "hand" || kind === "whisper" || kind === "judge" ? [0, 0] : [1, 0]}
-          exitAt={r.end}
-        />
-      ) : null}
+      {behind ? null : typeEl}
     </AbsoluteFill>
   );
 };

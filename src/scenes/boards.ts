@@ -73,7 +73,7 @@ export const VERSE1: ShotSpec[] = [
   // T3: rising out of the water, burning, blotted with sores
   { line: ["verse1", 6], img: "carceri_tower", from: [0.0, 0.55, 1.0, 1.0], to: [0.0, 0.0, 1.0, 0.45], move: "glide", dark: 0.4, typo: Rise },
   // T3: the fever builds; YOURS at the lens
-  { line: ["verse1", 7], img: "boze_marat", from: BOZE.face, to: BOZE.eyes, dark: 0.3, typo: Lens },
+  { line: ["verse1", 7], img: "boze_marat", from: [0.0, 0.0, 1.0, 0.66], to: [0.04, 0.02, 0.96, 0.62], dark: 0.3, typo: Lens, typoProps: { heroY: 235, restY: 120, heroW: 0.94 }, behind: true, parallax: 0.8, drift: [-14, -4] },
 ];
 
 // ---- Verse 2: September
