@@ -39,7 +39,7 @@ html = f"""<title>Marat Chorus Preview</title>
       <li><span class="t">0:05</span> “that's why they listen… BELIEVE”: Marat nods on the kick while the camera steps closer on every word. The push speeds up bar by bar. His head jerks back on BELIEVE and the camera dives into his eye.</li>
       <li><span class="t">0:09</span> FIVE HUNDRED HEADS!: the camera counts the heads on pikes. The moves overshoot and spring back, leaving a speed trail. The tally rolls up like a counter (5 … 500) and pumps on every kick. While a frame holds, it cuts on the kick between wide and tight on the same heads.</li>
       <li><span class="t">0:11</span> (AMPUTATE!) throws the top half of the picture up and away. The wound breathes open on each kick.</li>
-      <li><span class="t">0:12</span> The repeat counts again, mirrored, on the 1789 heads. (OPERATE!) slams the halves shut, and the stitches go in one per drum hit.</li>
+      <li><span class="t">0:12</span> The repeat counts again, mirrored, on the 1789 heads. (OPERATE!) is the surgeon: the heads are excised, lifted out of the frame for good, and the body that remains is cauterised and sutured on the drum hits.</li>
       <li><span class="t">0:14</span> “Apply the blade”: the camera falls with the blade and stops dead with a flash of steel. The flood rises in surges on the kick.</li>
       <li><span class="t">0:16</span> “WE'RE GONNA NEED A TUB”: Marat's bath, cutting on the kick, then BLOOD floods it.</li>
     </ol>

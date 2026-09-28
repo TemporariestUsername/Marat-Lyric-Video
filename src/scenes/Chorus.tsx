@@ -87,7 +87,8 @@ export const CHORUS1_BOARDS: ChorusBoards = {
  *     while the tally builds 5 -> 500. (AMPUTATE!) cuts the whole frame through at
  *     neck height and wrenches the top away.
  *  2  the same count, mirrored, on the 1789 heads, seen through the wound;
- *     (OPERATE!) slams the halves together and stitches them in blood.
+ *     (OPERATE!) the surgeon excises the heads: the top is lifted out of frame for
+ *     good, and the body that remains is cauterised and sutured on the drums.
  *  3  Apply the blade: on the guillotine's crossbeam; on "blade" the camera drops
  *     with the blade to the lunette and stops dead; "loose the flood" lets the red in.
  *  4  WE'RE GONNA NEED A TUB: Marat's room (the 1793 assassination plate); on TUB the
@@ -227,7 +228,7 @@ export const Chorus: SceneComp = ({ scene }) => {
         {t < frameT(l3.start) ? (
           <>
             {/* the print is the body that gets cut; the type stays whole above it */}
-            <Cut at={amputate} joinAt={operate} seam={[560, 500]}>
+            <Cut at={amputate} exciseAt={operate} seam={[560, 500]}>
               {t < frameT(l2.start) ? countShot(keysA, B.count1, +1) : countShot(keysB, B.count2, -1)}
             </Cut>
             {t < frameT(l2.start) ? countType(l1, s1.main, m1, +1) : countType(l2, s2.main, m2, -1)}
