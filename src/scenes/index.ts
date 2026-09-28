@@ -15,7 +15,7 @@ type Spec = Omit<SceneDef, "end">;
 const withTub = (tub: ChorusBoards["tub"]): ChorusBoards => ({ ...CHORUS1_BOARDS, tub });
 const TUB1 = withTub({ id: "supplice_louis", wide: [0, 0, 1, 1], tub: [0.3, 0.3, 0.7, 0.85] });
 const TUB2 = withTub({ id: "abbaye_massacre", wide: [0.0, 0.05, 1.0, 0.95], tub: [0.3, 0.45, 1.0, 0.95] });
-const TUB3 = withTub({ id: "corday_portrait", wide: [0.05, 0.05, 0.95, 0.85], tub: [0.36, 0.14, 0.7, 0.4] });
+const TUB3 = withTub({ id: "corday_c42212", wide: [0.0, 0.0, 1.0, 0.85], tub: [0.3, 0.08, 0.72, 0.4] });
 const specs: Spec[] = [
   { id: "intro", start: 0, Comp: Board, opts: { shots: INTRO, punch: 0.4 } },
   { id: "verse1", start: first("verse1") - 0.1, Comp: Board, opts: { shots: VERSE1, punch: 0.35 } },

@@ -93,7 +93,7 @@ export const SPOKEN: ShotSpec[] = [
 // ---- The tribunal, and Marat's answer
 export const TRIBUNAL: ShotSpec[] = [
   { line: ["tribunal", 0], img: "fouquier_tribunal", from: [0.05, 0.05, 0.95, 0.7], to: [0.2, 0.25, 0.8, 0.6], dark: 0.45, type: "judge", place: "top", fade: 0.6 },
-  { line: ["tribunal", 1], img: "corday_trial", from: [0.3, 0.1, 0.6, 0.5], to: [0.0, 0.2, 0.4, 0.8], dark: 0.45, type: "judge", place: "top" },
+  { line: ["tribunal", 1], img: "fouquier_tribunal", from: [0.3, 0.55, 0.95, 0.95], to: [0.0, 0.55, 0.6, 0.95], dark: 0.45, type: "judge", place: "top" },
   { line: ["answer", 0], img: "boze_marat", from: BOZE.face, cuts: [BOZE.eyes, BOZE.eyes, BOZE.eye, BOZE.eye, BOZE.eye, BOZE.eye], to: BOZE.eye, dark: 0.2 },
   { line: ["answer", 1], img: "marat_geneve", from: GENEVE.face, cuts: [GENEVE.eye], dark: 0.2 },
 ];
@@ -107,7 +107,12 @@ export const ACQUITTAL: ShotSpec[] = [
 ];
 
 // Corday's portrait (framed engraving): her face, and what she holds in her right hand
-const CORDAY = { face: [0.4, 0.17, 0.66, 0.36] as Box, hand: [0.3, 0.46, 0.5, 0.62] as Box };
+const CORDAY = {
+  hat: { all: [0.02, 0.0, 0.98, 0.72] as Box, face: [0.28, 0.14, 0.72, 0.44] as Box }, // Carnavalet G.42196, the oval
+  bonnet: { all: [0.05, 0.0, 0.95, 0.75] as Box, face: [0.3, 0.16, 0.72, 0.48] as Box }, // G.42210
+  knife: { all: [0.0, 0.05, 1.0, 0.75] as Box, hand: [0.48, 0.5, 0.9, 0.76] as Box }, // G.42197: the knife in her hand
+  hauer: { all: [0.05, 0.08, 0.95, 0.85] as Box, face: [0.22, 0.2, 0.78, 0.6] as Box }, // painted in her cell, 1793
+};
 
 // ---- The bath, Corday, the death
 export const BATH: ShotSpec[] = [
@@ -116,18 +121,19 @@ export const BATH: ShotSpec[] = [
   { line: ["bath", 2], img: "boze_marat", from: BOZE.face, to: BOZE.eyes, dark: 0.45, candle: [0.3, 0.6], type: "whisper" },
   { line: ["bath", 3], img: "ami_du_peuple_n4", from: PAPER.columns, to: PAPER.foot, dark: 0.4, type: "whisper" },
   // Corday arrives. Marat is alive and singing until her first line: no death on screen before it.
-  { line: ["corday", 0], img: "corday_portrait", from: [0.1, 0.0, 0.9, 0.6], to: [0.2, 0.05, 0.8, 0.5], dark: 0.3, type: "whisper", fade: 0.4 },
-  { line: ["corday", 1], img: "corday_portrait", from: [0.25, 0.1, 0.75, 0.45], to: CORDAY.face, dark: 0.3, type: "whisper" },
+  { line: ["corday", 0], img: "corday_c42196", from: CORDAY.hat.all, to: CORDAY.hat.face, dark: 0.3, type: "whisper", fade: 0.4 },
+  { line: ["corday", 1], img: "corday_c42210", from: CORDAY.bonnet.all, to: CORDAY.bonnet.face, dark: 0.3, type: "whisper" },
   { line: ["corday", 2], img: "ami_du_peuple_n4", from: PAPER.columns, to: PAPER.date, dark: 0.4, type: "whisper" },
   { line: ["corday", 3], img: "hell_broke_loose", from: [0.1, 0.0, 0.8, 0.75], to: [0.31, 0.0, 0.52, 0.17], dark: 0.35, type: "whisper" },
   // the knife (instrumental): onto what is in her hand, then black, and the blood rises. Marat is not seen.
-  { bars: 2, img: "corday_portrait", from: CORDAY.face, to: CORDAY.hand, dark: 0.35, soak: [0, 0.2] },
+  { bars: 2, img: "corday_c42197", from: CORDAY.knife.all, to: CORDAY.knife.hand, dark: 0.35, soak: [0, 0.2] },
   { bars: 3, black: true, soak: [0.2, 0.85] },
   // David: the whole last address, one slow look at the painting
   { line: ["death", 0], img: "david_marat", from: DAVID.dark, to: DAVID.face, dark: 0.35, type: "whisper", fade: 1.2 },
   { line: ["death", 1], img: "david_marat", from: DAVID.face, to: DAVID.bath, dark: 0.3, type: "whisper", fade: 0.8 },
   { line: ["death", 2], img: "david_marat", from: DAVID.letter, to: [0.4, 0.2, 0.7, 0.35], dark: 0.3, type: "whisper", fade: 0.8 },
-  { line: ["death", 3], img: "david_marat", from: DAVID.quill, to: DAVID.wound, dark: 0.3, type: "whisper", fade: 0.8 },
+  // her own words (she said as much at her trial): Hauer's portrait, painted in her cell
+  { line: ["death", 3], img: "corday_hauer", from: CORDAY.hauer.all, to: CORDAY.hauer.face, dark: 0.3, type: "whisper", fade: 0.6 },
   { line: ["death", 4], img: "david_marat", from: DAVID.wound, to: [0.2, 0.25, 0.4, 0.38], dark: 0.3, type: "whisper", fade: 0.8 },
   { line: ["death", 5], img: "david_marat", from: DAVID.inscription, to: DAVID.all, dark: 0.3, type: "whisper", fade: 0.8 },
   { bars: 1, black: true },

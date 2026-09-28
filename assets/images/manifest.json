@@ -427,6 +427,76 @@
    "ref": "File:Planche encyclopédie imprimerie 8 Développement de la presse.jpg",
    "use": "the press taken apart (Encyclopédie)",
    "hires": true
+  },
+  {
+   "id": "corday_c42196",
+   "src": "commons",
+   "ref": "File:M. A. Charlotte Corday, G.42196.jpg",
+   "use": "Corday: period portrait print (Carnavalet)",
+   "hires": true
+  },
+  {
+   "id": "corday_c42197",
+   "src": "commons",
+   "ref": "File:M. A. Charlotte Corday, G.42197.jpg",
+   "use": "Corday: period portrait print (Carnavalet)",
+   "hires": true
+  },
+  {
+   "id": "corday_c42210",
+   "src": "commons",
+   "ref": "File:Charlotte Corday, G.42210.jpg",
+   "use": "Corday: period portrait print (Carnavalet)",
+   "hires": true
+  },
+  {
+   "id": "corday_c42211",
+   "src": "commons",
+   "ref": "File:Charlotte Corday, G.42211.jpg",
+   "use": "Corday: period portrait print (Carnavalet)",
+   "hires": true
+  },
+  {
+   "id": "corday_c42212",
+   "src": "commons",
+   "ref": "File:Charlotte Corday, G.42212.jpg",
+   "use": "Corday: period portrait print (Carnavalet)",
+   "hires": true
+  },
+  {
+   "id": "corday_c42218",
+   "src": "commons",
+   "ref": "File:Charlotte Corday, G.42218.jpg",
+   "use": "Corday: period portrait print (Carnavalet)",
+   "hires": true
+  },
+  {
+   "id": "corday_hauer",
+   "src": "commons",
+   "ref": "File:AR-Corday-Heuer.jpg",
+   "use": "Corday: Hauer's portrait, painted in her cell, 1793",
+   "hires": true
+  },
+  {
+   "id": "corday_michelena",
+   "src": "commons",
+   "ref": "File:Carlota Corday 1889 by Arturo Michelena.jpg",
+   "use": "Corday led to execution (Michelena, 1889)",
+   "hires": true
+  },
+  {
+   "id": "corday_ward",
+   "src": "commons",
+   "ref": "File:Edward Matthew Ward - La Toilette des Morts - Charlotte Corday in the Prison of the Conciergerie.jpg",
+   "use": "Corday in the Conciergerie (Ward, 1863)",
+   "hires": true
+  },
+  {
+   "id": "corday_bertrand",
+   "src": "commons",
+   "ref": "File:Jean-Baptiste Bertrand Johann Jakob Hauer porträtiert Charlotte Corday in ihrer Zelle.jpg",
+   "use": "Hauer portrays Corday in her cell (Bertrand)",
+   "hires": true
   }
  ]
 }
