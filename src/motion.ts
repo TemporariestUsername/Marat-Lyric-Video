@@ -62,3 +62,19 @@ export const camera = (t: number, anchor: number, amt = 1) => {
 
 export const cameraTransform = (c: { x: number; y: number; rot: number; zoom: number }) =>
   `translate(${c.x}px, ${c.y}px) rotate(${c.rot}deg) scale(${c.zoom})`;
+
+/**
+ * Jaw opening 0..1 for a silhouette singing these words: snaps open on each
+ * onset (a frame early, like a real mouth) and closes; shouted words open wider.
+ */
+export const mouth = (t: number, words: { text: string; start: number }[]): number => {
+  let m = 0;
+  for (const w of words) {
+    const d = t - frameT(w.start);
+    if (d < -0.05 || d > 0.45) continue;
+    const loud = /[A-Z]{2,}/.test(w.text) ? 1 : 0.6;
+    const open = d < 0 ? (d + 0.05) / 0.05 : Math.exp(-d / (loud > 0.9 ? 0.22 : 0.12));
+    m = Math.max(m, open * loud);
+  }
+  return Math.min(1, m);
+};

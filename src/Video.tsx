@@ -3,7 +3,8 @@ import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig } from
 import "./fonts";
 import { TimeProvider } from "./time";
 import { SCENES, sceneIndexAt } from "./scenes";
-import { easeInOut, prog } from "./timing";
+import { TIMING, easeInOut, isShout, prog } from "./timing";
+import { FX } from "./components/FX";
 
 const TURN = 0.42;
 
@@ -20,12 +21,21 @@ export const MaratVideo: React.FC<{ startSec: number }> = ({ startSec }) => {
   const prev = i > 0 ? SCENES[i - 1] : null;
   const turning = prev?.opts.pageTurnOut && t < scene.start + TURN;
   const Prev = prev?.Comp;
+  // energy layer: all hits derived from the lyric timing inside this scene
+  const fx: number = scene.opts.fx ?? 0.6;
+  const inScene = TIMING.lines.filter((l) => l.start >= scene.start - 0.05 && l.start < scene.end);
+  const words = inScene.flatMap((l) => l.words);
+  const strobes = fx >= 0.9 ? words.filter((w) => isShout(w.text) && !/^\(|BLOOD/.test(w.text)).map((w) => w.start) : [];
+  const glitches = fx >= 0.9 ? inScene.map((l) => l.start) : [];
+  const flashes = words.filter((w) => /BLOOD|^\(/.test(w.text)).map((w) => w.start);
   const k = turning ? easeInOut(prog(t, scene.start, TURN)) : 0;
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <Audio src={staticFile("song.mp3")} trimBefore={Math.round(startSec * fps)} />
       <TimeProvider t={t}>
-        <Comp scene={scene} />
+        <FX amount={fx} strobes={strobes} glitches={glitches} flashes={flashes}>
+          <Comp scene={scene} />
+        </FX>
       </TimeProvider>
       {turning && Prev && prev ? (
         <AbsoluteFill style={{ perspective: 2200 }}>

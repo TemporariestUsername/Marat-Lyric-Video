@@ -27,30 +27,31 @@ html = f"""<title>Marat Chorus Preview</title>
 </style>
 <main>
   <header>
-    <span class="sc">L'Ami du peuple · second pass</span>
+    <span class="sc">L'Ami du peuple · third pass</span>
     <h1>Gonna Need a Tub <em>(For All This Blood)</em></h1>
     <span class="sc">Chorus 1 · 1:07 – 1:25 of the song</span>
   </header>
   <section>
-    <h2>Chorus 1, redesigned</h2>
+    <h2>Chorus 1, third pass: more energy</h2>
     <video id="chorus" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(chorus)}"></video>
     <ol>
-      <li><span class="t">0:00</span> Pre-chorus in the print shop: the press platen strikes on every sung word.</li>
-      <li><span class="t">0:05</span> On “FIVE” the page tears open onto the crowd; the engraved 500 lands.</li>
-      <li><span class="t">0:06</span> The hook builds word by word; (AMPUTATE!) and (OPERATE!) stamp in blood.</li>
+      <li><span class="t">0:00</span> Marat, in silhouette, spits the pre-chorus in the print shop; the press slams on the kick and on every word; the camera rushes into the page.</li>
+      <li><span class="t">0:05</span> The page rips open onto the mob. Every shouted word slams full-frame with strobes; Marat headbangs and screams it.</li>
+      <li><span class="t">0:06</span> (AMPUTATE!) and (OPERATE!) stamp across the whole frame with a blood flash.</li>
       <li><span class="t">0:10</span> The guillotine blade drops on “blade” and cuts the board in two.</li>
-      <li><span class="t">0:12</span> The headline slams in; BLOOD bleeds down from its letters.</li>
-      <li><span class="t">0:15</span> The page turns to verse 2.</li>
+      <li><span class="t">0:12</span> The headline slams word by word, BLOOD flashes the frame red, then the whole headline bleeds.</li>
+      <li><span class="t">0:15</span> Page turn to verse 2, with Marat singing from the corner.</li>
     </ol>
+    <p>Camera punches, shakes and the crowd's moshing are driven by the kick and snare from the separated drum track, so they land on the real drums.</p>
   </section>
   <section>
     <h2>Sync check</h2>
-    <p>The same stretch of song with each word flashing red on the frame the video treats as its onset. Every flash should land on the start of the sung word. Note any word that looks early or late.</p>
+    <p>The same stretch of song with each word flashing red on the frame the video treats as its onset. Every flash should land on the start of the sung word. Watch this one with sound whenever you can and note any word that looks early or late.</p>
     <video id="sync" controls playsinline preload="auto" src="data:video/mp4;base64,{b64(sync)}"></video>
   </section>
   <section>
     <h2>Silhouettes</h2>
-    <p>Drawn in the cover's paper-cut style: the hand press, the guillotine and its blade, and the crowd with bonnets rouges, tricornes and pikes. Marat and Corday come next, as profile busts.</p>
+    <p>Drawn in the cover's paper-cut style: Marat in his kerchief (with a hinged jaw, so he can sing and scream), the hand press, the guillotine blade, and the crowd with bonnets rouges, tricornes and pikes. Corday comes next.</p>
     <img alt="Silhouette sheet: printing press, guillotine, blade, crowd with pikes" src="data:image/jpeg;base64,{b64(sil)}">
   </section>
 </main>

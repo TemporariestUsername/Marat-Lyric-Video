@@ -12,7 +12,7 @@ export type Exit = "up" | "down" | "left" | "right" | "zoom" | "none";
 export type Face = { family: string; size: number; weight?: number; italic?: boolean; spacing?: number };
 
 const cache = new Map<string, number>();
-const widthOf = (text: string, f: Face) => {
+export const widthOf = (text: string, f: Face) => {
   const key = `${text}|${f.family}|${f.size}|${f.weight}|${f.italic}|${f.spacing}`;
   let w = cache.get(key);
   if (w === undefined) {

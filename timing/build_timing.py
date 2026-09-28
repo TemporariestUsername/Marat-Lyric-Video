@@ -5,6 +5,7 @@ Inputs
   timing/raw_alignment.json    stable-ts word alignment (timing/align.py)
   timing/beats.json            beat grid (timing/beats.py)
   timing/refined_onsets.json   final word onsets (timing/ctc_align.py + timing/refine_onsets.py)
+  timing/drums.json            kick/snare hits from the Demucs drum stem (timing/drums.py)
   timing/overrides.json        optional manual fixes: {"<line id>": start_seconds}
                                or {"<line id>": {"start": s, "words": [s, s, ...]}}
                                (the tap-to-sync tool exports this format too)
@@ -72,6 +73,7 @@ segs = aln["segments"]
 flat_lines = [l for b in blocks for l in b]
 assert len(segs) == len(flat_lines), f"{len(segs)} aligned segments vs {len(flat_lines)} lyric lines"
 
+drums = json.load(open(P("timing/drums.json"))) if os.path.exists(P("timing/drums.json")) else {}
 refined = {}
 if os.path.exists(P("timing/refined_onsets.json")):
     refined = json.load(open(P("timing/refined_onsets.json")))
@@ -170,6 +172,8 @@ out = {
     "beats": beats["beats"],
     "downbeats": beats["downbeats"],
     "energy": beats["energy"],
+    "kicks": drums.get("kicks", []),
+    "snares": drums.get("snares", []),
     "sections": sections_out,
     "lines": lines_out,
 }

@@ -21,6 +21,8 @@ type Timing = {
   beatPeriod: number;
   beats: number[];
   energy: { step: number; values: number[] };
+  kicks: [number, number][];
+  snares: [number, number][];
   sections: Section[];
   lines: Line[];
 };
@@ -133,3 +135,30 @@ export const isShout = (tok: string): boolean => {
   const letters = tok.replace(/[^A-Za-zÀ-ÿ]/g, "");
   return letters.length >= 2 && letters === letters.toUpperCase();
 };
+
+// ---- drums (from the separated drum stem): the visuals hit the real kicks and snares
+const kickT = TIMING.kicks.map((k) => k[0]);
+const snareT = TIMING.snares.map((k) => k[0]);
+const lastIdx = (arr: number[], t: number) => {
+  let lo = 0,
+    hi = arr.length - 1,
+    r = -1;
+  while (lo <= hi) {
+    const m = (lo + hi) >> 1;
+    if (arr[m] <= t) {
+      r = m;
+      lo = m + 1;
+    } else hi = m - 1;
+  }
+  return r;
+};
+/** 1 on a kick (scaled by its strength), decaying. */
+export const kickPulse = (t: number, decay = 0.09): number => {
+  const i = lastIdx(kickT, t);
+  return i < 0 ? 0 : TIMING.kicks[i][1] * Math.exp(-(t - kickT[i]) / decay);
+};
+export const snarePulse = (t: number, decay = 0.08): number => {
+  const i = lastIdx(snareT, t);
+  return i < 0 ? 0 : TIMING.snares[i][1] * Math.exp(-(t - snareT[i]) / decay);
+};
+export const kicksBetween = (a: number, b: number) => kickT.filter((x) => x >= a && x < b);

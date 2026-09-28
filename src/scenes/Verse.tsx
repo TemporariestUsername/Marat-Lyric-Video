@@ -5,8 +5,10 @@ import { Paper } from "../components/Paper";
 import { Masthead } from "../components/Masthead";
 import { KineticLine, engraved } from "../components/Kinetic";
 import { Stamp } from "../components/Stamp";
-import { camera, cameraTransform } from "../motion";
-import { isShout, rnd, sectionLines, shake } from "../timing";
+import { camera, cameraTransform, mouth } from "../motion";
+import { Marat } from "../silhouettes/Marat";
+import { cutShadow } from "../components/Paper";
+import { isShout, kickPulse, rnd, sectionLines, shake } from "../timing";
 import { C } from "../theme";
 import { F } from "../fonts";
 import { SceneProps } from "./types";
@@ -25,8 +27,9 @@ export const Verse: React.FC<SceneProps> = ({ scene }) => {
   const lines = sectionLines(o.section);
   const cur = lines.findIndex((l, k) => l.start - 0.2 <= t && (k + 1 >= lines.length || lines[k + 1].start - 0.2 > t));
   const hits = lines.flatMap((l) => l.words.filter((w) => isShout(w.text) || o.denounce?.includes(l.id)).map((w) => w.start));
-  const sh = shake(t, hits, 12, 0.14);
-  const cam = camera(t, lines[0].start, 1.2);
+  const sh = shake(t, hits, 20, 0.12);
+  const cam = camera(t, lines[0].start, 1.6);
+  const k = kickPulse(t, 0.14);
   // the sheet slides a little with each new line, so the page itself keeps moving
   const lineIdx = Math.max(0, cur);
   const slideX = (rnd(o.section, lineIdx) - 0.5) * 80;
@@ -57,6 +60,10 @@ export const Verse: React.FC<SceneProps> = ({ scene }) => {
             seed={`${l.id}${k}`}
           />
         ))}
+        {/* Marat sings the verse from the bottom corner, headbanging on the kick */}
+        <div style={{ position: "absolute", inset: 0, filter: cutShadow, transform: `translate(${-cam.x * 0.5}px, ${k * 16}px)` }}>
+          <Marat width={640} nod={12 * k} jaw={mouth(t, lines.flatMap((l) => l.words))} style={{ left: -90, top: 420 }} />
+        </div>
         {cur >= 0 ? (
           <KineticLine
             key={lines[cur].id}
@@ -64,14 +71,14 @@ export const Verse: React.FC<SceneProps> = ({ scene }) => {
             face={{ family: F.fell, size: 108 }}
             faceFor={(w) => (isShout(w.text) ? { family: F.didone, weight: 900, size: 132 } : undefined)}
             styleFor={(w) => (isShout(w.text) ? engraved({ tint: C.ink, tile: 1, stroke: 2 }) : undefined)}
-            entrance={cur % 2 ? "drop" : "print"}
-            entranceFor={(w) => (isShout(w.text) ? "slam" : undefined)}
-            cx={960}
-            cy={640}
-            fitW={1560}
-            fitH={480}
-            maxScale={1.7}
-            maxRowWidth={1400}
+            entrance={cur % 2 ? "drop" : "slam"}
+            entranceFor={(w, i) => (isShout(w.text) ? "slam" : i % 3 === 2 ? "whip" : undefined)}
+            cx={1130}
+            cy={600}
+            fitW={1400}
+            fitH={560}
+            maxScale={2.0}
+            maxRowWidth={1100}
             lineHeight={1.1}
             exitAt={lines[cur + 1]?.start}
             exit={cur % 2 ? "left" : "up"}
